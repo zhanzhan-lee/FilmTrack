@@ -1,5 +1,5 @@
 # CITS3403-Group11-2025
----
+
 
 ## ✅ **Project Requirements (Summary)**
 
@@ -43,9 +43,15 @@
 
 ---
 
+
+
 ### ⚠️ **Important Rules**
 - **Do NOT start coding until after Week 6 lecture.**
 - Focus only on **discussing the application purpose and idea** with your team now.
 - Ask facilitators if you’re unsure about your idea’s suitability.
 
----
+## Theme Ideation
+
+### 1.
+
+### 2. 
