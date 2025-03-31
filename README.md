@@ -49,6 +49,8 @@
 - **Do NOT start coding until after Week 6 lecture.**
 - Focus only on **discussing the application purpose and idea** with your team now.
 - Ask facilitators if you’re unsure about your idea’s suitability.
+  
+---
 
 # Theme Ideation
 
@@ -114,3 +116,7 @@ User
 - Data structure is clean and great for learning full-stack dev
 - Looks good (photos + charts + maps)
 - No real competitor exists — we’re solving a real niche problem
+
+---
+
+## **💡2.ADD YOUR IDEA HERE**
