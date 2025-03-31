@@ -52,13 +52,15 @@
   
 ---
 
+
+
 # Theme Ideation
 
 ## **💡1.FilmTrack**
 ### 🧠 One-sentence summary:
 
 > **FilmTrack** helps film photographers track their gear and shoots, and visualize their habits — like a smart photo logbook with charts and maps.
-### What are we building?
+### 💡What are we building?
 
    **FilmTrack** is a web app for **film photography lovers** to:
 
@@ -99,6 +101,7 @@ User
   - Shooting locations on a map
 - Display **labels under each photo** (e.g. camera + film + settings)
 - Share a film roll or summary via link
+  
 ### 📊 What does the system analyze?
 
 - 🎞️ Most used film type
