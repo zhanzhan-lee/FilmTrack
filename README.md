@@ -154,6 +154,7 @@ User
 - **Detailed** song practice progress
 - Time since last practiced
 - Most common genres/artists/albums etc.
+- Charts tracking practice time each day, or breakdowns by instrument/song/genre etc.
 
 ### 🎯 Why is this a good project?
 
