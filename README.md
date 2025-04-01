@@ -122,4 +122,43 @@ User
 
 ---
 
-## **💡2.ADD YOUR IDEA HERE**
+## 2. Music Practice Tracker
+### 🧠 One-sentence summary:
+
+> Helps musicians keep on top of their practice by tracking song progress, identifying skill progression and competition with friends.
+
+### 🤔 What do musicians need?
+   - Musicians need to develop specific skills in order to learn and play songs
+   - Developing skills requires **repeated practice**, and is something that should be tracked
+        - Skills include **instrument specific techniques** such as guitar picking, or **general musical skills** such as rhythm
+   - On top of developing skills, musicians need ways to keep track of what songs/parts of songs they have learned, and how long since they have practiced them
+   - Additionally, simply having a list of songs that they can play can be useful for **auditions**, **confidence**, or to meet likeminded musicians
+
+### ✅ What can users do?
+
+- Create an account, including a **profile picture**, **favourite genre**, etc.
+- Add specific **songs** they are practicing/know how to play
+   - Track progress of learning songs, such as a checklist of having learned the **chorus**, **solo** etc.
+   - Identify when song was last practiced, to allow the app to remind users to practice this song after a certain amount of time (**spaced repetition**)
+   - Upload audio recordings of songs over time to clearly hear progression
+   - Add text notes about certain parts/timestamps, etc.
+- Add specific **instruments** that they can play
+     - Similar to songs, users can track their progress in practicing instrument specific skills
+- Automatically see best known songs, and songs that require the most practice
+- Compete with friends, such as leaderboards of practice time, or songs learned etc.
+- Record custom practice exercises
+
+### 📊 What does the system analyze?
+
+- Most/least praticed songs
+- **Detailed** song practice progress
+- Time since last practiced
+- Most common genres/artists/albums etc.
+
+### 🎯 Why is this a good project?
+
+- Practice is absolutely imperative for musicians, and repetition is vital
+- **Meets all Unit requirements: data input, auto-analysis, visualization, sharing**
+- No good app currently exists to track this, while using paper can be difficult to keep track of learning hundreds of songs
+- Will look visually cool, as we can include nice grid views of songs and images of their album covers, as well as their colour indicating their last practice date
+- Usings friends/leaderboards is a cool way to meet the sharing requirement 
