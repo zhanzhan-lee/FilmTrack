@@ -162,4 +162,46 @@ User
 - **Meets all Unit requirements: data input, auto-analysis, visualization, sharing**
 - No good app currently exists to track this, while using paper can be difficult to keep track of learning hundreds of songs
 - Will look visually cool, as we can include nice grid views of songs and images of their album covers, as well as their colour indicating their last practice date
-- Usings friends/leaderboards is a cool way to meet the sharing requirement 
+- Usings friends/leaderboards is a cool way to meet the sharing requirement
+
+---
+
+## 3. Daily Food Log: 
+### 🧠 One-sentence summary:
+
+> Daily Food Log helps to record daily meals, track basic nutrition information, and share your food log with friends.
+
+### 🤔 What do people need?
+   - People need to keep track of what they eat each day to stay healthy.
+   - Keeping a food diary helps maintain nutrient balance.
+        - Reveal people's eating habits and support **health tracking**.
+        - Easy to complete **weight management** & **diet improvements**.
+   - A meal record is a simple way to plan better meals.
+   - Sharing food logs with friends can provide motivation and useful tips.
+
+### ✅ What can users do?
+- Create an account, including a **profile picture** and **basic details**.
+- Add daily **meal entries** with details-meal type, food items, etc.
+   - Records for **breakfast**, **lunch**, **dinner**, and **snacks & afternoon tea**.
+   - Photos of their meals are available.
+   - Summarizes total calories and nutrient breakdown.
+- View their meal history using **charts** and **graphs**.
+- Share selected meal logs with friends for **social needs**.
+- Set reminders to log meals regularly.
+
+### 📊 What does the system analyze?
+
+- Total calorie intake.
+- Breakdown of macronutrients like **carbohydrates**, **proteins**, and **fats**.
+- Meal frequency and meal time(timing).
+- Trends over time shown in **charts**.
+- Their eating patterns.
+
+### 🎯 Why is this a good project?
+
+- Part of daily life-tracking meals is essential for maintaining a healthy lifestyle.
+- Meets all **requirements**: **data input, auto-analysis, visualization, sharing**.
+- Many people still use paper logs, a variety of apps but too complex to use/purchase needed, this is free & easy to use and share.
+- Design is simple and has a clear data structure, good for learning future development projects.
+- Sharing food logs contributes to a supportive group of people for healthy living.
+
