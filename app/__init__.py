@@ -1,17 +1,17 @@
+# app/__init__.py
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
 
 def create_app():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = 'dev'  
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-    db.init_app(app)
+    # Configuring the Flask Application
+    app.config['SECRET_KEY'] = 'dev'  # temporary
 
-    from .routes import main
-    app.register_blueprint(main)
+
+    # Importing routes (view functions) 
+    from .routes import home, about, contact
+    app.add_url_rule('/', 'home', home)
+    app.add_url_rule('/about', 'about', about)
+    app.add_url_rule('/contact', 'contact', contact)
 
     return app

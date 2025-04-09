@@ -1,151 +1,82 @@
-# Theme Ideation
+Got it! Since you're not focusing on the database part right now, I will update the `README.md` accordingly, omitting the database-related steps.
 
-## **💡1.FilmTrack**
-### 🧠 One-sentence summary:
-
-> **FilmTrack** helps film photographers track their gear and shoots, and visualize their habits — like a smart photo logbook with charts and maps.
-### 💡What are we building?
-
-   **FilmTrack** is a web app for **film photography lovers** to:
-
-   - Record what they used to shoot (camera, lens, film, settings)
-   - See **automatic analysis** of their shooting habits
-   - Visualize results using **charts, maps, and labels**
-   - Share their photo logs with others
-### 🤔 What is film photography?
-
-- It uses **old-school cameras with film rolls** (e.g. 36 shots per roll)
-- You **manually set** the shutter speed, aperture, focus
-- You can't preview photos — you wait to develop the film
-- Film costs money and time, so each shot matters
-
-📒 Many film photographers write down info after each shoot.  
-FilmTrack helps **digitize, organize, and visualize** that info.
-
-### 🧱 How is the data organized?
-
-We use 4 levels to keep everything structured:
-
-```
-User
- └── Camera (e.g. Leica iiiG)
-       └── Lens (e.g. elmar 50mm f/3.5)
-             └── Film Roll ( KodakGold200> one shooting session)
-                   └── Shot (each photo's settings + preview)
-```
-
-### ✅ What can users do?
-
-- Create account, manage their **cameras & lens list**
-- Add new **film roll records**
-- Upload **preview photos** and photo settings
-- Automatically see:
-  - Most used film/lens/camera
-  - Shooting trends over time
-  - Shooting locations on a map
-- Display **labels under each photo** (e.g. camera + film + settings)
-- Share a film roll or summary via link
-  
-### 📊 What does the system analyze?
-
-- 🎞️ Most used film type
-- 🔍 Most used lens or camera
-- 🕐 Monthly shooting trends
-- 🗺️ Where the user shoots (map view)
-- 📷 Common settings (e.g. shutter speed, ISO)
-- 🏷️ Labels under each photo like:  
-  `Leica iiiG | elmar 50mm f/3.5 | Kodak Gold 200 | 1/250s | f/5.6`
-
-### 🎯 Why is this a good project?
-
-- Real photographers need this — most use notebooks or Excel
-- **Meets all Unit requirements: data input, auto-analysis, visualization, sharing**
-- Data structure is clean and great for learning full-stack dev
-- Looks good (photos + charts + maps)
-- No real competitor exists — we’re solving a real niche problem
+Here's the revised version:
 
 ---
 
-## 2. Music Practice Tracker
-### 🧠 One-sentence summary:
+# 🚀 CITS3403 Group Project - Flask Application
 
-> Helps musicians keep on top of their practice by tracking song progress, identifying skill progression and competition with friends.
+This is the Flask-based web application for the CITS3403 course group project. It demonstrates the use of Flask, and provides basic features like routing and templating.
 
-### 🤔 What do musicians need?
-   - Musicians need to develop specific skills in order to learn and play songs
-   - Developing skills requires **repeated practice**, and is something that should be tracked
-        - Skills include **instrument specific techniques** such as guitar picking, or **general musical skills** such as rhythm
-   - On top of developing skills, musicians need ways to keep track of what songs/parts of songs they have learned, and how long since they have practiced them
-   - Additionally, simply having a list of songs that they can play can be useful for **auditions**, **confidence**, or to meet likeminded musicians
+## 🚀 Project Setup
 
-### ✅ What can users do?
+### Prerequisites
 
-- Create an account, including a **profile picture**, **favourite genre**, etc.
-- Add specific **songs** they are practicing/know how to play
-   - Track progress of learning songs, such as a checklist of having learned the **chorus**, **solo** etc.
-   - Identify when song was last practiced, to allow the app to remind users to practice this song after a certain amount of time (**spaced repetition**)
-   - Upload audio recordings of songs over time to clearly hear progression
-   - Add text notes about certain parts/timestamps, etc.
-- Add specific **instruments** that they can play
-     - Similar to songs, users can track their progress in practicing instrument specific skills
-- Automatically see best known songs, and songs that require the most practice
-- Compete with friends, such as leaderboards of practice time, or songs learned etc.
-- Record custom practice exercises
-
-### 📊 What does the system analyze?
-
-- Most/least praticed songs
-- **Detailed** song practice progress
-- Time since last practiced
-- Most common genres/artists/albums etc.
-- Charts tracking practice time each day, or breakdowns by instrument/song/genre etc.
-
-### 🎯 Why is this a good project?
-
-- Practice is absolutely imperative for musicians, and repetition is vital
-- **Meets all Unit requirements: data input, auto-analysis, visualization, sharing**
-- No good app currently exists to track this, while using paper can be difficult to keep track of learning hundreds of songs
-- Will look visually cool, as we can include nice grid views of songs and images of their album covers, as well as their colour indicating their last practice date
-- Usings friends/leaderboards is a cool way to meet the sharing requirement
+- **Operating System**: Ubuntu 24.04 (or WSL with Ubuntu 24.04)
+- **Python Version**: Python 3.10 or later
+- **Required Dependencies**: Flask, Flask-WTF, and other required Python libraries.
 
 ---
 
-## 3. Daily Food Log: 
-### 🧠 One-sentence summary:
+### 🛠 Step-by-step Setup Guide
 
-> Daily Food Log helps to record daily meals, track basic nutrition information, and share your food log with friends.
+#### 1️⃣ Clone the Project
 
-### 🤔 What do people need?
-   - People need to keep track of what they eat each day to stay healthy.
-   - Keeping a food diary helps maintain nutrient balance.
-        - Reveal people's eating habits and support **health tracking**.
-        - Easy to complete **weight management** & **diet improvements**.
-   - A meal record is a simple way to plan better meals.
-   - Sharing food logs with friends can provide motivation and useful tips.
+Start by cloning the project repository:
 
-### ✅ What can users do?
-- Create an account, including a **profile picture** and **basic details**.
-- Add daily **meal entries** with details-meal type, food items, etc.
-   - Records for **breakfast**, **lunch**, **dinner**, and **snacks & afternoon tea**.
-   - Photos of their meals are available.
-   - Summarizes total calories and nutrient breakdown.
-- View their meal history using **charts** and **graphs**.
-- Share selected meal logs with friends for **social needs**.
-- Set reminders to log meals regularly.
+```bash
+git clone https://github.com/your-GitHub-username/CITS3403-Group11-2025.git
+cd CITS3403-Group11-2025
+```
 
-### 📊 What does the system analyze?
+#### 2️⃣ Install Python and Virtual Environment Support
 
-- Total calorie intake.
-- Breakdown of macronutrients like **carbohydrates**, **proteins**, and **fats**.
-- Meal frequency and meal time(timing).
-- Trends over time shown in **charts**.
-- Their eating patterns.
+Make sure Python and the `python3-venv` module are installed on your machine. Run the following commands to install the necessary packages:
 
-### 🎯 Why is this a good project?
+```bash
+sudo apt update
+sudo apt install python3 python3-venv python3-pip
+```
 
-- Part of daily life-tracking meals is essential for maintaining a healthy lifestyle.
-- Meets all **requirements**: **data input, auto-analysis, visualization, sharing**.
-- Many people still use paper logs, a variety of apps but too complex to use/purchase needed, this is free & easy to use and share.
-- Design is simple and has a clear data structure, good for learning future development projects.
-- Sharing food logs contributes to a supportive group of people for healthy living.
+#### 3️⃣ Create and Activate the Virtual Environment
+
+Create a virtual environment to isolate project dependencies:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+Once activated, your terminal prompt should change to `(venv)`.
+
+#### 4️⃣ Install Project Dependencies
+
+With the virtual environment activated, install the required dependencies using `requirements.txt`:
+
+```bash
+pip install -r requirements.txt
+```
+
+This will install all the necessary packages, including Flask and Flask-WTF.
+
+#### 5️⃣ Run the Application 
+
+Set the Flask app environment variables and start the application:
+
+```bash
+export FLASK_APP=run.py
+export FLASK_ENV=development  # Enable debugging mode
+flask run
+```
+
+Visit `http://127.0.0.1:5000` in your browser to see the app running.
+
+---
+
+## 🧭 Usage
+
+- **Development Mode**: The application runs in development mode with auto-reloading enabled. Simply run `flask run` to start the app.
+- **No Database Setup**: The project currently does not include any database configuration. You can focus on the core functionality of the application.
+
+---
 
