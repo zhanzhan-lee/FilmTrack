@@ -1,12 +1,4 @@
-Got it! Since you're not focusing on the database part right now, I will update the `README.md` accordingly, omitting the database-related steps.
 
-Here's the revised version:
-
----
-
-# 🚀 CITS3403 Group Project - Flask Application
-
-This is the Flask-based web application for the CITS3403 course group project. It demonstrates the use of Flask, and provides basic features like routing and templating.
 
 ## 🚀 Project Setup
 
@@ -14,7 +6,6 @@ This is the Flask-based web application for the CITS3403 course group project. I
 
 - **Operating System**: Ubuntu 24.04 (or WSL with Ubuntu 24.04)
 - **Python Version**: Python 3.10 or later
-- **Required Dependencies**: Flask, Flask-WTF, and other required Python libraries.
 
 ---
 
