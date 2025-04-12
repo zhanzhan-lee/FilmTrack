@@ -12,3 +12,11 @@ def about():
 # View function for the contact page
 def contact():
     return render_template('contact.html', title="Contact Us", message="Get in touch with us.")
+
+
+
+
+
+
+
+
