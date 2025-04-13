@@ -1,4 +1,22 @@
 
+## 🧩 **Branching & Development Strategy**
+To keep things organized:
+
+- `main` → ✅ **stable product branch**  
+  Final, working version of our product. Only merge tested and approved code here.
+  
+- `develop` → 🔄 **integration branch**  
+  All development work gets merged here first. This is our day-to-day working branch.
+
+- `feature branches` → 🌱 everyone creates their own for specific tasks  
+  E.g. `intro-layout-jay`, `fix-header-zane`, etc.
+
+We’ll **merge feature branches into `develop` during group meetings**.  
+Once everything is stable and reviewed, `develop` gets merged into `main`.
+
+
+
+
 ### ✅ Step 1: Clone the repo (if you haven't already)
 If you haven't cloned the GitHub repo to your local machine:
 
@@ -8,6 +26,9 @@ cd your-repo-name
 ```
 
 ---
+
+
+## 🧩 **How to create your feature branches**
 
 ### ✅ Step 2: Pull the latest changes (if you already cloned)
 If you already have the repo on your computer, first make sure you're up to date:
