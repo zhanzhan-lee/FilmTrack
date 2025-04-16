@@ -3,6 +3,8 @@
 {% block title %}Stats{% endblock %}
 
 {% block content %}
+
+
     <style>
         body {
             background-color: #F2E8CF;
@@ -89,12 +91,30 @@
           width: 40px;
         }
 
+        .film-leaderboard {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        .film-leaderboard-position {
+          display: flex;
+          flex-direction: row;
+          gap: 1rem;
+        }
+
         #shutter-speed {
           width: 600px;
         }
 
         #gear-preference {
           width: 400px;
+        }
+
+        #favourite-film-img {
+          height: 100px;
+          width: 100px;
+          border-radius: 15px;
         }
       </style>
       <div class="charts">
@@ -134,27 +154,94 @@
         <div class="chart-container" id="gear-preference">
           <p class="chart-title">Favourite Film</p>
 
-          <img src="https://images.squarespace-cdn.com/content/v1/579d7b8c29687f4dd9d83ad9/775260f5-a308-4f4f-ad52-26e2032c918d/000048930026.jpg?format=1000w" id="favourite-film-img">
+          <div class="film-leaderboard">
+            <div class="film-leaderboard-position">
+              <img src="https://images.squarespace-cdn.com/content/v1/579d7b8c29687f4dd9d83ad9/775260f5-a308-4f4f-ad52-26e2032c918d/000048930026.jpg?format=1000w" id="favourite-film-img">
+              <h1>#1</h1>
+            </div>
+          </div>
+
+          <div class="film-leaderboard">
+            <div class="film-leaderboard-position">
+              <h3>#2  Porta 400</h3>
+            </div>
+          </div>
+
+          <div class="film-leaderboard">
+            <div class="film-leaderboard-position">
+              <h3>#3  Tri-X 400</h3>
+            </div>
+          </div>
         </div>
 
         </div>
         <div class="chart-row">
-        <div class="chart-container" id="gear-preference">
-          <p class="chart-title">Gear Preference</p>
+          <div class="chart-container" id="gear-preference">
+            <p class="chart-title">Gear Preference</p>
 
-          <div class="bar">
-              <div class="bar-label"><img src="https://cdn-icons-png.flaticon.com/512/2956/2956744.png" class="chart-icon"></div>
+            <div class="bar">
+                <div class="bar-label"><img src="https://cdn-icons-png.flaticon.com/512/2956/2956744.png" class="chart-icon"></div>
+                <div class="bar-wrapper">
+                    <div class="bar-fill" data-value="90"></div>
+                </div>
+            </div>
+            <div class="bar">
+              <div class="bar-label"><img src="https://cdn-icons-png.flaticon.com/512/0/191.png" class="chart-icon"></div>
               <div class="bar-wrapper">
-                  <div class="bar-fill" data-value="90"></div>
+                  <div class="bar-fill" data-value="50"></div>
               </div>
-          </div>
-          <div class="bar">
-            <div class="bar-label"><img src="https://cdn-icons-png.flaticon.com/512/0/191.png" class="chart-icon"></div>
-            <div class="bar-wrapper">
-                <div class="bar-fill" data-value="50"></div>
             </div>
           </div>
-        </div>
+
+          <div class="chart-container" id="monthly-trend">
+            <p class="chart-title">Monthly Trend</p>
+
+            <div>
+              <canvas id="monthlyChart"></canvas>
+
+              <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+              <script>
+              const ctx = document.getElementById('monthlyChart').getContext('2d');
+
+              const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+              gradient.addColorStop(0, 'rgba(66, 133, 244, 0.3)'); // soft blue
+              gradient.addColorStop(1, 'rgba(66, 133, 244, 0)');   // fade
+
+              new Chart(ctx, {
+                type: 'line',
+                data: {
+                  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                  datasets: [{
+                    label: 'Monthly Trend',
+                    data: [20, 30, 25, 40, 35, 50, 60],
+                    fill: true,
+                    backgroundColor: gradient,
+                    borderColor: '#4285F4',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    pointRadius: 0,
+                  }]
+                },
+                options: {
+                  plugins: {
+                    legend: { display: false },
+                  },
+                  scales: {
+                    y: {
+                      beginAtZero: true,
+                      grid: { drawTicks: false, color: '#eee' },
+                      ticks: { color: '#666', font: { family: 'Roboto' } }
+                    },
+                    x: {
+                      grid: { display: false },
+                      ticks: { color: '#666', font: { family: 'Roboto' } }
+                    }
+                  }
+                }
+              });
+              </script>
+            </div>
+          </div>
       </div>
 
     </div>
