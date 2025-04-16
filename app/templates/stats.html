@@ -5,26 +5,54 @@
 {% block content %}
     <h1>{{ message }}</h1>
     <style>
+        body {
+            background-color: #F2E8CF;
+        }
+
         .chart-container {
           display: flex;
           flex-direction: column;
-          gap: 2rem;
+          gap: 1rem;
           max-width: 600px;
+          background-color: #fff;
+          padding: 20px;
+          border-radius: 15px;
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        .chart-title {
+          font-weight: bold;
+          color: #2c2c2c;
+        }
+
+        .bar {
+            display: flex;
+            flex-direction: row;
+            flex: 1;
         }
     
         .bar-wrapper {
-          position: relative;
+            flex: 1;
+        position: relative;
           height: 30px;
           background: #2c2c2c;
           border-radius: 15px;
           overflow: hidden;
         }
+
+        .bar-label {
+            flex: 0 0 100px;
+            color: #2c2c2c;
+            font-weight: normal;
+            text-align: right;
+            padding-right: 15px;
+        }
     
         .bar-fill {
           position: absolute;
           height: 100%;
-          background: purple;
-          border-radius: 15px 0 0 15px;
+          background: #6B705C;
+          border-radius: 15px;
           width: 0;
           display: flex;
           justify-content: flex-end;
@@ -36,7 +64,7 @@
           width: 20px;
           height: 20px;
           border-radius: 50%;
-          background: #a64ca6;
+          background: #A5A58D;
           margin-right: 5px;
           transform: scale(0);
           transition: transform 0.5s ease-out;
@@ -44,20 +72,42 @@
       </style>
       
       <div class="chart-container">
-        <div class="bar-wrapper">
-          <div class="bar-fill" data-value="80">
-            <div class="bar-circle"></div>
-          </div>
+        <p class="chart-title">Shutter Speed Distribution</p>
+
+        <div class="bar">
+            <div class="bar-label">1/200s</div>
+            <div class="bar-wrapper">
+                <div class="bar-fill" data-value="80">
+                    <div class="bar-circle"></div>
+                </div>
+            </div>
         </div>
-        <div class="bar-wrapper">
-          <div class="bar-fill" data-value="60">
-            <div class="bar-circle"></div>
-          </div>
+
+        <div class="bar">
+            <div class="bar-label">1/1500s</div>
+            <div class="bar-wrapper">
+                <div class="bar-fill" data-value="75">
+                    <div class="bar-circle"></div>
+                </div>
+            </div>
         </div>
-        <div class="bar-wrapper">
-          <div class="bar-fill" data-value="40">
-            <div class="bar-circle"></div>
-          </div>
+
+        <div class="bar">
+            <div class="bar-label">1s</div>
+            <div class="bar-wrapper">
+                <div class="bar-fill" data-value="40">
+                    <div class="bar-circle"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bar">
+            <div class="bar-label">1/2000s</div>
+            <div class="bar-wrapper">
+                <div class="bar-fill" data-value="20">
+                    <div class="bar-circle"></div>
+                </div>
+            </div>
         </div>
       </div>
     
