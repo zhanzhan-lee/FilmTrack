@@ -4,5 +4,74 @@
 
 {% block content %}
     <h1>{{ message }}</h1>
-    <p>Photo stats:</p>
+    <style>
+        .chart-container {
+          display: flex;
+          flex-direction: column;
+          gap: 2rem;
+          max-width: 600px;
+        }
+    
+        .bar-wrapper {
+          position: relative;
+          height: 30px;
+          background: #2c2c2c;
+          border-radius: 15px;
+          overflow: hidden;
+        }
+    
+        .bar-fill {
+          position: absolute;
+          height: 100%;
+          background: purple;
+          border-radius: 15px 0 0 15px;
+          width: 0;
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          transition: width 1s ease-out;
+        }
+    
+        .bar-circle {
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: #a64ca6;
+          margin-right: 5px;
+          transform: scale(0);
+          transition: transform 0.5s ease-out;
+        }
+      </style>
+      
+      <div class="chart-container">
+        <div class="bar-wrapper">
+          <div class="bar-fill" data-value="80">
+            <div class="bar-circle"></div>
+          </div>
+        </div>
+        <div class="bar-wrapper">
+          <div class="bar-fill" data-value="60">
+            <div class="bar-circle"></div>
+          </div>
+        </div>
+        <div class="bar-wrapper">
+          <div class="bar-fill" data-value="40">
+            <div class="bar-circle"></div>
+          </div>
+        </div>
+      </div>
+    
+      <script>
+        window.addEventListener('load', () => {
+          document.querySelectorAll('.bar-fill').forEach(bar => {
+            const val = bar.getAttribute('data-value');
+            bar.style.width = val + '%';
+    
+            // delay the circle pop for cool factor
+            setTimeout(() => {
+              bar.querySelector('.bar-circle').style.transform = 'scale(1)';
+            }, 500);
+          });
+        });
+      </script>
 {% endblock %}
