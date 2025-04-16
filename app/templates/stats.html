@@ -3,7 +3,7 @@
 {% block title %}Stats{% endblock %}
 
 {% block content %}
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         body {
@@ -116,6 +116,11 @@
           width: 100px;
           border-radius: 15px;
         }
+
+        #donut-chart {
+          width: 100px;
+          height: 100px;
+        }
       </style>
       <div class="charts">
         <div class="chart-row">
@@ -198,10 +203,32 @@
 
             <div>
               <canvas id="monthlyChart"></canvas>
+            </div>
+          </div>
 
-              <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-              <script>
-              const ctx = document.getElementById('monthlyChart').getContext('2d');
+          <div class="chart-container" id="monthly-trend">
+            <p class="chart-title">Apeture Distribution</p>
+
+            <div>
+              <canvas id="donut-chart"></canvas>
+            </div>
+          </div>
+      </div>
+
+    </div>
+    
+      <script>
+        window.addEventListener('load', () => {
+          document.querySelectorAll('.bar-fill').forEach(bar => {
+            const val = bar.getAttribute('data-value');
+            bar.style.width = val + '%';
+          });
+        });
+      </script>
+
+<script>
+  // Monthly trend chart
+  const ctx = document.getElementById('monthlyChart').getContext('2d');
 
               const gradient = ctx.createLinearGradient(0, 0, 0, 300);
               gradient.addColorStop(0, 'rgba(66, 133, 244, 0.3)'); // soft blue
@@ -239,19 +266,33 @@
                   }
                 }
               });
-              </script>
-            </div>
-          </div>
-      </div>
 
-    </div>
-    
-      <script>
-        window.addEventListener('load', () => {
-          document.querySelectorAll('.bar-fill').forEach(bar => {
-            const val = bar.getAttribute('data-value');
-            bar.style.width = val + '%';
-          });
-        });
-      </script>
+  // Donut chart
+  const donutCtx = document.getElementById('donut-chart').getContext('2d');
+  const donutChart = new Chart(donutCtx, {
+    type: 'doughnut',
+    data: {
+      labels: ['A', 'B', 'C', 'D', 'E'],
+      datasets: [{
+        data: [20, 15, 25, 10, 30],
+        backgroundColor: [
+          '#4A90E2',
+          '#5AA3F2',
+          '#6AB5FF',
+          '#8BC6FF',
+          '#A3D4FF'
+        ],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      cutout: '40%',
+      plugins: {
+        legend: {
+          display: false
+        }
+      }
+    }
+  });
+</script>
 {% endblock %}
