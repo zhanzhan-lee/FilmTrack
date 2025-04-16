@@ -88,10 +88,18 @@
           height: 40px;
           width: 40px;
         }
+
+        #shutter-speed {
+          width: 600px;
+        }
+
+        #gear-preference {
+          width: 400px;
+        }
       </style>
       <div class="charts">
         <div class="chart-row">
-        <div class="chart-container">
+        <div class="chart-container" id="shutter-speed">
           <p class="chart-title">Shutter Speed Distribution</p>
 
           <div class="bar">
@@ -122,8 +130,16 @@
               </div>
           </div>
         </div>
+        
+        <div class="chart-container" id="gear-preference">
+          <p class="chart-title">Favourite Film</p>
 
-        <div class="chart-container">
+          <img src="https://images.squarespace-cdn.com/content/v1/579d7b8c29687f4dd9d83ad9/775260f5-a308-4f4f-ad52-26e2032c918d/000048930026.jpg?format=1000w" id="favourite-film-img">
+        </div>
+
+        </div>
+        <div class="chart-row">
+        <div class="chart-container" id="gear-preference">
           <p class="chart-title">Gear Preference</p>
 
           <div class="bar">
@@ -137,7 +153,7 @@
             <div class="bar-wrapper">
                 <div class="bar-fill" data-value="50"></div>
             </div>
-        </div>
+          </div>
         </div>
       </div>
 
