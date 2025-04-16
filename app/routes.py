@@ -12,3 +12,7 @@ def about():
 # View function for the contact page
 def contact():
     return render_template('contact.html', title="Contact Us", message="Get in touch with us.")
+
+# View function for the stats page
+def stats():
+    return render_template('stats.html', title="Stats", message="Visualise your shooting habits.")

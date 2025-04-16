@@ -9,9 +9,10 @@ def create_app():
 
 
     # Importing routes (view functions) 
-    from .routes import home, about, contact
+    from .routes import home, about, contact, stats
     app.add_url_rule('/', 'home', home)
     app.add_url_rule('/about', 'about', about)
     app.add_url_rule('/contact', 'contact', contact)
+    app.add_url_rule('/stats', 'stats', stats)
 
     return app
