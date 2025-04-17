@@ -101,12 +101,20 @@ body {
     gap: 1rem;
 }
 
+.monthly-trend {
+    width: 600px;
+}
+
+#apeture-distribution {
+    width: 300px;
+}
+
 #shutter-speed {
     width: 600px;
 }
 
 #gear-preference {
-    width: 400px;
+    width: 300px;
 }
 
 #favourite-film-img {

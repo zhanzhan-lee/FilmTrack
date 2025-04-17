@@ -1,6 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Monthly trend chart
-    const ctx = document.getElementById('monthlyChart').getContext('2d');
+    const ctx = document.getElementById('monthly-trend').getContext('2d');
+
+    // TODO: Fix this
+    document.getElementById('monthly-trend').height = 150;
+    document.getElementById('monthly-trend').width = 600;
 
     const gradient = ctx.createLinearGradient(0, 0, 0, 300);
     gradient.addColorStop(0, 'rgba(66, 133, 244, 0.3)'); // soft blue
