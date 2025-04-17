@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Monthly trend chart
     const ctx = document.getElementById('monthlyChart').getContext('2d');
 
     const gradient = ctx.createLinearGradient(0, 0, 0, 300);
@@ -28,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 y: {
                     beginAtZero: true,
                     grid: { drawTicks: false, color: '#eee' },
-                    ticks: { color: '#666', font: { family: 'Roboto' } }
+                    ticks: { display: false }
                 },
                 x: {
                     grid: { display: false },
