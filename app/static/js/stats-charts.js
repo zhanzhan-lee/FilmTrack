@@ -70,5 +70,26 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
+
+    var map = L.map('map').setView([-25.2744, 133.7751], 4); // Australia, baby
+
+    // 🗺️ MINIMAL TILE LAYER
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; OpenStreetMap & Carto',
+      maxZoom: 18
+    }).addTo(map);
+
+    // 📍 SPICY MAP PINS
+    const locations = [
+      { name: "Sydney", lat: -33.8688, lng: 151.2093 },
+      { name: "Melbourne", lat: -37.8136, lng: 144.9631 },
+      { name: "Perth", lat: -31.9505, lng: 115.8605 }
+    ];
+
+    locations.forEach(loc => {
+      L.marker([loc.lat, loc.lng])
+        .addTo(map)
+        .bindPopup(`<b>${loc.name}</b> 🦘`); //TODO: Extend this to having photo preview?
+    });
 });
 

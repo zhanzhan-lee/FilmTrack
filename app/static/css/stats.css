@@ -127,3 +127,8 @@ body {
     width: 100px;
     height: 100px;
 }
+
+#map {
+    height: 400px;
+    width: 400px;
+}
