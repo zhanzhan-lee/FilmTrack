@@ -21,6 +21,9 @@ Once everything is stable and reviewed, `develop` gets merged into `main`.
 ### ✅ Step 1: Clone the repo (if you haven't already)
 If you haven't cloned the GitHub repo to your local machine:
 
+
+
+
 ```bash
 git clone https://github.com/your-team-name/your-repo-name.git
 cd your-repo-name
