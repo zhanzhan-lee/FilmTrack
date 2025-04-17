@@ -3,296 +3,114 @@
 {% block title %}Stats{% endblock %}
 
 {% block content %}
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/stats.css') }}">
+<script src="{{ url_for('static', filename='js/stats-charts.js') }}"></script>
 
-    <style>
-        body {
-            background-color: #F2E8CF;
-        }
+<div class="charts">
+  <div class="chart-row">
+    <div class="chart-container" id="shutter-speed">
+      <p class="chart-title">Shutter Speed Distribution</p>
 
-        .charts {
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
-          margin: 30px;
-        }
-
-        .chart-row {
-          display: flex;
-          flex-direction: row;
-          gap: 2rem;
-        }
-
-        .chart-container {
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
-          max-width: 600px;
-          background-color: #fff;
-          padding: 20px;
-          border-radius: 15px;
-          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        }
-
-        .chart-title {
-          font-weight: bold;
-          color: #2c2c2c;
-        }
-
-        .bar {
-            display: flex;
-            flex-direction: row;
-            flex: 1;
-            align-items: center;
-        }
-    
-        .bar-wrapper {
-            flex: 1;
-        position: relative;
-          height: 30px;
-          background: #e4e4e4;
-          border-radius: 15px;
-          overflow: hidden;
-        }
-
-        .bar-label {
-            flex: 0 0 100px;
-            color: #2c2c2c;
-            font-weight: normal;
-            text-align: right;
-            padding-right: 15px;
-            max-width: 80px;
-        }
-    
-        .bar-fill {
-          position: absolute;
-          height: 100%;
-          background: linear-gradient(90deg,  #B5838D,  #d8b5bc);
-          border-radius: 15px;
-          width: 0;
-          display: flex;
-          justify-content: flex-end;
-          align-items: center;
-          transition: width 1s ease-out;
-        }
-    
-        .bar-circle {
-          width: 20px;
-          height: 20px;
-          border-radius: 50%;
-          background: #A5A58D;
-          margin-right: 5px;
-          transform: scale(0);
-          transition: transform 0.5s ease-out;
-        }
-
-        .chart-icon {
-          height: 40px;
-          width: 40px;
-        }
-
-        .film-leaderboard {
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
-        }
-
-        .film-leaderboard-position {
-          display: flex;
-          flex-direction: row;
-          gap: 1rem;
-        }
-
-        #shutter-speed {
-          width: 600px;
-        }
-
-        #gear-preference {
-          width: 400px;
-        }
-
-        #favourite-film-img {
-          height: 100px;
-          width: 100px;
-          border-radius: 15px;
-        }
-
-        #donut-chart {
-          width: 100px;
-          height: 100px;
-        }
-      </style>
-      <div class="charts">
-        <div class="chart-row">
-        <div class="chart-container" id="shutter-speed">
-          <p class="chart-title">Shutter Speed Distribution</p>
-
-          <div class="bar">
-              <div class="bar-label">1/200s</div>
-              <div class="bar-wrapper">
-                  <div class="bar-fill" data-value="80"></div>
-              </div>
-          </div>
-
-          <div class="bar">
-              <div class="bar-label">1/1500s</div>
-              <div class="bar-wrapper">
-                  <div class="bar-fill" data-value="75"></div>
-              </div>
-          </div>
-
-          <div class="bar">
-              <div class="bar-label">1s</div>
-              <div class="bar-wrapper">
-                  <div class="bar-fill" data-value="40"></div>
-              </div>
-          </div>
-
-          <div class="bar">
-              <div class="bar-label">1/2000s</div>
-              <div class="bar-wrapper">
-                  <div class="bar-fill" data-value="20"></div>
-              </div>
-          </div>
+      <div class="bar">
+        <div class="bar-label">1/200s</div>
+        <div class="bar-wrapper">
+          <div class="bar-fill" data-value="80"></div>
         </div>
-        
-        <div class="chart-container" id="gear-preference">
-          <p class="chart-title">Favourite Film</p>
-
-          <div class="film-leaderboard">
-            <div class="film-leaderboard-position">
-              <img src="https://images.squarespace-cdn.com/content/v1/579d7b8c29687f4dd9d83ad9/775260f5-a308-4f4f-ad52-26e2032c918d/000048930026.jpg?format=1000w" id="favourite-film-img">
-              <h1>#1</h1>
-            </div>
-          </div>
-
-          <div class="film-leaderboard">
-            <div class="film-leaderboard-position">
-              <h3>#2  Porta 400</h3>
-            </div>
-          </div>
-
-          <div class="film-leaderboard">
-            <div class="film-leaderboard-position">
-              <h3>#3  Tri-X 400</h3>
-            </div>
-          </div>
-        </div>
-
-        </div>
-        <div class="chart-row">
-          <div class="chart-container" id="gear-preference">
-            <p class="chart-title">Gear Preference</p>
-
-            <div class="bar">
-                <div class="bar-label"><img src="https://cdn-icons-png.flaticon.com/512/2956/2956744.png" class="chart-icon"></div>
-                <div class="bar-wrapper">
-                    <div class="bar-fill" data-value="90"></div>
-                </div>
-            </div>
-            <div class="bar">
-              <div class="bar-label"><img src="https://cdn-icons-png.flaticon.com/512/0/191.png" class="chart-icon"></div>
-              <div class="bar-wrapper">
-                  <div class="bar-fill" data-value="50"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="chart-container" id="monthly-trend">
-            <p class="chart-title">Monthly Trend</p>
-
-            <div>
-              <canvas id="monthlyChart"></canvas>
-            </div>
-          </div>
-
-          <div class="chart-container" id="monthly-trend">
-            <p class="chart-title">Apeture Distribution</p>
-
-            <div>
-              <canvas id="donut-chart"></canvas>
-            </div>
-          </div>
       </div>
 
+      <div class="bar">
+        <div class="bar-label">1/1500s</div>
+        <div class="bar-wrapper">
+          <div class="bar-fill" data-value="75"></div>
+        </div>
+      </div>
+
+      <div class="bar">
+        <div class="bar-label">1s</div>
+        <div class="bar-wrapper">
+          <div class="bar-fill" data-value="40"></div>
+        </div>
+      </div>
+
+      <div class="bar">
+        <div class="bar-label">1/2000s</div>
+        <div class="bar-wrapper">
+          <div class="bar-fill" data-value="20"></div>
+        </div>
+      </div>
     </div>
-    
-      <script>
-        window.addEventListener('load', () => {
-          document.querySelectorAll('.bar-fill').forEach(bar => {
-            const val = bar.getAttribute('data-value');
-            bar.style.width = val + '%';
-          });
-        });
-      </script>
+
+    <div class="chart-container" id="gear-preference">
+      <p class="chart-title">Favourite Film</p>
+
+      <div class="film-leaderboard">
+        <div class="film-leaderboard-position">
+          <img
+            src="https://images.squarespace-cdn.com/content/v1/579d7b8c29687f4dd9d83ad9/775260f5-a308-4f4f-ad52-26e2032c918d/000048930026.jpg?format=1000w"
+            id="favourite-film-img">
+          <h1>#1</h1>
+        </div>
+      </div>
+
+      <div class="film-leaderboard">
+        <div class="film-leaderboard-position">
+          <h3>#2 Porta 400</h3>
+        </div>
+      </div>
+
+      <div class="film-leaderboard">
+        <div class="film-leaderboard-position">
+          <h3>#3 Tri-X 400</h3>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="chart-row">
+    <div class="chart-container" id="gear-preference">
+      <p class="chart-title">Gear Preference</p>
+
+      <div class="bar">
+        <div class="bar-label"><img src="https://cdn-icons-png.flaticon.com/512/2956/2956744.png" class="chart-icon">
+        </div>
+        <div class="bar-wrapper">
+          <div class="bar-fill" data-value="90"></div>
+        </div>
+      </div>
+      <div class="bar">
+        <div class="bar-label"><img src="https://cdn-icons-png.flaticon.com/512/0/191.png" class="chart-icon"></div>
+        <div class="bar-wrapper">
+          <div class="bar-fill" data-value="50"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-container" id="monthly-trend">
+      <p class="chart-title">Monthly Trend</p>
+
+      <div>
+        <canvas id="monthlyChart"></canvas>
+      </div>
+    </div>
+
+    <div class="chart-container" id="monthly-trend">
+      <p class="chart-title">Apeture Distribution</p>
+
+      <div>
+        <canvas id="donut-chart"></canvas>
+      </div>
+    </div>
+  </div>
+
+</div>
 
 <script>
-  // Monthly trend chart
-  const ctx = document.getElementById('monthlyChart').getContext('2d');
-
-              const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-              gradient.addColorStop(0, 'rgba(66, 133, 244, 0.3)'); // soft blue
-              gradient.addColorStop(1, 'rgba(66, 133, 244, 0)');   // fade
-
-              new Chart(ctx, {
-                type: 'line',
-                data: {
-                  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-                  datasets: [{
-                    label: 'Monthly Trend',
-                    data: [20, 30, 25, 40, 35, 50, 60],
-                    fill: true,
-                    backgroundColor: gradient,
-                    borderColor: '#4285F4',
-                    borderWidth: 3,
-                    tension: 0.4,
-                    pointRadius: 0,
-                  }]
-                },
-                options: {
-                  plugins: {
-                    legend: { display: false },
-                  },
-                  scales: {
-                    y: {
-                      beginAtZero: true,
-                      grid: { drawTicks: false, color: '#eee' },
-                      ticks: { color: '#666', font: { family: 'Roboto' } }
-                    },
-                    x: {
-                      grid: { display: false },
-                      ticks: { color: '#666', font: { family: 'Roboto' } }
-                    }
-                  }
-                }
-              });
-
-  // Donut chart
-  const donutCtx = document.getElementById('donut-chart').getContext('2d');
-  const donutChart = new Chart(donutCtx, {
-    type: 'doughnut',
-    data: {
-      labels: ['A', 'B', 'C', 'D', 'E'],
-      datasets: [{
-        data: [20, 15, 25, 10, 30],
-        backgroundColor: [
-          '#4A90E2',
-          '#5AA3F2',
-          '#6AB5FF',
-          '#8BC6FF',
-          '#A3D4FF'
-        ],
-        borderWidth: 0
-      }]
-    },
-    options: {
-      cutout: '40%',
-      plugins: {
-        legend: {
-          display: false
-        }
-      }
-    }
+  window.addEventListener('load', () => {
+    document.querySelectorAll('.bar-fill').forEach(bar => {
+      const val = bar.getAttribute('data-value');
+      bar.style.width = val + '%';
+    });
   });
 </script>
 {% endblock %}
