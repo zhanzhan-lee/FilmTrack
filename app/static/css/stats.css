@@ -92,7 +92,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    width: 230px;
+    width: 240px;
 }
 
 .film-leaderboard-position {
@@ -130,5 +130,10 @@ body {
 
 #map {
     height: 400px;
-    width: 400px;
+    width: 600px;
+    border-radius: 15px;
+}
+
+#city-stats {
+    width: 300px;
 }
