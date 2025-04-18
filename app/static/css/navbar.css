@@ -1,0 +1,76 @@
+.custom-navbar {
+    background-color: #F2E8CF; /* Custom background color */
+    color: #6B705C; /* Custom text color */
+}
+
+.custom-navbar .nav-link {
+    color: #6B705C; /* Navigation link text color */
+    font-size: 20px;
+}
+
+.custom-navbar .nav-item {
+    display: flex; /* Use Flexbox layout */
+    align-items: center; /* Vertically align items */
+    font-weight: bold;
+}
+
+
+/* Custom navbar button styles */
+.custom-navbar .btn {
+    margin-left: 20px; /* Spacing between buttons */
+    border-radius: 15px; /* Rounded corners */
+    font-size: 20px;
+    font-weight: bold; /* Bold text */
+    padding: 12px 20px; /* Adjust button padding */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Add transition effect */
+}
+
+/* Hover effect for buttons */
+.custom-navbar .btn-login:hover {
+    background-color: #6B705C; /* Background color on hover */
+    color: white; /* Text color on hover */
+}
+
+.custom-navbar .btn-signup:hover {
+    background-color: #6B705C; /* Background color on hover */
+    color: white; /* Text color on hover */
+}
+
+.custom-navbar .btn-logout:hover {
+    background-color: #6B705C; /* Background color on hover */
+    color: white; /* Text color on hover */
+}
+
+
+
+
+
+
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background-color: #f8f9fa;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    transition: left 0.3s ease;
+    z-index: 1000;
+    padding-top: 20px;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.sidebar a {
+    color: #333;
+    text-decoration: none;
+}
+
+.btn-login,
+.btn-signup,
+.btn-logout {
+    margin-left: 10px;
+}
