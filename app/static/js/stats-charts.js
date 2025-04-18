@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const filmCtx = document.getElementById('film-chart').getContext('2d');
-    const bg2 = cameraCtx.createLinearGradient(0, 0, 0, 300);
+    const bg2 = filmCtx.createLinearGradient(0, 0, 0, 300);
     bg2.addColorStop(0, '#5eb3f4');
     bg2.addColorStop(1, '#9ccdf1'); 
 
@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
       data: {
         labels: ['A', 'B', 'C'],
         datasets: [{
-          data: [12, 19, 3],
+          data: [7, 10, 4],
           backgroundColor: bg2,
           borderRadius: 5,
         }]
@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
       data: {
         labels: ['A', 'B', 'C'],
         datasets: [{
-          data: [12, 19, 3],
+          data: [4, 12, 1],
           backgroundColor: blueGradient,
           borderRadius: 5,
         }]
