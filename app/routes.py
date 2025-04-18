@@ -27,6 +27,8 @@ def login():
 
         if user and check_password_hash(user.password, password):
             session['user_id'] = user.id
+            session['username'] = user.username
+            session['username'] = user.username # Store username in session
             flash('Login successful!', 'success')
             return redirect(url_for('home'))
         else:
@@ -51,3 +53,10 @@ def register():
             return redirect(url_for('login'))
 
     return render_template('register.html', title="Register")
+
+# View function for logout
+def logout():
+    session.pop('username', None)
+    session.pop('user_id', None)
+    flash('You have been logged out.', 'info')
+    return redirect(url_for('home'))
