@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Track Every Frame</title>
+    <link rel="stylesheet" href="website.css" />
+  </head>
+  <body>
+    <div id="main-page" class="center-wrapper">
+      <h1>Track every frame.</h1>
+      <p>Digitise your film journey.</p>
+      <div class="buttons">
+        <button onclick="showSignIn()">Sign In</button>
+        <button onclick="alert('Explore not implemented')">Explore</button>
+      </div>
+      <div class="features">
+        <div class="feature">Add your cameras, lenses, and film</div>
+        <div class="feature">
+          Record aperture, shutter speed, ISO, location & more
+        </div>
+        <div class="feature">Visualise exposure and gear preferences</div>
+        <div class="feature">Share your shooting maps and photos</div>
+      </div>
+    </div>
+
+    <div id="sign-in" class="auth-container auth-wrapper">
+      <h2>Welcome to Flourish!</h2>
+      <input type="email" placeholder="Email" />
+      <input type="password" placeholder="Password" />
+      <button>Log in</button>
+      <div class="link" onclick="showSignUp()">
+        Don’t have an account yet? Sign up now!
+      </div>
+    </div>
+
+    <div id="sign-up" class="auth-container auth-wrapper">
+      <h2>Welcome to Website Name!</h2>
+      <input type="email" placeholder="Email" />
+      <input type="text" placeholder="Choose a username" />
+      <input type="text" placeholder="Name" />
+      <input type="password" placeholder="Password" />
+
+      <div class="checkboxes">
+        <label
+          ><input type="checkbox" /> I agree to the
+          <a href="#">terms and conditions</a></label
+        ><br />
+        <label
+          ><input type="checkbox" /> I have read and understood the
+          <a href="#">privacy policy</a></label
+        ><br />
+        <label
+          ><input type="checkbox" /> Send me occasional tips and updates</label
+        >
+      </div>
+
+      <div class="checkbox-group">
+        <label>
+          <input type="checkbox" />
+          <span>I have read and understood the privacy policy</span>
+        </label>
+      </div>
+      <div class="checkbox-group">
+        <label>
+          <input type="checkbox" />
+          <span>Send me occasional tips and updates</span>
+        </label>
+      </div>
+
+      <button>Sign up</button>
+      <div class="link" onclick="showSignIn()">
+        Already have an account? Sign in
+      </div>
+    </div>
+
+    <script src="website.js"></script>
+  </body>
+</html>
