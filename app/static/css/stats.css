@@ -49,7 +49,7 @@ body {
     position: relative;
     height: 20px;
     background: #e4e4e4;
-    border-radius: 15px;
+    border-radius: 5px;
     overflow: hidden;
 }
 
@@ -64,8 +64,8 @@ body {
 .bar-fill {
     position: absolute;
     height: 100%;
-    background: linear-gradient(90deg, #B5838D, #d8b5bc);
-    border-radius: 15px;
+    background: linear-gradient(90deg, #5eb3f4, #9ccdf1);
+    border-radius: 5px;
     width: 0;
     display: flex;
     justify-content: flex-end;
@@ -105,16 +105,31 @@ body {
     width: 600px;
 }
 
+.gear-preference {
+    width: 300px;
+    display: flex;
+    flex-direction: row;
+}
+
+.gear-chart-container {
+    max-width: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.gear-chart {
+    height: 100px !important;
+    width: 100px !important;
+}
+
 #apeture-distribution {
     width: 300px;
 }
 
 #shutter-speed {
     width: 600px;
-}
-
-#gear-preference {
-    width: 300px;
 }
 
 #favourite-film-img {
