@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
     gradient.addColorStop(0, 'rgba(39, 134, 97, 0.3)');
     gradient.addColorStop(1, 'rgba(39, 134, 97, 0)'); 
 
-
     new Chart(ctx, {
         type: 'line',
         data: {
