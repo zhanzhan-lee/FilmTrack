@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+{% block title %}Stats{% endblock %}
+
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!--For the map only. Is this allowed?-->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/stats.css') }}">
+<script src="{{ url_for('static', filename='js/stats-charts.js') }}"></script>
+
+
+<div class="charts">
+  <div class="chart-row">
+    <div class="chart-tile">
+      <div class="chart-container" id="shutter-speed">
+        <p class="chart-title">Shutter Speed Distribution</p>
+
+        <div class="bar">
+          <div class="bar-label">1/200s</div>
+          <div class="bar-wrapper">
+            <div class="bar-fill" data-value="80"></div>
+          </div>
+        </div>
+
+        <div class="bar">
+          <div class="bar-label">1/1500s</div>
+          <div class="bar-wrapper">
+            <div class="bar-fill" data-value="75"></div>
+          </div>
+        </div>
+
+        <div class="bar">
+          <div class="bar-label">1s</div>
+          <div class="bar-wrapper">
+            <div class="bar-fill" data-value="40"></div>
+          </div>
+        </div>
+
+        <div class="bar">
+          <div class="bar-label">1/2000s</div>
+          <div class="bar-wrapper">
+            <div class="bar-fill" data-value="20"></div>
+          </div>
+        </div>
+
+        <div class="bar">
+          <div class="bar-label">10s</div>
+          <div class="bar-wrapper">
+            <div class="bar-fill" data-value="5"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-container" id="apeture-distribution">
+        <p class="chart-title">Apeture Distribution</p>
+
+        <div>
+          <canvas id="donut-chart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-tile">
+      <div class="chart-container" id="favourite-film">
+        <p class="chart-title">Favourite Film</p>
+
+        <div class="film-leaderboard">
+          <div class="film-leaderboard-position">
+            <img
+              src="https://images.squarespace-cdn.com/content/v1/579d7b8c29687f4dd9d83ad9/775260f5-a308-4f4f-ad52-26e2032c918d/000048930026.jpg?format=1000w"
+              id="favourite-film-img">
+            <h1>#1</h1>
+          </div>
+        </div>
+
+        <div class="film-leaderboard">
+          <div class="film-leaderboard-position">
+            <h3>#2 Porta 400</h3>
+          </div>
+        </div>
+
+        <div class="film-leaderboard">
+          <div class="film-leaderboard-position">
+            <h3>#3 Tri-X 400</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="chart-row">
+    <div class="chart-tile">
+      <div class="chart-container" id="gear-preference">
+        <p class="chart-title">Gear Preference</p>
+
+        <div class="bar">
+          <div class="bar-label"><img src="https://cdn-icons-png.flaticon.com/512/2956/2956744.png" class="chart-icon">
+          </div>
+          <div class="bar-wrapper">
+            <div class="bar-fill" data-value="90"></div>
+          </div>
+        </div>
+        <div class="bar">
+          <div class="bar-label"><img src="https://cdn-icons-png.flaticon.com/512/0/191.png" class="chart-icon"></div>
+          <div class="bar-wrapper">
+            <div class="bar-fill" data-value="50"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-tile">
+      <div class="chart-container">
+        <p class="chart-title">Monthly Trend</p>
+
+        <div>
+          <canvas id="monthly-trend"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-row">
+    <div class="chart-tile">
+      <div class="chart-container">
+        <p class="chart-title">Location Map</p>
+
+        <div id="map"></div>
+      </div>
+    </div>
+
+    <div class="chart-tile">
+      <div class="chart-container" id="city-stats">
+        <p class="chart-title">City Stats</p>
+
+        <div class="bar">
+          <div class="bar-label">Perth</div>
+          <div class="bar-wrapper">
+            <div class="bar-fill" data-value="80"></div>
+          </div>
+        </div>
+
+        <div class="bar">
+          <div class="bar-label">Sydney</div>
+          <div class="bar-wrapper">
+            <div class="bar-fill" data-value="75"></div>
+          </div>
+        </div>
+
+        <div class="bar">
+          <div class="bar-label">Melbourne</div>
+          <div class="bar-wrapper">
+            <div class="bar-fill" data-value="40"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  window.addEventListener('load', () => {
+    document.querySelectorAll('.bar-fill').forEach(bar => {
+      const val = bar.getAttribute('data-value');
+      bar.style.width = val + '%';
+    });
+  });
+</script>
+{% endblock %}

@@ -18,13 +18,15 @@ def create_app():
 
 
     # Importing routes (view functions) 
-    from .routes import home, about, contact, login, register, logout
+
+    from .routes import home, about, contact, login, register, logout, stats
     app.add_url_rule('/', 'home', home)
     app.add_url_rule('/about', 'about', about)
     app.add_url_rule('/contact', 'contact', contact)
     app.add_url_rule('/login', 'login', login, methods=['GET', 'POST'])
     app.add_url_rule('/register', 'register', register, methods=['GET', 'POST'])
     app.add_url_rule('/logout', 'logout', logout)
+    app.add_url_rule('/stats', 'stats', stats)
 
 
     

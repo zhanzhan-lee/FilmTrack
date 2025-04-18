@@ -1,3 +1,4 @@
+
 # app/routes.py
 from flask import render_template, request, redirect, url_for, flash, session
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -60,3 +61,8 @@ def logout():
     session.pop('user_id', None)
     flash('You have been logged out.', 'info')
     return redirect(url_for('home'))
+  
+# View function for the stats page
+def stats():
+    return render_template('stats.html', title="Stats", message="Visualise your shooting habits.")
+
