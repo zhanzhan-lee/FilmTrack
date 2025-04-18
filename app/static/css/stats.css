@@ -110,23 +110,18 @@ body {
     width: 600px;
 }
 
-.gear-preference {
-    width: 300px;
-    display: flex;
-    flex-direction: row;
-}
-
 .gear-chart-container {
-    max-width: 100px;
+    max-width: 150px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 1rem;
 }
 
 .gear-chart {
     height: 100px !important;
-    width: 100px !important;
+    width: 150px !important;
 }
 
 #apeture-distribution {
@@ -137,15 +132,22 @@ body {
     width: 600px;
 }
 
+#donut-chart {
+    width: 100px;
+    height: 100px;
+}
+
 #favourite-film-img {
     height: 100px;
     width: 100px;
     border-radius: 15px;
 }
 
-#donut-chart {
-    width: 100px;
-    height: 100px;
+.gear-preference {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
 }
 
 #map {
