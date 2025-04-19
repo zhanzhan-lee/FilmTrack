@@ -66,3 +66,5 @@ def logout():
 def stats():
     return render_template('stats.html', title="Stats", message="Visualise your shooting habits.")
 
+def share():
+    return render_template('share.html', title="Share", message="Share.")
