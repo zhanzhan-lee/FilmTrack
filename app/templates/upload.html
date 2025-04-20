@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Stats{% endblock %}
+
+{% block content %}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Camera</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h2>Upload New Camera</h2>
+
+    <form id="camera-upload-form" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+
+        <label>{{ form.name.label }}</label><br>
+        {{ form.name(size=40) }}<br><br>
+
+        <label>{{ form.brand.label }}</label><br>
+        {{ form.brand(size=40) }}<br><br>
+
+        <label>{{ form.type.label }}</label><br>
+        {{ form.type() }}<br><br>
+
+        <label>{{ form.format.label }}</label><br>
+        {{ form.format() }}<br><br>
+
+        <label>{{ form.image.label }}</label><br>
+        {{ form.image() }}<br><br>
+
+        <label>{{ form.is_public.label }} {{ form.is_public() }}</label><br><br>
+
+        {{ form.submit() }}
+    </form>
+
+    <script>
+    $(function () {
+        $('#camera-upload-form').on('submit', function (e) {
+            e.preventDefault();
+
+            var formData = new FormData(this);
+
+            $.ajax({
+                type: 'POST',
+                url: '/upload_camera',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    alert(response.message);
+                    $('#camera-upload-form')[0].reset();  // 重置表单
+                },
+                error: function (xhr) {
+                    alert('Error: ' + (xhr.responseJSON?.message || 'Upload failed'));
+                }
+            });
+        });
+    });
+    </script>
+</body>
+</html>
+
+{% endblock %}
