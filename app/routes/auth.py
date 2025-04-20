@@ -1,5 +1,7 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session
+# app/routes/auth.py
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import login_user, logout_user, login_required
 
 from app.models import User
 from app import db
@@ -14,8 +16,7 @@ def login():
         user = User.query.filter_by(username=username).first()
 
         if user and check_password_hash(user.password, password):
-            session['user_id'] = user.id
-            session['username'] = user.username
+            login_user(user)  # ✅ 使用 Flask-Login 登录
             flash('Login successful!', 'success')
             return redirect(url_for('main.home'))
         else:
@@ -42,8 +43,8 @@ def register():
     return render_template('register.html', title="Register")
 
 @auth.route('/logout')
+@login_required
 def logout():
-    session.pop('username', None)
-    session.pop('user_id', None)
+    logout_user()  # ✅ 使用 Flask-Login 登出
     flash('You have been logged out.', 'info')
     return redirect(url_for('main.home'))
