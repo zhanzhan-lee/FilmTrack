@@ -4,7 +4,6 @@
     border-bottom: 2px solid #6B705C; /* Add a bottom border */
 }
 
-
 .custom-navbar .nav-link {
     color: #6B705C; /* Navigation link text color */
     font-size: 20px;
@@ -15,7 +14,6 @@
     align-items: center; /* Vertically align items */
     font-weight: bold;
 }
-
 
 /* Custom navbar button styles */
 .custom-navbar .btn {
@@ -39,27 +37,28 @@
 }
 
 .custom-navbar .btn-logout:hover {
-    background-color: #6B705C; /* Background color on hover */
+    background-color: #B5838D; /* Background color on hover */
     color: white; /* Text color on hover */
 }
 
 
 
-
+/* _________________________________________________________________ */
 
 
 
 .sidebar {
     position: fixed;
-    top: 0;
+    top: 100px; /* Adjusted to match the navbar height */
     left: -250px;
     width: 250px;
     height: 100%;
     background-color: #f8f9fa;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    box-shadow: 10px 0 10px rgba(0,0,0,0.1);
     transition: left 0.3s ease;
     z-index: 1000;
     padding-top: 20px;
+    padding-left: 20px;
 }
 
 .sidebar.active {
@@ -76,3 +75,32 @@
 .btn-logout {
     margin-left: 10px;
 }
+
+body {
+    padding-top: 130px; 
+}
+
+
+/* Sidebar toggle button styles */
+#sidebarToggle {
+    width: 55px; /* Fixed width */
+    height: 55px; /* Fixed height */
+    display: flex; /* Use Flexbox for centering */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    font-size: 24px; /* Ensure consistent font size */
+    line-height: 1; /* Avoid font height affecting layout */
+    transition: transform 0.3s ease, background-color 0.3s ease; /* Add smooth transitions */
+    border: 1px solid #6B705C; /* Border */
+    border-radius: 5px; /* Rounded corners */
+    overflow: hidden;  
+    
+}
+
+/* Hover effect for the toggle button */
+#sidebarToggle:hover {
+    transform: scale(1.1); /* Slightly enlarge on hover */
+    background-color: #6B705C; /* Change background color */
+    color: white; /* Change text color */
+}
+
