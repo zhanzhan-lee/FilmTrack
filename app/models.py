@@ -1,39 +1,120 @@
-from . import db
+from flask_login import UserMixin
+from app import db
 
-class User(db.Model):
+
+
+# -------------------------
+# User
+# -------------------------
+class User(db.Model, UserMixin):  # ⬅ 加上 UserMixin
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(150), unique=True, nullable=False)
-    password = db.Column(db.String(150), nullable=False)
+    username = db.Column(db.String(50), unique=True, nullable=False)
+    password = db.Column(db.String(200), nullable=False)
 
+    cameras = db.relationship('Camera', backref='owner', lazy=True)
+    lenses = db.relationship('Lens', backref='owner', lazy=True)
+    films = db.relationship('Film', backref='owner', lazy=True)
+    rolls = db.relationship('Roll', backref='user', lazy=True)
+    photos = db.relationship('Photo', backref='user', lazy=True)
+    
+    def __repr__(self):
+        return f'<User {self.username}>'
 
+# -------------------------
+# Camera
+# -------------------------
 class Camera(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     brand = db.Column(db.String(50))
-    format = db.Column(db.String(50))
+    type = db.Column(db.String(50))        # SLR, Rangefinder, etc
+    format = db.Column(db.String(50))      # 35mm, 120, etc
     is_public = db.Column(db.Boolean, default=False)
+    image_path = db.Column(db.String(200)) # optional image
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
+    photos = db.relationship('Photo', backref='camera', lazy=True)
+
+    def __repr__(self):
+        return f'<Camera {self.brand} {self.name}>'
+
+# -------------------------
+# Lens
+# -------------------------
 class Lens(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
+    name = db.Column(db.String(100), nullable=False)
     brand = db.Column(db.String(50))
     mount_type = db.Column(db.String(50))
     is_public = db.Column(db.Boolean, default=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-class Photo(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    image_path = db.Column(db.String(200))
-    shutter_speed = db.Column(db.String(20))
-    aperture = db.Column(db.String(20))
-    iso = db.Column(db.String(10))
-    camera_id = db.Column(db.Integer, db.ForeignKey('camera.id'))
-    lens_id = db.Column(db.Integer, db.ForeignKey('lens.id'))
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
-
+    
+    photos = db.relationship('Photo', backref='lens', lazy=True)
 
 
     def __repr__(self):
-        return f'<User {self.username}>'
+        return f'<Lens {self.brand} {self.name}>'
+    
+# -------------------------
+# Film
+# -------------------------
+class Film(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    brand = db.Column(db.String(50))
+    iso = db.Column(db.String(20))
+    format = db.Column(db.String(20))     # e.g. 35mm, 120
+    is_public = db.Column(db.Boolean, default=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    photos = db.relationship('Photo', backref='film', lazy=True)
+
+    def __repr__(self):
+        return f'<Film {self.brand} {self.name}>'
+
+# -------------------------
+# Roll
+# -------------------------
+class Roll(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    film_id = db.Column(db.Integer, db.ForeignKey('film.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    roll_name = db.Column(db.String(100))     # e.g. JapanTrip-HP5
+    start_date = db.Column(db.DateTime)
+    end_date = db.Column(db.DateTime)
+    status = db.Column(db.String(20))         # e.g. in use / developed
+    notes = db.Column(db.Text)
+
+
+    photos = db.relationship('Photo', backref='roll', lazy=True)
+
+    def __repr__(self):
+        return f'<Roll {self.roll_name or self.id}>'
+
+# -------------------------
+# Photo（shot）
+# -------------------------
+class Photo(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    image_path = db.Column(db.String(200))
+    shot_date = db.Column(db.DateTime)
+    shutter_speed = db.Column(db.String(20))
+    aperture = db.Column(db.String(20))
+    iso = db.Column(db.String(10))
+    frame_number = db.Column(db.String(10))
+    location = db.Column(db.String(100))
+
+    #  Equipment used (camera, lens, film)
+    camera_id = db.Column(db.Integer, db.ForeignKey('camera.id'), nullable=False)
+    lens_id = db.Column(db.Integer, db.ForeignKey('lens.id'), nullable=True)
+    film_id = db.Column(db.Integer, db.ForeignKey('film.id'), nullable=True)
+
+     # Optional association with a roll
+    roll_id = db.Column(db.Integer, db.ForeignKey('roll.id'), nullable=True)
+
+    def __repr__(self):
+        return f'<Photo {self.shot_date} ISO {self.iso}>'
