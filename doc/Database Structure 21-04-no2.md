@@ -7,7 +7,7 @@ This script helps you quickly populate the database with test data for developme
 
 ## ✅ What It Does
 
-- Creates 1 test user (`admin`)
+- Creates 1 test user (`admin`) 
 - Adds:
   - 3 films
   - 2 cameras
@@ -66,6 +66,12 @@ Then:
 1. Open `db.sqlite` from your project folder  
 2. Browse tables like `user`, `film`, `camera`, `photo`, etc.  
 3. Confirm the data is loaded and ready for use
+
+
+### 5. Test with user admin
+
+> name: admin
+> password: 123456
 
 
 ## ⚠️Next you can view all the details about the db structure below⚠️
