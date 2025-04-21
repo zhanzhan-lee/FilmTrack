@@ -1,38 +1,35 @@
-# app/__init__.py
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
-# Initializing a SQLAlchemy Instance
+# Initialize SQLAlchemy globally
 db = SQLAlchemy()
 
 def create_app():
     app = Flask(__name__)
-
-    # Configuring the Flask Application
-    app.config['SECRET_KEY'] = 'dev'  # temporary
+    
+    # Configuration
+    app.config['SECRET_KEY'] = 'dev'  # Temporary secret key
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+    # Initialize DB with app context
     db.init_app(app)
 
+    # Register Blueprints
+    from .routes.main import main
+    from .routes.auth import auth
+    from .routes.upload import upload
+    from .routes.stats import stats
+    from .routes.share import share
 
+    app.register_blueprint(main)
+    app.register_blueprint(auth)
+    app.register_blueprint(upload)
+    app.register_blueprint(stats)
+    app.register_blueprint(share)
 
-    # Importing routes (view functions) 
-
-    from .routes import home, about, contact, login, register, logout, stats, share
-    app.add_url_rule('/', 'home', home)
-    app.add_url_rule('/about', 'about', about)
-    app.add_url_rule('/contact', 'contact', contact)
-    app.add_url_rule('/login', 'login', login, methods=['GET', 'POST'])
-    app.add_url_rule('/register', 'register', register, methods=['GET', 'POST'])
-    app.add_url_rule('/logout', 'logout', logout)
-    app.add_url_rule('/stats', 'stats', stats)
-    app.add_url_rule('/share', 'share', share)
-
-
-    
+    # Create database tables (only if not exist)
     with app.app_context():
         db.create_all()
 
-   
     return app
