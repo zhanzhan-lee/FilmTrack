@@ -16,9 +16,10 @@ This project follows a modular design using **Flask Blueprints**, which enables 
 | `stats`          | `stats.py`       | Statistical views and user activity analysis |
 | `share`          | `share.py`       | Sharing charts and insights |
 
-Each Blueprint is imported and registered manually inside `app/__init__.py`.
+Each Blueprint is imported and registered manually inside `app/__init__.py`
 
 ---
+
 
 ## 🧩 Blueprint Registration in `app/__init__.py`
 
