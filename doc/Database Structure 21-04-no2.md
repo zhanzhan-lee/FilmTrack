@@ -46,6 +46,7 @@ flask run
 ```
 
 This will recreate a fresh `db.sqlite` file using your current models.
+
 ---
 
 ### 3. Run the script
