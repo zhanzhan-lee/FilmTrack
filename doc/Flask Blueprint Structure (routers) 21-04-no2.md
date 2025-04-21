@@ -1,10 +1,8 @@
-Perfect — now that I’ve confirmed your Blueprint registration is done in the **top-level `__init__.py` file inside your Flask app module**, here’s the finalized **English `.md` documentation** reflecting that setup:
 
----
 
 # 📘 Flask Blueprint Structure Documentation
 
-This project follows a modular design using **Flask Blueprints**, which enables clean code separation and easier maintenance. All Blueprints are registered in the **top-level `app/__init__.py`** file (not in `routes/__init__.py` or `run.py`).
+This project follows a modular design using **Flask Blueprints**, which enables clean code separation and easier maintenance. All Blueprints are registered in the **top-level `app/__init__.py`** file.
 
 ---
 
@@ -78,9 +76,3 @@ All templates extend a common base layout `base.html`.
 
 ---
 
-📄 **Author:** Project Team  
-🕒 **Last Updated:** April 21, 2025  
-
----
-
-需要我保存成 `Blueprint_Structure.md` 并生成文件吗？可以直接下载使用。
