@@ -1,9 +1,83 @@
 
+# 🚀 Using `seed_data.py` to Insert Sample Data
 
-# 📷 Database Structure Documentation  
-
+This script helps you quickly populate the database with test data for development and visualization.
 
 ---
+
+## ✅ What It Does
+
+- Creates 1 test user (`admin`)
+- Adds:
+  - 3 films
+  - 2 cameras
+  - 2 lenses
+  - 3 rolls (shooting sessions)
+  - 15 photos (5 per roll, with random settings)
+
+> ⚠️ The script clears all existing data before inserting new data.
+
+---
+
+## 📦 How to Use
+
+### 1. Activate your virtual environment
+
+```bash
+source venv/bin/activate  # or venv\Scripts\activate on Windows
+```
+
+---
+
+### 2. (Optional) Delete old database
+```bash
+cd instance
+```
+```bash
+rm db.sqlite
+```
+
+---
+
+### 3. Run the script
+```bash
+cd .. # in root folder
+```
+```bash
+python seed_data.py
+```
+
+You should see:
+
+```
+✅ Sample data inserted successfully using new model structure.
+```
+
+---
+
+### 4. View the database
+
+Install a **SQLite Viewer plugin** in your editor (e.g. VS Code):
+
+- Recommended: **SQLite Viewer** by Florian Klampfer
+
+Then:
+
+1. Open `db.sqlite` from your project folder  
+2. Browse tables like `user`, `film`, `camera`, `photo`, etc.  
+3. Confirm the data is loaded and ready for use
+
+
+## ⚠️Next you can view all the details about the db structure below⚠️
+
+---
+
+
+
+
+
+# ⚠️⚠️⚠️ Database Structure Documentation  (Improtant)⚠️⚠️⚠️
+
 
 ## 🧑‍💼 1. `User` – User Table
 
@@ -149,7 +223,7 @@ User ──< Camera
 
 ---
 
-## 🧠Confusing concepts !!!
+## 🧠⚠️⚠️Confusing concepts ⚠️⚠️
 
 
 

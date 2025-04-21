@@ -16,7 +16,7 @@ def login():
         user = User.query.filter_by(username=username).first()
 
         if user and check_password_hash(user.password, password):
-            login_user(user)  # ✅ 使用 Flask-Login 登录
+            login_user(user)  #  Flask-Login to log in the user
             flash('Login successful!', 'success')
             return redirect(url_for('main.home'))
         else:
@@ -45,6 +45,6 @@ def register():
 @auth.route('/logout')
 @login_required
 def logout():
-    logout_user()  # ✅ 使用 Flask-Login 登出
+    logout_user()  # Flask-Login to logout
     flash('You have been logged out.', 'info')
     return redirect(url_for('main.home'))
