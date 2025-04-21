@@ -29,7 +29,8 @@ source venv/bin/activate  # or venv\Scripts\activate on Windows
 
 ---
 
-### 2. (Optional) Delete old database
+### 2. Delete old database
+Flask with SQLite does not automatically update existing databases when we change our models
 ```bash
 cd instance
 ```
@@ -37,12 +38,18 @@ cd instance
 rm db.sqlite
 ```
 
+### 2.5. Recreate the new empty database  
+After deleting the old database, go back to the root folder and run:
+
+```bash
+flask run
+```
+
+This will recreate a fresh `db.sqlite` file using your current models.
 ---
 
 ### 3. Run the script
-```bash
-cd .. # in root folder
-```
+
 ```bash
 python seed_data.py
 ```
