@@ -1,0 +1,47 @@
+body {
+    background-color: #F2E8CF;
+}
+
+.gear-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.gear-card {
+    width: 260px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    text-align: center;
+    padding: 10px;
+    font-family: sans-serif;
+}
+
+.gear-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.gear-card .info {
+    margin-top: 8px;
+    font-size: 0.9rem;
+}
+
+.gear-card .subtext {
+    color: #666;
+    font-size: 0.8rem;
+}
+
+.add-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    border: 2px dashed #ccc;
+    font-weight: bold;
+}

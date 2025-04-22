@@ -30,15 +30,16 @@ def create_app():
     # Register Blueprints
     from .routes.main import main
     from .routes.auth import auth
-    from .routes.upload import upload
     from .routes.stats import stats
     from .routes.share import share
+    from .routes.gear import gear
+    
 
     app.register_blueprint(main)
     app.register_blueprint(auth)
-    app.register_blueprint(upload)
     app.register_blueprint(stats)
     app.register_blueprint(share)
+    app.register_blueprint(gear)
 
     # Create database tables (only if not exist)
     with app.app_context():

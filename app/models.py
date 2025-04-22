@@ -47,6 +47,7 @@ class Lens(db.Model):
     brand = db.Column(db.String(50))
     mount_type = db.Column(db.String(50))
     is_public = db.Column(db.Boolean, default=False)
+    image_path = db.Column(db.String(200))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     
@@ -66,6 +67,7 @@ class Film(db.Model):
     iso = db.Column(db.String(20))
     format = db.Column(db.String(20))     # e.g. 35mm, 120
     is_public = db.Column(db.Boolean, default=False)
+    image_path = db.Column(db.String(200))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     photos = db.relationship('Photo', backref='film', lazy=True)

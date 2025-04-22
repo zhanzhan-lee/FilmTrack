@@ -34,14 +34,14 @@ with app.app_context():
 
     # cameras
     cameras = [
-        Camera(name="Nikon F", brand="Nikon", type="SLR", format="35mm", user_id=user.id),
-        Camera(name="Leica IIIG", brand="Leica", type="Rangefinder", format="35mm", user_id=user.id)
+        Camera(name="Nikon F", brand="Nikon", type="SLR", format="35mm", user_id=user.id, image_path = "nikon_f.jpg"),
+        Camera(name="Leica IIIG", brand="Leica", type="Rangefinder", format="35mm", user_id=user.id, image_path = "leica_iiig.jpg")
     ]
 
-    # lens
+    # lensLeitz-50mm-f3.5-Elmar
     lenses = [
         Lens(name="Nikkor 50mm f/1.4", brand="Nikon", mount_type="F", user_id=user.id),
-        Lens(name="Canon 35mm f/2.8 LTM", brand="Canon", mount_type="LTM", user_id=user.id)
+        Lens(name="Leitz-50mm-f3.5-Elmar", brand="Leitz", mount_type="L39", user_id=user.id, image_path = "Leitz-50mm-f3.5-Elmar.jpg")
     ]
 
     db.session.add_all(films + cameras + lenses)
