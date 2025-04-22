@@ -5,7 +5,7 @@ body {
 .charts {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 2rem;
     margin: 30px;
     font-family: 'Roboto';
 }
@@ -17,23 +17,29 @@ body {
 
 .chart-row {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     gap: 2rem;
+    justify-content: space-between;
 }
 
 .chart-container {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    flex: 1;
+    width: 100%;
 }
 
 .chart-tile {
     display: flex;
     flex-direction: row;
     gap: 1rem;
-    max-width: 700px;
+    max-width: 900px;
+    width: auto;
+    flex: 1;
     background-color: #fff;
-    padding: 20px;
+    padding: 25px;
     border-radius: 15px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -41,6 +47,7 @@ body {
 .bar {
     display: flex;
     flex-direction: row;
+    flex: 1;
     align-items: center;
 }
 
@@ -49,7 +56,7 @@ body {
     position: relative;
     height: 20px;
     background: #e4e4e4;
-    border-radius: 15px;
+    border-radius: 5px;
     overflow: hidden;
 }
 
@@ -59,13 +66,14 @@ body {
     font-weight: normal;
     text-align: right;
     padding-right: 15px;
+    min-width: 100px;
 }
 
 .bar-fill {
     position: absolute;
     height: 100%;
-    background: linear-gradient(90deg, #B5838D, #d8b5bc);
-    border-radius: 15px;
+    background: linear-gradient(90deg, #5eb3f4, #9ccdf1);
+    border-radius: 5px;
     width: 0;
     display: flex;
     justify-content: flex-end;
@@ -101,8 +109,27 @@ body {
     gap: 1rem;
 }
 
-.monthly-trend {
-    width: 600px;
+.gear-preference {
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.gear-chart-container {
+    max-width: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.gear-chart {
+    height: 100px !important;
+    width: 130px !important;
 }
 
 #apeture-distribution {
@@ -110,11 +137,20 @@ body {
 }
 
 #shutter-speed {
-    width: 600px;
+    flex: 1 1 600px;
+    max-width: 100%;
+    min-width: 300px;
 }
 
-#gear-preference {
-    width: 300px;
+#donut-chart {
+    flex: 1;
+    max-width: 200px;
+    max-height: 200px;
+}
+
+#favourite-film {
+    flex: 1;
+    max-width: 310px;
 }
 
 #favourite-film-img {
@@ -123,9 +159,14 @@ body {
     border-radius: 15px;
 }
 
-#donut-chart {
-    width: 100px;
-    height: 100px;
+#monthly-trend {
+    width: 100%;
+    height: 150px;
+    flex: 1;
+}
+
+#monthly {
+    flex: 2;
 }
 
 #map {
@@ -135,5 +176,5 @@ body {
 }
 
 #city-stats {
-    width: 300px;
+    flex: 1;
 }

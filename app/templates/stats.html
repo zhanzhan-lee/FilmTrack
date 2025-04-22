@@ -5,13 +5,11 @@
 {% block content %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<!--For the map only. Is this allowed?-->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/stats.css') }}">
 <script src="{{ url_for('static', filename='js/stats-charts.js') }}"></script>
-
 
 <div class="charts">
   <div class="chart-row">
@@ -64,8 +62,8 @@
       </div>
     </div>
 
-    <div class="chart-tile">
-      <div class="chart-container" id="favourite-film">
+    <div class="chart-tile" id="favourite-film">
+      <div class="chart-container">
         <p class="chart-title">Favourite Film</p>
 
         <div class="film-leaderboard">
@@ -94,26 +92,26 @@
   </div>
   <div class="chart-row">
     <div class="chart-tile">
-      <div class="chart-container" id="gear-preference">
+      <div class="chart-container">
         <p class="chart-title">Gear Preference</p>
-
-        <div class="bar">
-          <div class="bar-label"><img src="https://cdn-icons-png.flaticon.com/512/2956/2956744.png" class="chart-icon">
+        <div class="gear-preference">
+          <div class="gear-chart-container">
+            <canvas class="gear-chart" id="cameras-chart"></canvas>
+            <img src="https://cdn-icons-png.flaticon.com/512/2956/2956744.png" class="chart-icon">
           </div>
-          <div class="bar-wrapper">
-            <div class="bar-fill" data-value="90"></div>
+          <div class="gear-chart-container">
+            <canvas class="gear-chart" id="lenses-chart"></canvas>
+            <img src="https://cdn-icons-png.flaticon.com/512/6481/6481726.png" class="chart-icon">
           </div>
-        </div>
-        <div class="bar">
-          <div class="bar-label"><img src="https://cdn-icons-png.flaticon.com/512/0/191.png" class="chart-icon"></div>
-          <div class="bar-wrapper">
-            <div class="bar-fill" data-value="50"></div>
+          <div class="gear-chart-container">
+            <canvas class="gear-chart" id="film-chart"></canvas>
+            <img src="https://static.thenounproject.com/png/765569-200.png" class="chart-icon">
           </div>
         </div>
       </div>
     </div>
 
-    <div class="chart-tile">
+    <div class="chart-tile" id="monthly">
       <div class="chart-container">
         <p class="chart-title">Monthly Trend</p>
 
@@ -124,7 +122,7 @@
     </div>
   </div>
 
-  <div class="chart-row">
+  <div class="chart-row" id="location-map">
     <div class="chart-tile">
       <div class="chart-container">
         <p class="chart-title">Location Map</p>
@@ -133,8 +131,8 @@
       </div>
     </div>
 
-    <div class="chart-tile">
-      <div class="chart-container" id="city-stats">
+    <div class="chart-tile" id="city-stats">
+      <div class="chart-container">
         <p class="chart-title">City Stats</p>
 
         <div class="bar">
