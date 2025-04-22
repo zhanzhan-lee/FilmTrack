@@ -1,45 +1,52 @@
 function monthlyTrendChart() {
-  // Monthly trend chart
-  const ctx = document.getElementById('monthly-trend').getContext('2d');
+  fetch('/api/favourite-films')
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
 
-  const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-  gradient.addColorStop(0, 'rgba(39, 134, 97, 0.3)');
-  gradient.addColorStop(1, 'rgba(39, 134, 97, 0)');
+      // Monthly trend chart
+      const ctx = document.getElementById('monthly-trend').getContext('2d');
 
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-      datasets: [{
-        label: 'Monthly Trend',
-        data: [20, 30, 25, 40, 35, 50, 60],
-        fill: true,
-        backgroundColor: gradient,
-        borderColor: '#278661',
-        borderWidth: 3,
-        tension: 0.4,
-        pointRadius: 0,
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false },
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          grid: { drawTicks: false, color: '#eee' },
-          ticks: { display: false }
+      const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+      gradient.addColorStop(0, 'rgba(39, 134, 97, 0.3)');
+      gradient.addColorStop(1, 'rgba(39, 134, 97, 0)');
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+          datasets: [{
+            label: 'Monthly Trend',
+            data: [20, 30, 25, 40, 35, 50, 60],
+            fill: true,
+            backgroundColor: gradient,
+            borderColor: '#278661',
+            borderWidth: 3,
+            tension: 0.4,
+            pointRadius: 0,
+          }]
         },
-        x: {
-          grid: { display: false },
-          ticks: { color: '#666', font: { family: 'Roboto' } }
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: { drawTicks: false, color: '#eee' },
+              ticks: { display: false }
+            },
+            x: {
+              grid: { display: false },
+              ticks: { color: '#666', font: { family: 'Roboto' } }
+            }
+          }
         }
-      }
-    }
-  });
+      });
+    })
+    .catch(error => console.error('Error fetching monthly trend data:', error));
 }
 
 function apetureDistributionChart() {
@@ -114,15 +121,8 @@ function gearChart(elementID) {
   });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  monthlyTrendChart();
-  apetureDistributionChart();
-
-  gearChart('lenses-chart');
-  gearChart('film-chart');
-  gearChart('cameras-chart');
-
-  var map = L.map('map').setView([-25.2744, 133.7751], 4); // Australia, baby
+function locationMap() {
+  const map = L.map('map').setView([-25.2744, 133.7751], 4); // Australia, baby
 
   // 🗺️ MINIMAL TILE LAYER
   L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
@@ -142,7 +142,15 @@ document.addEventListener('DOMContentLoaded', () => {
       .addTo(map)
       .bindPopup(`<b>${loc.name}</b> 🦘`); //TODO: Extend this to having photo preview?
   });
+}
 
+document.addEventListener('DOMContentLoaded', () => {
+  monthlyTrendChart();
+  apetureDistributionChart();
 
+  gearChart('lenses-chart');
+  gearChart('film-chart');
+  gearChart('cameras-chart');
+
+  locationMap();
 });
-
