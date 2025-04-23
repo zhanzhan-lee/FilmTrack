@@ -84,7 +84,7 @@ with app.app_context():
                 camera_id=cameras[(i + j) % len(cameras)].id,
                 lens_id=lenses[(j % len(lenses))].id,
                 film_id=roll.film_id,
-                shot_date=roll.start_date + timedelta(hours=j * 50),
+                shot_date=roll.start_date + timedelta(hours=j * 1000),
                 shutter_speed=random.choice(shutter_speeds),
                 aperture=random.choice(apertures),
                 iso=str(films[i % len(films)].iso),
