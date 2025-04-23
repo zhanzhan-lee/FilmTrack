@@ -86,45 +86,50 @@ function apertureDistributionChart() {
 }
 
 function gearChart(elementID) {
-  const ctx = document.getElementById(elementID).getContext('2d');
-  const bg = ctx.createLinearGradient(0, 0, 0, 300);
-  bg.addColorStop(0, '#5eb3f4');
-  bg.addColorStop(1, '#9ccdf1');
+  fetch('/api/' + elementID + '-preference')
+    .then(response => response.json())
+    .then(data => {
+      const ctx = document.getElementById(elementID).getContext('2d');
+      const bg = ctx.createLinearGradient(0, 0, 0, 300);
+      bg.addColorStop(0, '#5eb3f4');
+      bg.addColorStop(1, '#9ccdf1');
 
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['A', 'B', 'C'],
-      datasets: [{
-        data: [12, 19, 3],
-        backgroundColor: bg,
-        borderRadius: 5,
-      }]
-    },
-    options: {
-      responsive: true,
-      animation: {
-        duration: 1000,
-        easing: 'easeOutQuart'
-      },
-      plugins: {
-        legend: {
-          display: false
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: data.labels,
+          datasets: [{
+            data: data.data,
+            backgroundColor: bg,
+            borderRadius: 5,
+          }]
         },
-        tooltip: {
-          enabled: false
+        options: {
+          responsive: true,
+          animation: {
+            duration: 1000,
+            easing: 'easeOutQuart'
+          },
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              enabled: false
+            }
+          },
+          scales: {
+            x: {
+              display: false
+            },
+            y: {
+              display: false
+            }
+          }
         }
-      },
-      scales: {
-        x: {
-          display: false
-        },
-        y: {
-          display: false
-        }
-      }
-    }
-  });
+      });
+    })
+    .catch(error => console.error('Error fetching aperture distribution data:', error));
 }
 
 function locationMap() {
