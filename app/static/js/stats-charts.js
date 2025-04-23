@@ -1,5 +1,5 @@
 function monthlyTrendChart() {
-  fetch('/api/favourite-films')
+  fetch('/api/monthly-trend')
     .then(response => response.json())
     .then(data => {
       console.log(data);

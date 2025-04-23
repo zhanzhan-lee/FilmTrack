@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, request, jsonify
-from app.models import Photo
-from sqlalchemy import func
+from app.models import Photo, Film
+from sqlalchemy import func, extract
 from flask_login import current_user
+from datetime import datetime, timedelta
 
 stats = Blueprint('stats', __name__)
 
@@ -9,17 +10,52 @@ stats = Blueprint('stats', __name__)
 def stats_page():
     return render_template('stats.html', title="Stats", message="Visualise your shooting habits.")
 
-@stats.route('/api/user-photos', methods=['GET'])
+@stats.route('/api/monthly-trend', methods=['GET'])
 def get_monthly_trend():
-    # Query the database for monthly trend data
-    data = Photo.query.with_entities(Photo.shot_date).all()
+    today = datetime.today()
+    six_months_ago = today - timedelta(days=6 * 30)
+
+    results = (
+        Photo.query
+        .with_entities(
+            extract('month', Photo.shot_date).label('month'),
+            func.count(Photo.id).label('photo_count')
+        )
+        .filter(Photo.shot_date >= six_months_ago)
+        .filter(Photo.shot_date <= today)             # Filter for the last 6 months
+        .filter(Photo.user_id == current_user.id)              # Filter by the current user's ID
+        .group_by(extract('month', Photo.shot_date))           # Group by month
+        .order_by(extract('month', Photo.shot_date))           # Order by month
+        .all()
+    )
     
-    # Example: Group data by month (you can customize this logic)
-    monthly_data = {
-        "labels": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
-        "data": [20, 30, 25, 40, 35, 50, 60]  # Replace with actual data
+    labels = []
+    data = []
+
+    # Map month numbers to month names
+    month_names = {
+        1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "May", 6: "Jun",
+        7: "Jul", 8: "Aug", 9: "Sep", 10: "Oct", 11: "Nov", 12: "Dec"
     }
-    
+
+    # Populate labels and data
+    for month, photo_count in results:
+        labels.append(month_names[month])  # Convert month number to name
+        data.append(photo_count)
+
+    # Fill in missing months with 0 photos
+    for i in range(6):
+        month = (today.month - i - 1) % 12 + 1  # Calculate the month number
+        if month_names[month] not in labels:
+            labels.insert(0, month_names[month])
+            data.insert(0, 0)
+
+    # Prepare the response
+    monthly_data = {
+        "labels": labels[-6:],  # Ensure only the last 6 months are included
+        "data": data[-6:]       # Ensure only the last 6 months are included
+    }
+
     return jsonify(monthly_data)
 
 @stats.route('/api/favourite-films', methods=['GET'])
@@ -34,15 +70,11 @@ def get_favourite_films():
         .all()
     )
 
-    serialized_results = [{"film_id": film_id, "photo_count": photo_count} for film_id, photo_count in results]
-
-    return jsonify(serialized_results)
-
     # Get the film names for the top 3 films
-    top_films = []
+    favourite_films = []
     for film_id, _ in results:
         film = Film.query.get(film_id)
         if film:
-            top_films.append(film.name)
+            favourite_films.append(film.name)
 
-    return jsonify(top_films)
+    return jsonify(favourite_films)
