@@ -47,7 +47,7 @@ function monthlyTrendChart() {
     .catch(error => console.error('Error fetching monthly trend data:', error));
 }
 
-function apetureDistributionChart() {
+function apertureDistributionChart() {
   fetch('/api/aperture-distribution')
     .then(response => response.json())
     .then(data => {
@@ -82,7 +82,7 @@ function apetureDistributionChart() {
         }
       });
     })
-    .catch(error => console.error('Error fetching apeture distribution data:', error));
+    .catch(error => console.error('Error fetching aperture distribution data:', error));
 }
 
 function gearChart(elementID) {
@@ -152,7 +152,7 @@ function locationMap() {
 
 document.addEventListener('DOMContentLoaded', () => {
   monthlyTrendChart();
-  apetureDistributionChart();
+  apertureDistributionChart();
 
   gearChart('lenses-chart');
   gearChart('film-chart');
