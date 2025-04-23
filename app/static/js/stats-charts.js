@@ -2,8 +2,7 @@ function monthlyTrendChart() {
   fetch('/api/monthly-trend')
     .then(response => response.json())
     .then(data => {
-      console.log(data);
-
+      console.log(data.data)
       // Monthly trend chart
       const ctx = document.getElementById('monthly-trend').getContext('2d');
 
@@ -14,10 +13,10 @@ function monthlyTrendChart() {
       new Chart(ctx, {
         type: 'line',
         data: {
-          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+          labels: data.labels,
           datasets: [{
             label: 'Monthly Trend',
-            data: [20, 30, 25, 40, 35, 50, 60],
+            data: data.data,
             fill: true,
             backgroundColor: gradient,
             borderColor: '#278661',
@@ -35,6 +34,7 @@ function monthlyTrendChart() {
           scales: {
             y: {
               beginAtZero: true,
+              suggestedMax: Math.max(...data.data) + 2, // Dynamically adjust the max scale
               grid: { drawTicks: false, color: '#eee' },
               ticks: { display: false }
             },
