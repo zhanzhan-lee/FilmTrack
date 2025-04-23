@@ -2,8 +2,6 @@ function monthlyTrendChart() {
   fetch('/api/monthly-trend')
     .then(response => response.json())
     .then(data => {
-      console.log(data.data)
-      // Monthly trend chart
       const ctx = document.getElementById('monthly-trend').getContext('2d');
 
       const gradient = ctx.createLinearGradient(0, 0, 0, 300);
@@ -50,33 +48,41 @@ function monthlyTrendChart() {
 }
 
 function apetureDistributionChart() {
-  const donutCtx = document.getElementById('donut-chart').getContext('2d');
-  const donutChart = new Chart(donutCtx, {
-    type: 'doughnut',
-    data: {
-      labels: ['f/2.8', 'f/4', 'f/5.6', 'f/8', 'f/16'],
-      datasets: [{
-        data: [20, 15, 25, 10, 30],
-        backgroundColor: [
-          '#278661',
-          '#3A9B74',
-          '#4CAF88',
-          '#6BC19C',
-          '#8CD4B0'
-        ],
-        borderWidth: 0
-      }]
-    },
-    options: {
-      responsive: true,
-      cutout: '40%',
-      plugins: {
-        legend: {
-          display: false
+  fetch('/api/aperture-distribution')
+    .then(response => response.json())
+    .then(data => {
+      const ctx = document.getElementById('donut-chart').getContext('2d');
+
+      console.log(data);
+
+      new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: data.labels,
+          datasets: [{
+            data: data.data,
+            backgroundColor: [
+              '#278661',
+              '#3A9B74',
+              '#4CAF88',
+              '#6BC19C',
+              '#8CD4B0'
+            ],
+            borderWidth: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          cutout: '40%',
+          plugins: {
+            legend: {
+              display: false
+            }
+          }
         }
-      }
-    }
-  });
+      });
+    })
+    .catch(error => console.error('Error fetching apeture distribution data:', error));
 }
 
 function gearChart(elementID) {

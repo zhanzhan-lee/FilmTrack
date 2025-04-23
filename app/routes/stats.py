@@ -78,3 +78,23 @@ def get_favourite_films():
             favourite_films.append(film.name)
 
     return jsonify(favourite_films)
+
+@stats.route('/api/aperture-distribution', methods=['GET'])
+def get_aperture_distribution():
+    # Query the database for the top 5 apertures used by the current user
+    results = (
+        Photo.query
+        .with_entities(Photo.aperture, func.count(Photo.id).label('aperture_count'))
+        .filter(Photo.user_id == current_user.id)  # Filter by the current user's ID
+        .group_by(Photo.aperture)
+        .order_by(func.count(Photo.id).desc())  # Order by count in descending order
+        .limit(5)  # Limit to the top 5 apertures
+        .all()
+    )
+
+    # Prepare the labels and data for the response
+    labels = [result[0] for result in results]  # Aperture values
+    data = [result[1] for result in results]   # Counts
+
+    # Return the data as JSON
+    return jsonify({"labels": labels, "data": data})
