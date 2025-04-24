@@ -58,27 +58,6 @@ def get_monthly_trend():
 
     return jsonify(monthly_data)
 
-@stats.route('/api/favourite-films', methods=['GET'])
-def get_favourite_films():
-    results = (
-        Photo.query
-        .with_entities(Photo.film_id, func.count(Photo.id).label('photo_count'))
-        .filter(Photo.user_id == current_user.id)  # Filter by the current user's ID
-        .group_by(Photo.film_id)
-        .order_by(func.count(Photo.id).desc())
-        .limit(3)
-        .all()
-    )
-
-    # Get the film names for the top 3 films
-    favourite_films = []
-    for film_id, _ in results:
-        film = Film.query.get(film_id)
-        if film:
-            favourite_films.append(film.name)
-
-    return jsonify(favourite_films)
-
 @stats.route('/api/aperture-distribution', methods=['GET'])
 def get_aperture_distribution():
     # Query the database for the top 5 apertures used by the current user
