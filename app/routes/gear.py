@@ -40,3 +40,34 @@ def get_camera_data():
         }
         for cam in cameras
     ])
+
+
+@gear.route('/gear/data/lenses')
+@login_required
+def get_lens_data():
+    lenses = Lens.query.filter_by(user_id=current_user.id).all()
+    return jsonify([
+        {
+            'name': lens.name,
+            'brand': lens.brand,
+            'mount_type': lens.mount_type,
+            'image': lens.image_path  # 注意：不要添加 fallback 路径
+        }
+        for lens in lenses
+    ])
+
+
+@gear.route('/gear/data/films')
+@login_required
+def get_film_data():
+    films = Film.query.filter_by(user_id=current_user.id).all()
+    return jsonify([
+        {
+            'name': film.name,
+            'brand': film.brand,
+            'iso': film.iso,
+            'format': film.format,
+            'image': film.image_path
+        }
+        for film in films
+    ])
