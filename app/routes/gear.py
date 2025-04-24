@@ -95,7 +95,7 @@ def get_film_data():
 def upload_camera():
     form = CameraForm()
     if form.validate_on_submit():
-        # 处理图片上传
+        
         image_file = form.image.data
         image_path = None
         if image_file:
@@ -104,9 +104,9 @@ def upload_camera():
             os.makedirs(save_folder, exist_ok=True)
             save_path = os.path.join(save_folder, filename)
             image_file.save(save_path)
-            image_path = f'{filename}'  # 仅存相对路径
+            image_path = f'{filename}'  
 
-        # 添加相机记录
+     
         new_camera = Camera(
             name=form.name.data,
             brand=form.brand.data,
