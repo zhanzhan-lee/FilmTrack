@@ -187,9 +187,9 @@ document.addEventListener('DOMContentLoaded', () => {
   fetch('/api/top-locations')
     .then(response => response.json())
     .then(data => {
-      horizontalBarChart(data, "#city-stats");
+      horizontalBarChart(data, "#location-stats");
     })
-  .catch(error => console.error('Error fetching city stats: ', error));
+  .catch(error => console.error('Error fetching location stats: ', error));
 
   monthlyTrendChart();
   apertureDistributionChart();
