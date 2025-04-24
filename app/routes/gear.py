@@ -196,8 +196,6 @@ def edit_camera(id):
     # print(" Received form data:", form.data)
     # print(" Form errors:", form.errors)
 
-
-
     if form.validate_on_submit():
         # 更新字段
         camera.name = form.name.data
