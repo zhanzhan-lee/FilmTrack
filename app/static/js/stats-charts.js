@@ -53,8 +53,6 @@ function apertureDistributionChart() {
     .then(data => {
       const ctx = document.getElementById('donut-chart').getContext('2d');
 
-      console.log(data);
-
       new Chart(ctx, {
         type: 'doughnut',
         data: {
@@ -82,7 +80,7 @@ function apertureDistributionChart() {
         }
       });
     })
-    .catch(error => console.error('Error fetching aperture distribution data:', error));
+  .catch(error => console.error('Error fetching aperture distribution data:', error));
 }
 
 function gearChart(elementID) {
@@ -129,7 +127,7 @@ function gearChart(elementID) {
         }
       });
     })
-    .catch(error => console.error('Error fetching aperture distribution data:', error));
+  .catch(error => console.error('Error fetching aperture distribution data:', error));
 }
 
 function locationMap() {
@@ -155,7 +153,24 @@ function locationMap() {
   });
 }
 
+function assignValuesToShutterSpeed() {
+  fetch('/api/shutter-speed-distribution')
+    .then(response => response.json())
+    .then(data => {
+      const bars = document.querySelectorAll('#shutter-speed .bar-fill');
+
+      bars.forEach((barFill, index) => {
+        barFill.setAttribute('data-value', data.data[index]);
+
+        barFill.style.width = data.data[index] + '%';
+      });
+    })
+  .catch(error => console.error('Error fetching shutter speeds: ', error));
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  assignValuesToShutterSpeed();
+
   monthlyTrendChart();
   apertureDistributionChart();
 
