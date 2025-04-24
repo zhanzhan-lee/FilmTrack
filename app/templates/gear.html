@@ -14,6 +14,7 @@
 
 
         <h2>Cameras</h2>
+        <div id="camera-list" class="gear-section"></div>
         <!-- <div class="gear-section">
             {% for camera in cameras %}
             <div class="gear-card">
@@ -33,7 +34,7 @@
             {% endfor %}
             <div class="gear-card add-card"><a href="#">＋ Add</a></div>
         </div> -->
-        <div id="camera-list" class="gear-section"></div>
+        
 
             <!-- JS 会动态插入内容 -->
     </div>
@@ -41,10 +42,10 @@
 
         
         <h2>Lenses</h2>
-        <div class="gear-section">
+        <div id="lens-list" class="gear-section"></div>
+        <!-- <div class="gear-section">
             {% for lens in lenses %}
             <div class="gear-card">
-                <!-- <img src="{{ url_for('static', filename='uploads/lenses/' ~ lens.image_path) if lens.image_path else url_for('static', filename='images/placeholder.jpg') }}" alt="Lens"> -->
                 <img src="{{
                     lens.image_path if lens.image_path and 'http' in lens.image_path
                     else url_for('static', filename=(lens.image_path and 'uploads/lenses/' ~ lens.image_path) or 'images/lens_placeholder.png')
@@ -58,13 +59,14 @@
             </div>
             {% endfor %}
             <div class="gear-card add-card"><a href="#">＋ Add</a></div>
-        </div>
+        </div> -->
 
         <h2>Film</h2>
-        <div class="gear-section">
+        <div id="film-list" class="gear-section"></div>
+        <!-- <div class="gear-section">
             {% for film in films %}
             <div class="gear-card">
-                <!-- <img src="{{ url_for('static', filename='uploads/films/' ~ film.image_path) if film.image_path else url_for('static', filename='images/placeholder.jpg') }}" alt="Film"> -->
+                
                 <img src="{{
                     film.image_path if film.image_path and 'http' in film.image_path
                     else url_for('static', filename=(film.image_path and 'uploads/films/' ~ film.image_path) or 'images/film_placeholder.png')
@@ -79,7 +81,7 @@
             </div>
             {% endfor %}
             <div class="gear-card add-card"><a href="#">＋ Add</a></div>
-        </div>
+        </div> -->
     </div>
    
 </div>
@@ -90,3 +92,7 @@
 {% block scripts %}
 <script src="{{ url_for('static', filename='js/gear.js') }}"></script>
 {% endblock %}
+
+{% include "_modals/camera_modal.html" %}
+{% include "_modals/lens_modal.html" %}
+{% include "_modals/film_modal.html" %}

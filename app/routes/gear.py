@@ -1,9 +1,17 @@
 # app/routes/gear.py
 from flask import Blueprint, render_template
+from flask import current_app
 from flask_login import login_required, current_user
 from app.models import Camera, Lens, Film
 from app.forms import CameraForm, LensForm, FilmForm
 from flask import jsonify
+from flask import request
+from werkzeug.utils import secure_filename
+import os
+from app import db
+
+
+
 
 gear = Blueprint('gear', __name__)
 
@@ -71,3 +79,100 @@ def get_film_data():
         }
         for film in films
     ])
+
+
+# _____________________________________________________________________
+
+
+@gear.route('/gear/upload_camera', methods=['POST'])
+@login_required
+def upload_camera():
+    form = CameraForm()
+    if form.validate_on_submit():
+        # 处理图片上传
+        image_file = form.image.data
+        image_path = None
+        if image_file:
+            filename = secure_filename(image_file.filename)
+            save_folder = os.path.join(current_app.static_folder, 'uploads', 'cameras')
+            os.makedirs(save_folder, exist_ok=True)
+            save_path = os.path.join(save_folder, filename)
+            image_file.save(save_path)
+            image_path = f'{filename}'  # 仅存相对路径
+
+        # 添加相机记录
+        new_camera = Camera(
+            name=form.name.data,
+            brand=form.brand.data,
+            type=form.type.data,
+            format=form.format.data,
+            image_path=image_path,
+            is_public=form.is_public.data,
+            user_id=current_user.id
+        )
+        db.session.add(new_camera)
+        db.session.commit()
+
+        return jsonify({'message': 'success'}), 200
+
+    return jsonify({'message': 'form invalid'}), 400
+
+
+@gear.route('/gear/upload_lens', methods=['POST'])
+@login_required
+def upload_lens():
+    form = LensForm()
+    if form.validate_on_submit():
+        image_file = form.image.data
+        image_path = None
+        if image_file:
+            filename = secure_filename(image_file.filename)
+            save_folder = os.path.join(current_app.static_folder, 'uploads', 'lenses')
+            os.makedirs(save_folder, exist_ok=True)
+            save_path = os.path.join(save_folder, filename)
+            image_file.save(save_path)
+            image_path = f'{filename}'
+
+        new_lens = Lens(
+            name=form.name.data,
+            brand=form.brand.data,
+            mount_type=form.mount_type.data,
+            image_path=image_path,
+            is_public=form.is_public.data,
+            user_id=current_user.id
+        )
+        db.session.add(new_lens)
+        db.session.commit()
+        return jsonify({'message': 'success'}), 200
+
+    return jsonify({'message': 'form invalid'}), 400
+
+@gear.route('/gear/upload_film', methods=['POST'])
+@login_required
+def upload_film():
+    form = FilmForm()
+    if form.validate_on_submit():
+        image_file = form.image.data
+        image_path = None
+        if image_file:
+            filename = secure_filename(image_file.filename)
+            save_folder = os.path.join(current_app.static_folder, 'uploads', 'films')
+            os.makedirs(save_folder, exist_ok=True)
+            save_path = os.path.join(save_folder, filename)
+            image_file.save(save_path)
+            image_path = f'{filename}'
+
+        new_film = Film(
+            name=form.name.data,
+            brand=form.brand.data,
+            iso=form.iso.data,
+            format=form.format.data,
+            image_path=image_path,
+            is_public=form.is_public.data,
+            user_id=current_user.id
+        )
+        db.session.add(new_film)
+        db.session.commit()
+        return jsonify({'message': 'success'}), 200
+
+    return jsonify({'message': 'form invalid'}), 400

@@ -113,3 +113,68 @@ function loadFilms() {
             container.appendChild(addBtn);
         });
 }
+
+// ____________________________________________________________________________________________
+
+
+$(function () {
+    $('#camera-form').on('submit', function (e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      $.ajax({
+        url: '/gear/upload_camera',
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function () {
+          $('#cameraModal').modal('hide');
+          $('#camera-form')[0].reset();  // 清空表单
+          loadCameras();  // 🔁 实时刷新
+        },
+        error: function () {
+          alert("Upload failed.");
+        }
+      });
+    });
+  });
+  
+  $('#lens-form').on('submit', function (e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    $.ajax({
+        url: '/gear/upload_lens',
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function () {
+            $('#lensModal').modal('hide');
+            $('#lens-form')[0].reset();
+            loadLenses();
+        },
+        error: function () {
+            alert("Upload lens failed.");
+        }
+    });
+});
+
+$('#film-form').on('submit', function (e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    $.ajax({
+        url: '/gear/upload_film',
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function () {
+            $('#filmModal').modal('hide');
+            $('#film-form')[0].reset();
+            loadFilms();
+        },
+        error: function () {
+            alert("Upload film failed.");
+        }
+    });
+});
