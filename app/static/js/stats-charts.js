@@ -1,3 +1,5 @@
+Chart.register(ChartDataLabels);
+
 function monthlyTrendChart() {
   fetch('/api/monthly-trend')
     .then(response => response.json())
@@ -27,6 +29,17 @@ function monthlyTrendChart() {
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
+            datalabels: false,
+            tooltip: {
+              enabled: true,
+              mode: 'index',
+              intersect: false,
+              callbacks: {
+                label: function(context) {
+                  return `Photos: ${context.raw}`;
+                }
+              }
+            },
             legend: { display: false },
           },
           scales: {
@@ -52,7 +65,9 @@ function apertureDistributionChart() {
     .then(response => response.json())
     .then(data => {
       const ctx = document.getElementById('donut-chart').getContext('2d');
+      console.log(Chart.registry.plugins);
 
+      
       new Chart(ctx, {
         type: 'doughnut',
         data: {
@@ -70,13 +85,37 @@ function apertureDistributionChart() {
           }]
         },
         options: {
+          hover: {
+            mode: 'nearest', // Highlight the nearest segment
+            intersect: true
+          },
           responsive: true,
           cutout: '40%',
           plugins: {
+            datalabels: {
+              color: '#eee', // Text color
+              font: {
+                size: 12,
+                weight: 'bold'
+              },
+              formatter: function(value, context) {
+                return context.chart.data.labels[context.dataIndex]; // Use the label instead of the value
+              }
+            },
+            tooltip: {
+              enabled: true,
+              callbacks: {
+                label: function(context) {
+                  const label = context.label || '';
+                  const value = context.raw || 0;
+                  return ` ${value} photos`; // TODO: Make singular when only 1 photo
+                }
+              }
+            },
             legend: {
               display: false
             }
-          }
+          },
         }
       });
     })
