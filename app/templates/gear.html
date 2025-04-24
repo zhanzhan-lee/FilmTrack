@@ -8,9 +8,18 @@
 {% block content %}
 <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/gear.css') }}"> -->
 
+{% include "_modals/camera_modal.html" %}
+{% include "_modals/lens_modal.html" %}
+{% include "_modals/film_modal.html" %}
+
+{% include "_modals/camera_edit_modal.html" %}
+
+
+
+
+
 <div class="content-container">
 
-    <div class="gear-section">
 
 
         <h2>Cameras</h2>
@@ -36,8 +45,7 @@
         </div> -->
         
 
-            <!-- JS 会动态插入内容 -->
-    </div>
+
         
 
         
@@ -93,6 +101,4 @@
 <script src="{{ url_for('static', filename='js/gear.js') }}"></script>
 {% endblock %}
 
-{% include "_modals/camera_modal.html" %}
-{% include "_modals/lens_modal.html" %}
-{% include "_modals/film_modal.html" %}
+

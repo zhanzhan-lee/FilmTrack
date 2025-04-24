@@ -2,7 +2,14 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SelectField, BooleanField, FileField, SubmitField
 from wtforms.validators import DataRequired
 
+
+
+
+
+
 class CameraForm(FlaskForm):
+    class Meta:
+        csrf = False
     name = StringField('Camera Name', validators=[DataRequired()])
     brand = StringField('Brand', validators=[DataRequired()])
     type = SelectField('Type', choices=[('SLR', 'SLR'), ('Rangefinder', 'Rangefinder'), ('Compact', 'Compact')])

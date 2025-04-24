@@ -4,6 +4,9 @@ document.addEventListener('DOMContentLoaded', function () {
     loadFilms();
 });
 
+
+
+
 function loadCameras() {
     fetch('/gear/data/cameras')
         .then(response => response.json())
@@ -20,14 +23,23 @@ function loadCameras() {
 
                 const card = document.createElement('div');
                 card.className = 'gear-card';
+
+                card.setAttribute('data-id', cam.id); // 添加数据属性以存储相机ID
+
+
                 card.innerHTML = `
-                    <img src="${imgUrl}" alt="Camera">
+                    <img src="${imgUrl}" alt="Camera" onerror="this.onerror=null;this.src='/static/images/cam_placeholder.png';">
+
                     <div class="info">
                         <strong>${cam.name}</strong><br>
                         ${cam.brand}<br>
                         <span class="subtext">${cam.type} · ${cam.format}</span>
                     </div>
                 `;
+
+                card.addEventListener('click', () => openEditCameraModal(cam)); // 点击事件!!!!!
+
+
                 container.appendChild(card);
             });
 
@@ -58,7 +70,7 @@ function loadLenses() {
                 const card = document.createElement('div');
                 card.className = 'gear-card';
                 card.innerHTML = `
-                    <img src="${imgUrl}" alt="Lens">
+                    <img src="${imgUrl}" alt="Lens" onerror="this.onerror=null;this.src='/static/images/lens_placeholder.png';">
                     <div class="info">
                         <strong>${lens.name}</strong><br>
                         ${lens.brand}<br>
@@ -95,7 +107,7 @@ function loadFilms() {
                 const card = document.createElement('div');
                 card.className = 'gear-card';
                 card.innerHTML = `
-                    <img src="${imgUrl}" alt="Film">
+                    <img src="${imgUrl}" alt="Film" onerror="this.onerror=null;this.src='/static/images/film_placeholder.png';">
                     <div class="info">
                         <strong>${film.name}</strong><br>
                         ${film.brand}<br>
@@ -115,7 +127,7 @@ function loadFilms() {
 }
 
 // ____________________________________________________________________________________________
-
+// Modal for adding a new gear
 
 $(function () {
     $('#camera-form').on('submit', function (e) {
@@ -178,3 +190,65 @@ $('#film-form').on('submit', function (e) {
         }
     });
 });
+
+
+// ____________________________________________________________________________________________
+// Modal for editing a new camera
+
+
+function openEditCameraModal(cam) {
+    $('#camera-edit-form input[name="id"]').val(cam.id);
+    $('#camera-edit-form input[name="name"]').val(cam.name);
+    $('#camera-edit-form input[name="brand"]').val(cam.brand);
+    $('#camera-edit-form select[name="type"]').val(cam.type);
+    $('#camera-edit-form select[name="format"]').val(cam.format);
+    $('#camera-edit-form input[name="is_public"]').prop('checked', cam.is_public);
+    $('#camera-edit-form input[name="image"]').val('');
+  
+    const modal = new bootstrap.Modal(document.getElementById('cameraEditModal'));
+    modal.show();
+  
+    // 删除按钮事件
+    $('#camera-delete-btn').off('click').on('click', function () {
+      deleteCamera(cam.id, modal);
+    });
+  }
+  
+  $('#camera-edit-form').on('submit', function (e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    const id = formData.get('id');
+  
+    $.ajax({
+      url: `/gear/edit_camera/${id}`,
+      type: 'POST',
+      data: formData,
+      contentType: false,
+      processData: false,
+      success: function () {
+        $('#cameraEditModal').modal('hide');
+        $('#camera-edit-form')[0].reset();
+        loadCameras(); // 刷新页面
+      },
+      error: function () {
+        alert("Update failed.");
+      }
+    });
+  });
+  
+  function deleteCamera(id, modalInstance) {
+    if (!confirm("Are you sure you want to delete this camera?")) return;
+  
+    $.ajax({
+      url: `/gear/delete_camera/${id}`,
+      type: 'DELETE',
+      success: function () {
+        modalInstance.hide();
+        loadCameras();
+      },
+      error: function () {
+        alert("Failed to delete.");
+      }
+    });
+  }
+  

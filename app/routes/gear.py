@@ -13,6 +13,9 @@ from app import db
 
 
 
+
+
+
 gear = Blueprint('gear', __name__)
 
 @gear.route('/gear')
@@ -40,6 +43,7 @@ def get_camera_data():
     cameras = Camera.query.filter_by(user_id=current_user.id).all()
     return jsonify([
         {
+            'id': cam.id,
             'name': cam.name,
             'brand': cam.brand,
             'type': cam.type,
@@ -59,7 +63,7 @@ def get_lens_data():
             'name': lens.name,
             'brand': lens.brand,
             'mount_type': lens.mount_type,
-            'image': lens.image_path  # 注意：不要添加 fallback 路径
+            'image': lens.image_path 
         }
         for lens in lenses
     ])
@@ -82,7 +86,7 @@ def get_film_data():
 
 
 # _____________________________________________________________________
-
+# ADD NEW GEAR
 
 @gear.route('/gear/upload_camera', methods=['POST'])
 @login_required
@@ -176,3 +180,48 @@ def upload_film():
         return jsonify({'message': 'success'}), 200
 
     return jsonify({'message': 'form invalid'}), 400
+
+# _____________________________________________________________________
+# EDIT GEAR
+
+@gear.route('/gear/edit_camera/<int:id>', methods=['POST'])
+@login_required
+def edit_camera(id):
+    camera = Camera.query.filter_by(id=id, user_id=current_user.id).first_or_404()
+    form = CameraForm()
+
+    print("📨 Received form data:", form.data)
+    print("❌ Form errors:", form.errors)
+
+
+
+    if form.validate_on_submit():
+        # 更新字段
+        camera.name = form.name.data
+        camera.brand = form.brand.data
+        camera.type = form.type.data
+        camera.format = form.format.data
+        camera.is_public = form.is_public.data
+
+        # 可选：处理图片更新
+        image_file = form.image.data
+        if image_file:
+            filename = secure_filename(image_file.filename)
+            folder = os.path.join(current_app.static_folder, 'uploads', 'cameras')
+            os.makedirs(folder, exist_ok=True)
+            save_path = os.path.join(folder, filename)
+            image_file.save(save_path)
+            camera.image_path = f'uploads/cameras/{filename}'
+
+        db.session.commit()
+        return jsonify({'message': 'updated'}), 200
+
+    return jsonify({'message': 'form invalid'}), 400
+
+@gear.route('/gear/delete_camera/<int:id>', methods=['DELETE'])
+@login_required
+def delete_camera(id):
+    camera = Camera.query.filter_by(id=id, user_id=current_user.id).first_or_404()
+    db.session.delete(camera)
+    db.session.commit()
+    return jsonify({'message': 'deleted'}), 200
