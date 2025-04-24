@@ -153,8 +153,8 @@ function locationMap() {
   });
 }
 
-function horizontalBarChart(data) {
-  const chart = document.querySelector("#shutter-speed");
+function horizontalBarChart(data, chartClass) {
+  const chart = document.querySelector(chartClass);
 
   data.labels.forEach((label, index) => {
     const bar = document.createElement('div');
@@ -176,17 +176,20 @@ function horizontalBarChart(data) {
   })
 }
 
-function shutterSpeedDistributionChart() {
+document.addEventListener('DOMContentLoaded', () => {
   fetch('/api/shutter-speed-distribution')
     .then(response => response.json())
     .then(data => {
-      horizontalBarChart(data);
+      horizontalBarChart(data, "#shutter-speed");
     })
   .catch(error => console.error('Error fetching shutter speeds: ', error));
-}
 
-document.addEventListener('DOMContentLoaded', () => {
-  shutterSpeedDistributionChart();
+  fetch('/api/top-locations')
+    .then(response => response.json())
+    .then(data => {
+      horizontalBarChart(data, "#city-stats");
+    })
+  .catch(error => console.error('Error fetching city stats: ', error));
 
   monthlyTrendChart();
   apertureDistributionChart();
