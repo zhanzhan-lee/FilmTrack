@@ -111,7 +111,7 @@ class Photo(db.Model):
     location = db.Column(db.String(100))
 
     #  Equipment used (camera, lens, film)
-    camera_id = db.Column(db.Integer, db.ForeignKey('camera.id'), nullable=False)
+    camera_id = db.Column(db.Integer, db.ForeignKey('camera.id'), nullable=True)
     lens_id = db.Column(db.Integer, db.ForeignKey('lens.id'), nullable=True)
     film_id = db.Column(db.Integer, db.ForeignKey('film.id'), nullable=True)
 

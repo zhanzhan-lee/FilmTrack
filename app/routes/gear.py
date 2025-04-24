@@ -9,7 +9,7 @@ from flask import request
 from werkzeug.utils import secure_filename
 import os
 from app import db
-
+from sqlalchemy.exc import IntegrityError
 
 
 
@@ -60,6 +60,7 @@ def get_lens_data():
     lenses = Lens.query.filter_by(user_id=current_user.id).all()
     return jsonify([
         {
+            'id': lens.id,
             'name': lens.name,
             'brand': lens.brand,
             'mount_type': lens.mount_type,
@@ -75,6 +76,7 @@ def get_film_data():
     films = Film.query.filter_by(user_id=current_user.id).all()
     return jsonify([
         {
+            'id': film.id,
             'name': film.name,
             'brand': film.brand,
             'iso': film.iso,
@@ -183,15 +185,16 @@ def upload_film():
 
 # _____________________________________________________________________
 # EDIT GEAR
-
+#________
+# Camera
 @gear.route('/gear/edit_camera/<int:id>', methods=['POST'])
 @login_required
 def edit_camera(id):
     camera = Camera.query.filter_by(id=id, user_id=current_user.id).first_or_404()
     form = CameraForm()
 
-    print("📨 Received form data:", form.data)
-    print("❌ Form errors:", form.errors)
+    # print(" Received form data:", form.data)
+    # print(" Form errors:", form.errors)
 
 
 
@@ -211,7 +214,7 @@ def edit_camera(id):
             os.makedirs(folder, exist_ok=True)
             save_path = os.path.join(folder, filename)
             image_file.save(save_path)
-            camera.image_path = f'uploads/cameras/{filename}'
+            camera.image_path = f'{filename}'
 
         db.session.commit()
         return jsonify({'message': 'updated'}), 200
@@ -222,6 +225,100 @@ def edit_camera(id):
 @login_required
 def delete_camera(id):
     camera = Camera.query.filter_by(id=id, user_id=current_user.id).first_or_404()
-    db.session.delete(camera)
-    db.session.commit()
-    return jsonify({'message': 'deleted'}), 200
+
+    try:
+        db.session.delete(camera)
+        db.session.commit()
+        return jsonify({'message': 'deleted'}), 200
+
+    except IntegrityError:
+        db.session.rollback()  #  回滚事务，防止 session 锁死
+        return jsonify({
+            'message': '❗ Unable to delete: This camera is linked to one or more photos.'
+        }), 400
+    
+
+#________
+# Lens
+@gear.route('/gear/edit_lens/<int:id>', methods=['POST'])
+@login_required
+def edit_lens(id):
+    lens = Lens.query.filter_by(id=id, user_id=current_user.id).first_or_404()
+    form = LensForm()
+
+    if form.validate_on_submit():
+        lens.name = form.name.data
+        lens.brand = form.brand.data
+        lens.mount_type = form.mount_type.data
+        lens.is_public = form.is_public.data
+
+        image_file = form.image.data
+        if image_file:
+            filename = secure_filename(image_file.filename)
+            folder = os.path.join(current_app.static_folder, 'uploads', 'lenses')
+            os.makedirs(folder, exist_ok=True)
+            image_file.save(os.path.join(folder, filename))
+            lens.image_path = f'{filename}'
+
+        db.session.commit()
+        return jsonify({'message': 'updated'}), 200
+
+    return jsonify({'message': 'form invalid'}), 400
+
+
+@gear.route('/gear/delete_lens/<int:id>', methods=['DELETE'])
+@login_required
+def delete_lens(id):
+    lens = Lens.query.filter_by(id=id, user_id=current_user.id).first_or_404()
+
+    try:
+        db.session.delete(lens)
+        db.session.commit()
+        return jsonify({'message': 'deleted'}), 200
+
+    except IntegrityError:
+        db.session.rollback()
+        return jsonify({'message': '❗ This lens is still associated with photos.'}), 400
+
+#________
+# Film
+@gear.route('/gear/edit_film/<int:id>', methods=['POST'])
+@login_required
+def edit_film(id):
+    film = Film.query.filter_by(id=id, user_id=current_user.id).first_or_404()
+    form = FilmForm()
+
+    if form.validate_on_submit():
+        film.name = form.name.data
+        film.brand = form.brand.data
+        film.iso = form.iso.data
+        film.format = form.format.data
+        film.is_public = form.is_public.data
+
+        image_file = form.image.data
+        if image_file:
+            filename = secure_filename(image_file.filename)
+            folder = os.path.join(current_app.static_folder, 'uploads', 'films')
+            os.makedirs(folder, exist_ok=True)
+            image_file.save(os.path.join(folder, filename))
+            film.image_path = f'{filename}'
+
+        db.session.commit()
+        return jsonify({'message': 'updated'}), 200
+
+    return jsonify({'message': 'form invalid'}), 400
+
+
+@gear.route('/gear/delete_film/<int:id>', methods=['DELETE'])
+@login_required
+def delete_film(id):
+    film = Film.query.filter_by(id=id, user_id=current_user.id).first_or_404()
+
+    try:
+        db.session.delete(film)
+        db.session.commit()
+        return jsonify({'message': 'deleted'}), 200
+
+    except IntegrityError:
+        db.session.rollback()
+        return jsonify({'message': '❗ This film is still associated with photos.'}), 400

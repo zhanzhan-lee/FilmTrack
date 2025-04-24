@@ -20,6 +20,8 @@ class CameraForm(FlaskForm):
 
 
 class LensForm(FlaskForm):
+    class Meta:
+        csrf = False
     name = StringField('Lens Name', validators=[DataRequired()])
     brand = StringField('Brand', validators=[DataRequired()])
     mount_type = StringField('Mount Type', validators=[DataRequired()])
@@ -29,6 +31,8 @@ class LensForm(FlaskForm):
 
 
 class FilmForm(FlaskForm):
+    class Meta:
+        csrf = False
     name = StringField('Film Name', validators=[DataRequired()])
     brand = StringField('Brand', validators=[DataRequired()])
     iso = StringField('ISO', validators=[DataRequired()])
