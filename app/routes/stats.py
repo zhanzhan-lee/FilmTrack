@@ -84,19 +84,19 @@ def get_shutter_speed_distribution():
     results = (
         Photo.query
         .with_entities(Photo.shutter_speed, func.count(Photo.id).label('shutter_speed_count'))
-        .filter(Photo.user_id == current_user.id)  # Filter by the current user's ID
+        .filter(Photo.user_id == current_user.id)
         .group_by(Photo.shutter_speed)
-        .order_by(func.count(Photo.id).desc())  # Order by count in descending order
-        .limit(5)  # Limit to the top 5 shutter speeds
+        .order_by(func.count(Photo.id).desc())
+        .limit(5)
         .all()
     )
 
     # Prepare the labels and data for the response
-    labels = [result[0] for result in results]  # Shutter speed values
-    data = [result[1] for result in results]   # Counts
+    labels = [result[0] for result in results]
+    data = [result[1] for result in results]
 
     # Return the data as JSON
-    return jsonify({"labels": labels, "data": data})
+    return jsonify({"labels": labels, "data": data, "total": sum(data)})
 
 @stats.route('/api/cameras-chart-preference', methods=['GET'])
 def get_camera_preference():

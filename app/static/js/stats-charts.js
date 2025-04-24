@@ -157,12 +157,18 @@ function assignValuesToShutterSpeed() {
   fetch('/api/shutter-speed-distribution')
     .then(response => response.json())
     .then(data => {
-      const bars = document.querySelectorAll('#shutter-speed .bar-fill');
+      const bars = document.querySelectorAll('#shutter-speed .bar'); //#shutter-speed .bar-fill
 
-      bars.forEach((barFill, index) => {
+      bars.forEach((bar, index) => {
+        // Assign the fill
+        barFill = bar.querySelector('.bar-fill');
         barFill.setAttribute('data-value', data.data[index]);
 
-        barFill.style.width = data.data[index] + '%';
+        barFill.style.width = (data.data[index] / data.total * 100) + '%'; // As a percentage of the total
+
+        // Assign the label
+        barLabel = bar.querySelector('.bar-label');
+        barLabel.innerHTML = data.labels[index];
       });
     })
   .catch(error => console.error('Error fetching shutter speeds: ', error));
