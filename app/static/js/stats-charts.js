@@ -153,29 +153,40 @@ function locationMap() {
   });
 }
 
-function assignValuesToShutterSpeed() {
+function horizontalBarChart(data) {
+  const chart = document.querySelector("#shutter-speed");
+
+  data.labels.forEach((label, index) => {
+    const bar = document.createElement('div');
+    bar.className = 'bar';
+
+    bar.innerHTML = `
+      <div class="bar-label">${label}</div>
+      <div class="bar-wrapper">
+        <div class="bar-fill" data-value="${data.data[index]}"></div>
+      </div>
+    `;
+
+    // Slightly delay the animation to ensure it plays
+    setTimeout(() => {
+      barFill = bar.querySelector('.bar-fill');
+      barFill.style.width = (data.data[index] / data.total * 100) + '%'; // As a percentage of the total
+    }, 100);
+    chart.append(bar);
+  })
+}
+
+function shutterSpeedDistributionChart() {
   fetch('/api/shutter-speed-distribution')
     .then(response => response.json())
     .then(data => {
-      const bars = document.querySelectorAll('#shutter-speed .bar'); //#shutter-speed .bar-fill
-
-      bars.forEach((bar, index) => {
-        // Assign the fill
-        barFill = bar.querySelector('.bar-fill');
-        barFill.setAttribute('data-value', data.data[index]);
-
-        barFill.style.width = (data.data[index] / data.total * 100) + '%'; // As a percentage of the total
-
-        // Assign the label
-        barLabel = bar.querySelector('.bar-label');
-        barLabel.innerHTML = data.labels[index];
-      });
+      horizontalBarChart(data);
     })
   .catch(error => console.error('Error fetching shutter speeds: ', error));
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  assignValuesToShutterSpeed();
+  shutterSpeedDistributionChart();
 
   monthlyTrendChart();
   apertureDistributionChart();
