@@ -3,5 +3,14 @@
 {% block title %}About Us{% endblock %}
 
 {% block content %}
-    Shared statistics:
+<link rel="stylesheet" href="{{ url_for('static', filename='css/view-stats.css') }}">
+
+<div class="user-stats-grid">
+    {% for i in range(6) %}
+    <div class="user-stats-tile">
+      <p class="user-stats-title">User {{ i + 1 }}</p>
+      <img src="{{ url_for('static', filename='images/stats-sample.png') }}" alt="Stats Sample" class="user-stats-image">
+    </div>
+    {% endfor %}
+  </div>
 {% endblock %}
