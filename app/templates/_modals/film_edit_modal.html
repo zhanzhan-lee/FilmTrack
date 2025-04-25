@@ -1,0 +1,56 @@
+<div class="modal fade" id="filmEditModal" tabindex="-1" aria-labelledby="filmEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form id="film-edit-form" enctype="multipart/form-data" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="filmEditModalLabel">Edit Film</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+  
+        <div class="modal-body">
+          <input type="hidden" name="id" />
+  
+          <div id="film-error-msg" class="text-danger small mb-2" style="display: none;"></div>
+  
+          <div class="mb-3">
+            <label for="edit-film-name">Name</label>
+            <input type="text" name="name" class="form-control" id="edit-film-name">
+          </div>
+  
+          <div class="mb-3">
+            <label for="edit-film-brand">Brand</label>
+            <input type="text" name="brand" class="form-control" id="edit-film-brand">
+          </div>
+  
+          <div class="mb-3">
+            <label for="edit-film-iso">ISO</label>
+            <input type="text" name="iso" class="form-control" id="edit-film-iso">
+          </div>
+  
+          <div class="mb-3">
+            <label for="edit-film-format">Format</label>
+            <select name="format" class="form-select" id="edit-film-format">
+              <option value="35mm">35mm</option>
+              <option value="120">Medium Format</option>
+              <option value="Sheet">Sheet</option>
+            </select>
+          </div>
+  
+          <div class="mb-3">
+            <label for="edit-film-image">Change Image</label>
+            <input type="file" name="image" class="form-control" id="edit-film-image">
+          </div>
+  
+          <div class="form-check mb-3">
+            <input type="checkbox" name="is_public" class="form-check-input" id="edit-film-public">
+            <label for="edit-film-public" class="form-check-label">Make Public</label>
+          </div>
+        </div>
+  
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-dark">Save</button>
+          <button type="button" class="btn btn-outline-danger" id="film-delete-btn">Delete</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  

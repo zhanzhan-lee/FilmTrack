@@ -1,0 +1,47 @@
+<div class="modal fade" id="lensEditModal" tabindex="-1" aria-labelledby="lensEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form id="lens-edit-form" enctype="multipart/form-data" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="lensEditModalLabel">Edit Lens</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+  
+        <div class="modal-body">
+          <input type="hidden" name="id" />
+  
+          <div id="lens-error-msg" class="text-danger small mb-2" style="display: none;"></div>
+  
+          <div class="mb-3">
+            <label for="edit-lens-name">Name</label>
+            <input type="text" name="name" class="form-control" id="edit-lens-name">
+          </div>
+  
+          <div class="mb-3">
+            <label for="edit-lens-brand">Brand</label>
+            <input type="text" name="brand" class="form-control" id="edit-lens-brand">
+          </div>
+  
+          <div class="mb-3">
+            <label for="edit-lens-mount">Mount Type</label>
+            <input type="text" name="mount_type" class="form-control" id="edit-lens-mount">
+          </div>
+  
+          <div class="mb-3">
+            <label for="edit-lens-image">Change Image</label>
+            <input type="file" name="image" class="form-control" id="edit-lens-image">
+          </div>
+  
+          <div class="form-check mb-3">
+            <input type="checkbox" name="is_public" class="form-check-input" id="edit-lens-public">
+            <label for="edit-lens-public" class="form-check-label">Make Public</label>
+          </div>
+        </div>
+  
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-dark">Save</button>
+          <button type="button" class="btn btn-outline-danger" id="lens-delete-btn">Delete</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  

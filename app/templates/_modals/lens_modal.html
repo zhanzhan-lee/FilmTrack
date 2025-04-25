@@ -1,0 +1,22 @@
+<div class="modal fade" id="lensModal" tabindex="-1" aria-labelledby="lensModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form id="lens-form" enctype="multipart/form-data" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="lensModalLabel">Upload Lens</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          {{ lens_form.hidden_tag() }}
+          {{ lens_form.name.label }} {{ lens_form.name(class="form-control") }}
+          {{ lens_form.brand.label }} {{ lens_form.brand(class="form-control") }}
+          {{ lens_form.mount_type.label }} {{ lens_form.mount_type(class="form-control") }}
+          {{ lens_form.image.label }} {{ lens_form.image(class="form-control") }}
+          {{ lens_form.is_public() }} {{ lens_form.is_public.label }}
+        </div>
+        <div class="modal-footer">
+          {{ lens_form.submit(class="btn btn-dark") }}
+        </div>
+      </form>
+    </div>
+  </div>
+  
