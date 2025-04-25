@@ -1,17 +1,47 @@
-# app/__init__.py
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
+
+# Initialize Flask-Login globally
+login_manager = LoginManager()
+# Initialize SQLAlchemy globally
+db = SQLAlchemy()
 
 def create_app():
     app = Flask(__name__)
+    
+    # Configuration
+    app.config['SECRET_KEY'] = 'dev'  # Temporary secret key
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-    # Configuring the Flask Application
-    app.config['SECRET_KEY'] = 'dev'  # temporary
+    # Initialize DB with app context
+    db.init_app(app)
+    login_manager.init_app(app)
+    login_manager.login_view = 'auth.login'
 
+ 
+    from app.models import User
 
-    # Importing routes (view functions) 
-    from .routes import home, about, contact
-    app.add_url_rule('/', 'home', home)
-    app.add_url_rule('/about', 'about', about)
-    app.add_url_rule('/contact', 'contact', contact)
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
+
+    # Register Blueprints
+    from .routes.main import main
+    from .routes.auth import auth
+    from .routes.upload import upload
+    from .routes.stats import stats
+    from .routes.share import share
+
+    app.register_blueprint(main)
+    app.register_blueprint(auth)
+    app.register_blueprint(upload)
+    app.register_blueprint(stats)
+    app.register_blueprint(share)
+
+    # Create database tables (only if not exist)
+    with app.app_context():
+        db.create_all()
 
     return app
