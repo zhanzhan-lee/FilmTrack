@@ -33,8 +33,9 @@ def create_app():
     from .routes.stats import stats
     from .routes.share import share
     from .routes.gear import gear
+    from .routes.shooting import shooting
     
-
+    app.register_blueprint(shooting)
     app.register_blueprint(main)
     app.register_blueprint(auth)
     app.register_blueprint(stats)

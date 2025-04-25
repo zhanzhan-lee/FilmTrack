@@ -1,0 +1,60 @@
+<!-- Modal: Edit Roll -->
+<div class="modal fade" id="editRollModal" tabindex="-1" role="dialog" aria-labelledby="editRollModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+  
+        <form id="edit-roll-form" enctype="multipart/form-data">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editRollModalLabel">Edit Roll</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span>&times;</span>
+            </button>
+          </div>
+  
+          <input type="hidden" name="roll_id" id="edit-roll-id">
+  
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Roll Name</label>
+              <input type="text" class="form-control" name="roll_name" id="edit-roll-name">
+            </div>
+  
+            <div class="form-group">
+              <label>Film Used</label>
+              <select class="form-control" name="film_id" id="edit-roll-film-select"></select>
+            </div>
+  
+            <div class="form-group">
+              <label>Start Date</label>
+              <input type="date" class="form-control" name="start_date" id="edit-roll-start">
+            </div>
+  
+            <div class="form-group">
+              <label>End Date</label>
+              <input type="date" class="form-control" name="end_date" id="edit-roll-end">
+            </div>
+  
+            <div class="form-group">
+              <label>Status</label>
+              <select class="form-control" name="status" id="edit-roll-status">
+                <option value="">Select</option>
+                <option value="in use">In Use</option>
+                <option value="developed">Developed</option>
+              </select>
+            </div>
+  
+            <div class="form-group">
+              <label>Notes</label>
+              <textarea class="form-control" name="notes" rows="3" id="edit-roll-notes"></textarea>
+            </div>
+          </div>
+  
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Update Roll</button>
+          </div>
+        </form>
+  
+      </div>
+    </div>
+  </div>
+  

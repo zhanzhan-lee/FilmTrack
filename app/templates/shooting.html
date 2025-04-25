@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}My Shooting Rolls{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/shooting.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<!-- Modal: Add & Edit Roll -->
+{% include "_modals/roll_modal.html" %}
+{% include "_modals/roll_edit_modal.html" %}
+
+<div class="content-container">
+    <h2>My Rolls</h2>
+    <div id="roll-list" class="gear-section"></div>
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/shooting.js') }}"></script>
+{% endblock %}
