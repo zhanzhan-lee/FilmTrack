@@ -171,3 +171,23 @@ def get_film_preference():
 
     # Return the data as JSON
     return jsonify({"labels": labels, "data": data})
+
+@stats.route('/api/top-locations', methods=['GET'])
+def get_top_locations():
+    # Query the database for the top 5 most shot-at locations by the current user
+    results = (
+        Photo.query
+        .with_entities(Photo.location, func.count(Photo.id).label('location_count'))
+        .filter(Photo.user_id == current_user.id)  # Filter by the current user's ID
+        .group_by(Photo.location)
+        .order_by(func.count(Photo.id).desc())  # Order by count in descending order
+        .limit(5)  # Limit to the top 5 locations
+        .all()
+    )
+
+    # Prepare the labels and data for the response
+    labels = [result[0] for result in results if result[0]]  # Location names (exclude None)
+    data = [result[1] for result in results]  # Counts
+
+    # Return the data as JSON
+    return jsonify({"labels": labels, "data": data, "total": sum(data)})

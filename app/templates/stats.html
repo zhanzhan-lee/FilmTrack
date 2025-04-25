@@ -4,6 +4,7 @@
 
 {% block content %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -11,46 +12,20 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/stats.css') }}">
 <script src="{{ url_for('static', filename='js/stats-charts.js') }}"></script>
 
+
 <div class="charts">
   <div class="chart-row">
     <div class="chart-tile">
       <div class="chart-container" id="shutter-speed">
         <p class="chart-title">Shutter Speed Distribution</p>
 
+        <!-- BAR EXAMPLE:
         <div class="bar">
           <div class="bar-label"></div>
           <div class="bar-wrapper">
-            <div class="bar-fill" data-value=""></div>
+            <div class="bar-fill" data-value="50"></div>
           </div>
-        </div>
-
-        <div class="bar">
-          <div class="bar-label"></div>
-          <div class="bar-wrapper">
-            <div class="bar-fill" data-value="0"></div>
-          </div>
-        </div>
-
-        <div class="bar">
-          <div class="bar-label"></div>
-          <div class="bar-wrapper">
-            <div class="bar-fill" data-value="0"></div>
-          </div>
-        </div>
-
-        <div class="bar">
-          <div class="bar-label"></div>
-          <div class="bar-wrapper">
-            <div class="bar-fill" data-value="0"></div>
-          </div>
-        </div>
-
-        <div class="bar">
-          <div class="bar-label"></div>
-          <div class="bar-wrapper">
-            <div class="bar-fill" data-value="0"></div>
-          </div>
-        </div>
+        </div> -->
       </div>
 
       <div class="chart-container" id="aperture-distribution">
@@ -131,30 +106,9 @@
       </div>
     </div>
 
-    <div class="chart-tile" id="city-stats">
-      <div class="chart-container">
-        <p class="chart-title">City Stats</p>
-
-        <div class="bar">
-          <div class="bar-label">Perth</div>
-          <div class="bar-wrapper">
-            <div class="bar-fill" data-value="80"></div>
-          </div>
-        </div>
-
-        <div class="bar">
-          <div class="bar-label">Sydney</div>
-          <div class="bar-wrapper">
-            <div class="bar-fill" data-value="75"></div>
-          </div>
-        </div>
-
-        <div class="bar">
-          <div class="bar-label">Melbourne</div>
-          <div class="bar-wrapper">
-            <div class="bar-fill" data-value="40"></div>
-          </div>
-        </div>
+    <div class="chart-tile">
+      <div class="chart-container"  id="location-stats">
+        <p class="chart-title">Top Locations</p>
       </div>
     </div>
   </div>
