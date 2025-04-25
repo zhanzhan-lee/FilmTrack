@@ -6,8 +6,8 @@ import random
 
 app = create_app()
 
-with app.app_context():
-    # 🧽 Clear old data (note that it is only used in the development stage)
+def clear_database():
+    """Clear all existing data from the database."""
     db.session.query(Photo).delete()
     db.session.query(Roll).delete()
     db.session.query(Film).delete()
@@ -16,102 +16,117 @@ with app.app_context():
     db.session.query(User).delete()
     db.session.commit()
 
-    # user
-    user = User(
-        username="admin",
-        password=generate_password_hash("123456")
-    )
-    db.session.add(user)
+def create_users():
+    """Create sample users."""
+    users = [
+        User(username="admin", password=generate_password_hash("123456")),
+        User(username="user1", password=generate_password_hash("password1")),
+        User(username="user2", password=generate_password_hash("password2"))
+    ]
+    db.session.add_all(users)
     db.session.commit()
+    return users
 
-    # films
-
+def create_films(users):
+    """Create sample films for each user."""
     films = [
-        Film(name="Portra 400", brand="Kodak", iso="400", format="35mm", user_id=user.id),
-        Film(name="HP5 Plus", brand="Ilford", iso="400", format="35mm", user_id=user.id),
-        # Film(name="Superia X-TRA 400", brand="Fujifilm", iso="400", format="35mm", user_id=user.id)
+        Film(name="Portra 400", brand="Kodak", iso="400", format="35mm", user_id=users[0].id),
+        Film(name="HP5 Plus", brand="Ilford", iso="400", format="35mm", user_id=users[0].id),
+        Film(name="Ektar 100", brand="Kodak", iso="100", format="35mm", user_id=users[1].id),
+        Film(name="Superia X-TRA 400", brand="Fujifilm", iso="400", format="35mm", user_id=users[2].id)
     ]
-
-    # cameras
-    cameras = [
-        Camera(name="Nikon F", brand="Nikon", type="SLR", format="35mm", user_id=user.id, image_path = "nikon_f.jpg"),
-
-        Camera(name="Canon AE-1", brand="Canon", type="SLR", format="35mm", user_id=user.id),
-        Camera(name="Leica IIIG", brand="Leica", type="Rangefinder", format="35mm", user_id=user.id, image_path = "leica_iiig.jpg")
-    ]
-
-    # lensLeitz-50mm-f3.5-Elmar
-    lenses = [
-        Lens(name="Nikkor 50mm f/1.4", brand="Nikon", mount_type="F", user_id=user.id),
-        Lens(name="Leitz-50mm-f3.5-Elmar", brand="Leitz", mount_type="L39", user_id=user.id, image_path = "Leitz-50mm-f3.5-Elmar.jpg")
-    ]
-
-    db.session.add_all(films + cameras + lenses)
+    db.session.add_all(films)
     db.session.commit()
+    return films
 
-    # Create Roll
-    roll_names = ["City Walk", "Family Weekend", "Test Shots"]
-    base_date = datetime(2025, 1, 1)
+def create_cameras(users):
+    """Create sample cameras for each user."""
+    cameras = [
+        Camera(name="Nikon F", brand="Nikon", type="SLR", format="35mm", user_id=users[0].id, image_path="nikon_f.jpg"),
+        Camera(name="Canon AE-1", brand="Canon", type="SLR", format="35mm", user_id=users[0].id),
+        Camera(name="Leica IIIG", brand="Leica", type="Rangefinder", format="35mm", user_id=users[1].id, image_path="leica_iiig.jpg"),
+        Camera(name="Pentax K1000", brand="Pentax", type="SLR", format="35mm", user_id=users[2].id)
+    ]
+    db.session.add_all(cameras)
+    db.session.commit()
+    return cameras
+
+def create_lenses(users):
+    """Create sample lenses for each user."""
+    lenses = [
+        Lens(name="Nikkor 50mm f/1.4", brand="Nikon", mount_type="F", user_id=users[0].id),
+        Lens(name="Leitz 50mm f/3.5 Elmar", brand="Leitz", mount_type="L39", user_id=users[1].id, image_path="leitz_50mm_elmar.jpg"),
+        Lens(name="Canon FD 50mm f/1.8", brand="Canon", mount_type="FD", user_id=users[0].id),
+        Lens(name="Pentax 50mm f/2", brand="Pentax", mount_type="K", user_id=users[2].id)
+    ]
+    db.session.add_all(lenses)
+    db.session.commit()
+    return lenses
+
+def create_rolls(users, films):
+    """Create sample rolls for each user."""
+    roll_names = ["City Walk", "Family Weekend", "Test Shots", "Holiday Trip"]
+    base_date = datetime(2024, 1, 1)
     rolls = []
 
-    for i in range(3):
-        roll = Roll(
-            roll_name=roll_names[i],
-            film_id=films[i % len(films)].id,
-            user_id=user.id,
-            start_date=base_date + timedelta(days=i * 5),
-            end_date=base_date + timedelta(days=i * 5 + 2),
-            status="scanned",
-            notes=f"Example roll {i+1}"
-        )
-        db.session.add(roll)
-        rolls.append(roll)
+    for i, user in enumerate(users):
+        for j in range(2):  # Two rolls per user
+            roll = Roll(
+                roll_name=f"{roll_names[j]} ({user.username})",
+                film_id=films[(i + j) % len(films)].id,
+                user_id=user.id,
+                start_date=base_date + timedelta(days=i * 10 + j * 5),
+                end_date=base_date + timedelta(days=i * 10 + j * 5 + 2),
+                status="scanned",
+                notes=f"Example roll {j+1} for {user.username}"
+            )
+            db.session.add(roll)
+            rolls.append(roll)
 
     db.session.commit()
+    return rolls
 
-    # 📸  Add photos (5 per roll)
+def create_photos(users, rolls, cameras, lenses, films):
+    """Create sample photos for each roll, spread out over the year."""
     shutter_speeds = ["1/30", "1/60", "1/125", "1/250", "1/500"]
     apertures = ["f/2.0", "f/2.8", "f/4.0", "f/5.6", "f/8.0"]
     locations = ["Perth City", "Fremantle", "Kings Park", "UWA", "Cottesloe"]
+    current_date = datetime.now()
 
-    for i, roll in enumerate(rolls):
-        for j in range(5):
-            # Only add 3 for the first roll
-            if i == 0 and j < 2:
-                continue
+    for roll in rolls:
+        for j in range(5):  # Five photos per roll
+            # Spread the shot_date between the roll's start_date and the current date
+            days_difference = (current_date - roll.start_date).days
+            random_days_offset = random.randint(0, days_difference)
+            shot_date = roll.start_date + timedelta(days=random_days_offset)
 
             photo = Photo(
-                user_id=user.id,
+                user_id=roll.user_id,
                 roll_id=roll.id,
-                camera_id=cameras[(i + j) % len(cameras)].id,
-                lens_id=lenses[(j % len(lenses))].id,
+                camera_id=cameras[j % len(cameras)].id,
+                lens_id=lenses[j % len(lenses)].id,
                 film_id=roll.film_id,
-                shot_date=roll.start_date + timedelta(hours=j * 1000),
+                shot_date=shot_date,
                 shutter_speed=random.choice(shutter_speeds),
                 aperture=random.choice(apertures),
-                iso=str(films[i % len(films)].iso),
-                frame_number=str(j + 1),
-                location=random.choice(locations)
-            )
-            db.session.add(photo)
-
-    # Add some photos for a different user as well
-    for i, roll in enumerate(rolls):
-        for j in range(2):
-            photo = Photo(
-                user_id=100,
-                roll_id=roll.id,
-                camera_id=cameras[(i + j) % len(cameras)].id,
-                lens_id=lenses[(j % len(lenses))].id,
-                film_id=roll.film_id,
-                shot_date=roll.start_date + timedelta(hours=j * 3),
-                shutter_speed=random.choice(shutter_speeds),
-                aperture=random.choice(apertures),
-                iso=str(films[i % len(films)].iso),
+                iso=str(films[j % len(films)].iso),
                 frame_number=str(j + 1),
                 location=random.choice(locations)
             )
             db.session.add(photo)
 
     db.session.commit()
-    print("✅ Sample data inserted successfully using new model structure.")
+
+with app.app_context():
+    # Clear existing data
+    clear_database()
+
+    # Create sample data
+    users = create_users()
+    films = create_films(users)
+    cameras = create_cameras(users)
+    lenses = create_lenses(users)
+    rolls = create_rolls(users, films)
+    create_photos(users, rolls, cameras, lenses, films)
+
+    print("✅ Sample data inserted successfully.")
