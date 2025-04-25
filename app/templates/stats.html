@@ -18,43 +18,43 @@
         <p class="chart-title">Shutter Speed Distribution</p>
 
         <div class="bar">
-          <div class="bar-label">1/200s</div>
+          <div class="bar-label"></div>
           <div class="bar-wrapper">
-            <div class="bar-fill" data-value="80"></div>
+            <div class="bar-fill" data-value=""></div>
           </div>
         </div>
 
         <div class="bar">
-          <div class="bar-label">1/1500s</div>
+          <div class="bar-label"></div>
           <div class="bar-wrapper">
-            <div class="bar-fill" data-value="75"></div>
+            <div class="bar-fill" data-value="0"></div>
           </div>
         </div>
 
         <div class="bar">
-          <div class="bar-label">1s</div>
+          <div class="bar-label"></div>
           <div class="bar-wrapper">
-            <div class="bar-fill" data-value="40"></div>
+            <div class="bar-fill" data-value="0"></div>
           </div>
         </div>
 
         <div class="bar">
-          <div class="bar-label">1/2000s</div>
+          <div class="bar-label"></div>
           <div class="bar-wrapper">
-            <div class="bar-fill" data-value="20"></div>
+            <div class="bar-fill" data-value="0"></div>
           </div>
         </div>
 
         <div class="bar">
-          <div class="bar-label">10s</div>
+          <div class="bar-label"></div>
           <div class="bar-wrapper">
-            <div class="bar-fill" data-value="5"></div>
+            <div class="bar-fill" data-value="0"></div>
           </div>
         </div>
       </div>
 
-      <div class="chart-container" id="apeture-distribution">
-        <p class="chart-title">Apeture Distribution</p>
+      <div class="chart-container" id="aperture-distribution">
+        <p class="chart-title">Aperture Distribution</p>
 
         <div>
           <canvas id="donut-chart"></canvas>
@@ -160,13 +160,4 @@
   </div>
 
 </div>
-
-<script>
-  window.addEventListener('load', () => {
-    document.querySelectorAll('.bar-fill').forEach(bar => {
-      const val = bar.getAttribute('data-value');
-      bar.style.width = val + '%';
-    });
-  });
-</script>
 {% endblock %}

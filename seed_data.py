@@ -76,8 +76,30 @@ with app.app_context():
 
     for i, roll in enumerate(rolls):
         for j in range(5):
+            # Only add 3 for the first roll
+            if i == 0 and j < 2:
+                continue
+
             photo = Photo(
                 user_id=user.id,
+                roll_id=roll.id,
+                camera_id=cameras[(i + j) % len(cameras)].id,
+                lens_id=lenses[(j % len(lenses))].id,
+                film_id=roll.film_id,
+                shot_date=roll.start_date + timedelta(hours=j * 1000),
+                shutter_speed=random.choice(shutter_speeds),
+                aperture=random.choice(apertures),
+                iso=str(films[i % len(films)].iso),
+                frame_number=str(j + 1),
+                location=random.choice(locations)
+            )
+            db.session.add(photo)
+
+    # Add some photos for a different user as well
+    for i, roll in enumerate(rolls):
+        for j in range(2):
+            photo = Photo(
+                user_id=100,
                 roll_id=roll.id,
                 camera_id=cameras[(i + j) % len(cameras)].id,
                 lens_id=lenses[(j % len(lenses))].id,
