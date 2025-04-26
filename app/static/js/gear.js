@@ -372,20 +372,21 @@ function openEditFilmModal(film) {
     });
   });
   
-  function deleteLens(id, modalInstance) {
-    if (!confirm("Are you sure you want to delete this lens?")) return;
-  
+  function deleteFilm(id, modalInstance) {
+    if (!confirm("Are you sure you want to delete this film?")) return;
+
     $.ajax({
-      url: `/gear/delete_lens/${id}`,
+      url: `/gear/delete_film/${id}`,        
       type: 'DELETE',
       success: function () {
         modalInstance.hide();
-        loadLenses();
+        loadFilms();                          
       },
       error: function (xhr) {
         const msg = xhr.responseJSON?.message || "Failed to delete.";
-        $('#lens-error-msg').text(msg).show();
+        $('#film-error-msg').text(msg).show();
       }
     });
-  }
+}
+
   
