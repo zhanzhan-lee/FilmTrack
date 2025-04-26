@@ -2,99 +2,51 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
   background-color: #f2e8cf;
-  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-.container {
-  max-width: 400px;
-  margin: 30px auto;
+.login-container {
+  background-color: #ffffff;
   padding: 40px;
-  background-color: #fff;
   border-radius: 10px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
 }
 
 h1 {
   color: #6b705c;
-  margin-bottom: 20px;
-}
-
-.features {
-  list-style: none;
-  padding: 0;
-  margin-bottom: 20px;
-}
-
-.features li {
-  margin: 10px 0;
-}
-
-.google-btn {
-  width: 100%;
-  padding: 10px;
-  background-color: #a5a58d;
-  border: none;
-  color: #fff;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.divider {
-  text-align: center;
-  margin: 15px 0;
-  color: #777;
+  margin-bottom: 30px;
 }
 
 form {
   display: flex;
   flex-direction: column;
+  align-items: stretch;
 }
 
 label {
-  margin-top: 10px;
-  font-weight: bold;
+  text-align: left;
+  margin-bottom: 5px;
   color: #6b705c;
+  font-weight: bold;
 }
 
-input[type="text"],
 input[type="email"],
 input[type="password"] {
-  padding: 8px;
-  margin-top: 5px;
+  padding: 10px;
+  margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
-.checkboxes {
-  margin: 15px 0;
-}
-
-.checkboxes label {
-  display: block;
-  font-weight: normal;
-  color: #333;
-  margin-bottom: 5px;
-}
-
-.checkboxes a {
-  color: #b5838d;
-  text-decoration: none;
-}
-
-.captcha-box {
-  border: 1px solid #ccc;
-  padding: 20px;
-  text-align: center;
-  color: #666;
-  background-color: #f9f9f9;
-  margin-bottom: 15px;
-  font-size: 14px;
-}
-
-.submit-btn {
+button {
   background-color: #6b705c;
-  color: white;
+  color: #ffffff;
   padding: 10px;
   border: none;
   font-weight: bold;
@@ -102,13 +54,16 @@ input[type="password"] {
   border-radius: 4px;
 }
 
-.signin {
+button:hover {
+  background-color: #5a5f4f;
+}
+
+.signup-text {
   margin-top: 20px;
-  text-align: center;
   font-size: 14px;
 }
 
-.signin a {
+.signup-text a {
   color: #b5838d;
   text-decoration: none;
 }
