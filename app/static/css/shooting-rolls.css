@@ -16,6 +16,7 @@ body {
 }
 
 /* 继续复用 gear-card 样式但可以微调 */
+/* Continue to reuse the gear-card style but can be fine-tuned */
 .gear-card {
     width: 236px; 
     /*max-width: 600px; */
@@ -56,21 +57,21 @@ body {
     height: 260px;
     
     border-radius: 0px;
-    position: relative; /* 相对定位，为了 film-cap */
+    position: relative; /* 相对定位，为了 film-cap *//* Relative positioning, for film-cap */
     display: flex;
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
-    overflow: hidden; /* 保证盖子不会溢出 */
+    overflow: hidden; /* 保证盖子不会溢出 *//* Make sure the lid doesn't overflow */
 }
 
-/* Hover 效果 */
+
 .film-logo-container:hover {
     animation: shake 0.6s ease-in-out;
     cursor: pointer;
 }
 
-/* 定义摇晃动画 */
+/* Define shake animation */
 @keyframes shake {
     0% { transform: rotate(0deg); }
     20% { transform: rotate(3deg); }
@@ -86,7 +87,7 @@ body {
     object-fit: fill;
     transform: rotate(270deg);
     outline: 2px solid #000000;
-    z-index: 2; /* 在盖子之下 */
+    z-index: 2; /* Under the cap */
     margin-top: 20px;
 }
 
@@ -98,33 +99,33 @@ body {
     margin-top: 10px;
 }
 
-/* 盖子 */
+/* cap */
 .film-cap {
-    width: 100%;   /* 拉满整条 */
+    width: 100%;   
     height: 20px;
     background: #ccc; 
-    border: 2px solid #000; /* 黑色边框 */
-    border-radius: 5px; /* 不需要圆角，普通矩形 */
+    border: 2px solid #000; 
+    border-radius: 5px; 
     position: absolute;
     left: 0;
-    z-index: 3; /* 盖子在上层 */
+    z-index: 3; /* cap is above */
 }
 
-/* 上盖子 */
+/* 上盖子 top cap */
 .film-cap.top {
-    top: 20px; /* 盖住 logo 的位置 */
+    top: 20px; 
 }
 
-/* 下盖子 */
+/* 下盖子 bottom cap */
 .film-cap.bottom {
     bottom: 0;
 }
 
 .film-cap.axle {
     top: 0px;
-    width: 50px; /* 轴的宽度 */
-    height: 30px; /* 轴的高度 */
-    left: 65px; /* 轴的左边距 */
+    width: 50px; 
+    height: 30px; 
+    left: 65px; 
 }
 
 .film-add-body {

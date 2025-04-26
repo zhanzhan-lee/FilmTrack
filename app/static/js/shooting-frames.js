@@ -20,17 +20,37 @@ function createRollRow(roll) {
     const row = document.createElement('div');
     row.className = 'roll-row';
 
-    const film = document.createElement('div');
-    film.className = 'film-logo-container-frame';
-    film.innerHTML = `
-        <div class="film-cap axle"></div>
-        <div class="film-cap top"></div>
-        <img src="${roll.film_image ? "/static/uploads/films/" + roll.film_image : "/static/images/film_placeholder.png"}" class="film-logo" alt="Film Logo">
-        <div class="film-cap bottom"></div>
+    // const film = document.createElement('div');
+    // film.className = 'film-logo-container-frame';
+    // film.innerHTML = `
+    //     <div class="film-cap axle"></div>
+    //     <div class="film-cap top"></div>
+    //     <img src="${roll.film_image ? "/static/uploads/films/" + roll.film_image : "/static/images/film_placeholder.png"}" class="film-logo" alt="Film Logo">
+    //     <div class="film-cap bottom"></div>
+    // `;
+    const filmWrapper = document.createElement('div');
+    filmWrapper.className = 'film-wrapper';
+    
+    filmWrapper.innerHTML = `
+        <div class="film-logo-container-frame">
+            <div class="film-cap axle"></div>
+            <div class="film-cap top"></div>
+            <img src="${roll.film_image ? "/static/uploads/films/" + roll.film_image : "/static/images/film_placeholder.png"}" class="film-logo" alt="Film Logo">
+            <div class="film-cap bottom"></div>
+        </div>
+        <div class="roll-name-label">${roll.roll_name || 'Untitled Roll'}</div>
     `;
-    film.addEventListener('click', () => {
-        openEditRoll(roll.id); // 如果需要可以复用 shooting-rolls.js 的打开编辑逻辑
+    
+    filmWrapper.querySelector('.film-logo-container-frame').addEventListener('click', () => {
+        openEditRoll(roll.id);
     });
+    
+    
+
+
+    // film.addEventListener('click', () => {
+    //     openEditRoll(roll.id); // If necessary, you can reuse the opening and editing logic of shooting-rolls.js
+    // });
 
     const strip = document.createElement('div');
     strip.className = 'film-strip';
@@ -46,8 +66,12 @@ function createRollRow(roll) {
         strip.appendChild(frame);
     }
 
-    row.appendChild(film);
+    // row.appendChild(film);
+    // row.appendChild(strip);
+
+    row.appendChild(filmWrapper);
     row.appendChild(strip);
+
 
     return row;
 }

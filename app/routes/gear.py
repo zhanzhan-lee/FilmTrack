@@ -230,7 +230,7 @@ def delete_camera(id):
         return jsonify({'message': 'deleted'}), 200
 
     except IntegrityError:
-        db.session.rollback()  #  回滚事务，防止 session 锁死
+        db.session.rollback()  #  回滚事务，防止 session 锁死Roll back the transaction to prevent the session from being locked
         return jsonify({
             'message': '❗ Unable to delete: This camera is linked to one or more photos.'
         }), 400
