@@ -33,6 +33,7 @@ def get_roll_data():
             'roll_name': roll.roll_name,
             'film_id': roll.film_id,
             'film_name': f"{roll.film.brand} {roll.film.name}" if roll.film else None,
+            'film_image': roll.film.image_path if roll.film else None,  # 
             'start_date': roll.start_date.strftime('%Y-%m-%d') if roll.start_date else None,
             'end_date': roll.end_date.strftime('%Y-%m-%d') if roll.end_date else None,
             'status': roll.status,
