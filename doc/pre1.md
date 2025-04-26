@@ -135,7 +135,7 @@ The **Gears page** is divided into three sections:
 
 
 
-### 3.3📊 Stats Page Overview💡Detailed
+### 3.3📊 Stats Page Overview💡`Detailed`
 
 **💡You must know this better than me, can show this in detail in the lab.**
 
