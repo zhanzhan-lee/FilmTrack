@@ -19,11 +19,28 @@ function loadRolls() {
                 const card = createRollCard(roll);
                 container.appendChild(card);
             });
-            const addBtn = document.createElement('div');
-            addBtn.className = 'gear-card add-card'; // 用原 gear 样式
-            addBtn.innerText = '＋ Add New Roll';
-            addBtn.addEventListener('click', openAddRollModal); // 点击打开新增 modal
-            container.appendChild(addBtn);
+            const addCard = document.createElement('div');
+            addCard.className = 'gear-card';
+            
+            // 直接构造一个假的胶卷罐
+            addCard.innerHTML = `
+                <div class="film-logo-container" id="add-roll-btn">
+                    <div class="film-cap axle"></div>
+                    <div class="film-cap top"></div>
+                    <div class="film-add-body">
+                        <div class="add-roll-text">＋ Add New Roll</div>
+                    </div>
+                    <div class="film-cap bottom"></div>
+                </div>
+            
+             
+            `;
+            
+            // 点击罐子就打开 modal
+            addCard.querySelector('#add-roll-btn').addEventListener('click', openAddRollModal);
+            
+            container.appendChild(addCard);
+            
         });
 }
 
@@ -68,6 +85,7 @@ function createRollCard(roll) {
             <div class="film-cap top"></div>
             <img src="${imgUrl}" class="film-logo" alt="Film Logo">
             <div class="film-cap bottom"></div>
+            
         </div>
 
         
@@ -79,12 +97,11 @@ function createRollCard(roll) {
             <p class="subtext"><strong>Start:</strong> ${roll.start_date || '—'} <br> <strong>End:</strong> ${roll.end_date || '—'}</p>
             <p class="subtext"><strong>Notes:</strong> ${roll.notes}</p>
         </div>
-        <div class="mt-2">
-            <button class="btn btn-sm btn-outline-primary me-2" onclick="openEditRoll(${roll.id})">Edit</button>
-            <button class="btn btn-sm btn-outline-danger" onclick="deleteRoll(${roll.id})">Delete</button>
-        </div>
+ 
     `;
-
+    card.querySelector('.film-logo-container').addEventListener('click', () => {
+        openEditRoll(roll.id);
+    });
     return card;
 }
 
@@ -145,18 +162,36 @@ function bindEditRollForm() {
         })
         .then(response => {
             if (response.ok) {
-                // 隐藏 modal
                 const modal = bootstrap.Modal.getInstance(document.getElementById('editRollModal'));
                 modal.hide();
-
-                // 刷新列表
                 loadRolls();
             } else {
                 alert("Failed to update roll.");
             }
         });
     });
+
+    // ✅ 注意：下面是和 submit 并列，不在 submit 内部
+    const deleteBtn = document.getElementById('delete-roll-btn');
+    deleteBtn.addEventListener('click', function () {
+        const rollId = document.getElementById('edit-roll-id').value;
+        if (!confirm('Are you sure you want to delete this roll?')) return;
+
+        fetch(`/shooting/delete_roll/${rollId}`, {
+            method: 'DELETE'
+        })
+        .then(response => {
+            if (response.ok) {
+                const modal = bootstrap.Modal.getInstance(document.getElementById('editRollModal'));
+                modal.hide();
+                loadRolls();
+            } else {
+                alert('Failed to delete roll.');
+            }
+        });
+    });
 }
+
 
 
 function bindRollForm() {
