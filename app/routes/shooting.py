@@ -10,18 +10,21 @@ shooting = Blueprint('shooting', __name__)
 
 # --------------------------------------------
 # 页面渲染：shooting 页面（初始加载）
+# Page rendering: shooting page (initial load)
 # --------------------------------------------
 @shooting.route('/shooting')
 @login_required
 def shooting_page():
     # 后续这里可以 preload 但我们预计 AJAX 加载即可
+    # We can preload it later, but we expect AJAX loading to be enough.
     return render_template(
         'shooting.html',
-        roll_form=RollForm()  # 提供 modal 表单
+        roll_form=RollForm()  # 提供 modal 表单(Provide modal form)
     )
 
 # --------------------------------------------
 # 数据接口：返回当前用户所有 Roll（AJAX）
+# Data interface: Return all Rolls of the current user (AJAX)
 # --------------------------------------------
 @shooting.route('/shooting/data/rolls')
 @login_required
@@ -45,6 +48,7 @@ def get_roll_data():
 
 # -----------------------------
 # 上传新 Roll（POST）
+# Upload a new Roll (POST)
 # -----------------------------
 @shooting.route('/shooting/upload_roll', methods=['POST'])
 @login_required
@@ -71,6 +75,7 @@ def upload_roll():
 
 # -----------------------------
 # 编辑 Roll（POST）
+# Edit Roll (POST)
 # -----------------------------
 @shooting.route('/shooting/edit_roll/<int:id>', methods=['POST'])
 @login_required
@@ -94,6 +99,7 @@ def edit_roll(id):
 
 # -----------------------------
 # 删除 Roll（DELETE）
+# Delete Roll (DELETE)
 # -----------------------------
 @shooting.route('/shooting/delete_roll/<int:id>', methods=['DELETE'])
 @login_required
