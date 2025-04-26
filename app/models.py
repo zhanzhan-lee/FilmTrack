@@ -89,7 +89,7 @@ class Roll(db.Model):
     status = db.Column(db.String(20))         # e.g. in use / developed
     notes = db.Column(db.Text)
 
-
+    film = db.relationship('Film')
     photos = db.relationship('Photo', backref='roll', lazy=True)
 
     def __repr__(self):

@@ -22,67 +22,15 @@
 
         <h2>Cameras</h2>
         <div id="camera-list" class="gear-section"></div>
-        <!-- <div class="gear-section">
-            {% for camera in cameras %}
-            <div class="gear-card">
-                
-                <img src="{{
-                    camera.image_path if camera.image_path and 'http' in camera.image_path
-                    else url_for('static', filename=(camera.image_path and 'uploads/cameras/' ~ camera.image_path) or 'images/cam_placeholder.png')
-                }}" alt="Camera">
-                
-                
-                <div class="info">
-                    <strong>{{ camera.name }}</strong><br>
-                    {{ camera.brand }}<br>
-                    <span class="subtext">{{ camera.type }} · {{ camera.format }}</span>
-                </div>
-            </div>
-            {% endfor %}
-            <div class="gear-card add-card"><a href="#">＋ Add</a></div>
-        </div> -->
+        <hr>
         
         <h2>Lenses</h2>
         <div id="lens-list" class="gear-section"></div>
-        <!-- <div class="gear-section">
-            {% for lens in lenses %}
-            <div class="gear-card">
-                <img src="{{
-                    lens.image_path if lens.image_path and 'http' in lens.image_path
-                    else url_for('static', filename=(lens.image_path and 'uploads/lenses/' ~ lens.image_path) or 'images/lens_placeholder.png')
-                }}" alt="Lens"> 
-                
-                <div class="info">
-                    <strong>{{ lens.name }}</strong><br>
-                    {{ lens.brand }}<br>
-                    <span class="subtext">{{ lens.mount_type }}</span>
-                </div>
-            </div>
-            {% endfor %}
-            <div class="gear-card add-card"><a href="#">＋ Add</a></div>
-        </div> -->
 
+        <hr>
         <h2>Film</h2>
         <div id="film-list" class="gear-section"></div>
-        <!-- <div class="gear-section">
-            {% for film in films %}
-            <div class="gear-card">
-                
-                <img src="{{
-                    film.image_path if film.image_path and 'http' in film.image_path
-                    else url_for('static', filename=(film.image_path and 'uploads/films/' ~ film.image_path) or 'images/film_placeholder.png')
-                }}" alt="Film">
-                
-                
-                <div class="info">
-                    <strong>{{ film.name }}</strong><br>
-                    {{ film.brand }}<br>
-                    <span class="subtext">ISO {{ film.iso }} · {{ film.format }}</span>
-                </div>
-            </div>
-            {% endfor %}
-            <div class="gear-card add-card"><a href="#">＋ Add</a></div>
-        </div> -->
+
     </div>
    
 </div>

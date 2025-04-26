@@ -1,0 +1,106 @@
+
+
+.roll-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 40px;
+    justify-content: flex-start; /* ✅ 靠左排列 */
+}
+
+.film-strip {
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap;     /* ✅ 不换行 */
+    align-items: center;
+    background: #333;
+    padding: 20px 60px 20px 20px; 
+    padding-right: 60px;
+    border-radius: 0 10px 10px 0 ;
+    overflow-x: auto; /* ✅ 允许横向滚动 */
+    margin-left: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    gap: 8px;               /* ✅ 控制 frame 之间距离 */
+    transform: translate(-30px, 10px) ;
+    
+}
+
+
+/* 上方打孔 */
+.film-strip::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 0;
+    right: 0;
+    height: 12px; /* 打孔高度 */
+    background: repeating-linear-gradient(
+        to right,
+        transparent 0px,
+        transparent 15px,
+        #111 15px,
+        #111 25px
+    );
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    z-index: 2;
+}
+
+/* 下方打孔 */
+.film-strip::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    bottom: 5px;
+    height: 12px;
+    background: repeating-linear-gradient(
+        to right,
+        transparent 0px,
+        transparent 15px,
+        #111 15px,
+        #111 25px
+    );
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    z-index: 2;
+}
+
+
+.film-frame {
+    width: 210px;
+    height: 140px;
+    flex: 0 0 auto;
+    background: #555;
+    border: 2px dashed #777;
+    border-radius: 4px;
+    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #bbb;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.film-frame:hover {
+    background: #666;
+    border-color: #aaa;
+    color: white;
+}
+
+.film-logo-container-frame {
+   
+    width: 180px;
+    height: 260px;
+    
+    border-radius: 0px;
+    position: relative; /* 相对定位，为了 film-cap */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    overflow: hidden; /* 保证盖子不会溢出 */
+}

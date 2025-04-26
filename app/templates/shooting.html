@@ -2,7 +2,8 @@
 {% block title %}My Shooting Rolls{% endblock %}
 
 {% block styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/shooting.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/shooting-rolls.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/shooting-frames.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -12,13 +13,20 @@
 {% include "_modals/roll_edit_modal.html" %}
 
 <div class="content-container">
-    <h2>My Rolls</h2>
+    <h2>Rolls In Use</h2>
     <div id="roll-list" class="gear-section"></div>
 </div>
 
+<hr>
+
+<div class="content-container">
+    <h2>Roll Frames</h2>
+    <div id="roll-detail-list" class="roll-detail-section"></div>
+</div>
 {% endblock %}
 
 
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/shooting.js') }}"></script>
+<script src="{{ url_for('static', filename='js/shooting-rolls.js') }}"></script>
+<script src="{{ url_for('static', filename='js/shooting-frames.js') }}"></script>
 {% endblock %}
