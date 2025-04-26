@@ -1,0 +1,145 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f2e8cf;
+  color: #333;
+}
+
+.container {
+  max-width: 400px;
+  margin: 30px auto;
+  padding: 40px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  color: #6b705c;
+  margin-bottom: 20px;
+}
+
+.features {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.features li {
+  margin: 10px 0;
+}
+
+.google-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #a5a58d;
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.divider {
+  text-align: center;
+  margin: 15px 0;
+  color: #777;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #6b705c;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.checkboxes {
+  margin: 15px 0;
+}
+
+.checkboxes label {
+  display: block;
+  font-weight: normal;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.checkboxes a {
+  color: #b5838d;
+  text-decoration: none;
+}
+
+.captcha-box {
+  border: 1px solid #ccc;
+  padding: 20px;
+  text-align: center;
+  color: #666;
+  background-color: #f9f9f9;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.submit-btn {
+  background-color: #6b705c;
+  color: white;
+  padding: 10px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.signin {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.signin a {
+  color: #b5838d;
+  text-decoration: none;
+}
+.flash {
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  font-size: 14px;
+  text-align: left;
+}
+
+.flash.success {
+  background-color: #d4edda;
+  color: #155724;
+  border-left: 5px solid #28a745;
+}
+
+.flash.danger {
+  background-color: #f8d7da;
+  color: #721c24;
+  border-left: 5px solid #dc3545;
+}
+
+.flash.warning {
+  background-color: #fff3cd;
+  color: #856404;
+  border-left: 5px solid #ffc107;
+}
+
+.flash.info {
+  background-color: #d1ecf1;
+  color: #0c5460;
+  border-left: 5px solid #17a2b8;
+}
