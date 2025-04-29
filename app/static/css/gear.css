@@ -3,9 +3,9 @@ body {
 
 }
 
-.content-container {
+/* .content-container {
     transform: translateX(50px);
-}
+} */
 
 .gear-section {
     display: flex;

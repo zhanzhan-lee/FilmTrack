@@ -16,6 +16,7 @@
     max-width: 1600px;
     margin: 0 auto;
     display: flex;
+    flex-wrap: nowrap; /* ✅加这句，防止换行 */
     justify-content: space-between;
     align-items: center;
 }
@@ -32,6 +33,10 @@
     height: 70px;
 }
 
+#site-logo {
+    height: 70px;
+    content: url("/static/images/logo.png"); /* 默认大屏logo路径 */
+}
 /* 右侧：登录登出按钮 */
 .right-items .navbar-nav {
     display: flex;
@@ -46,6 +51,10 @@
     color: #6B705C;
     font-size: 20px;
     font-weight: bold;
+}
+
+.container {
+    margin-top: 120px; /* 向下移动主内容，调整值以适应你的需求 */
 }
 
 .custom-navbar .btn {
@@ -86,26 +95,61 @@
     color: white;
 }
 
-/* 小屏幕适配 */
-@media (max-width: 768px) {
-    .navbar-inner {
-        flex-direction: column;
-        align-items: flex-start;
-        height: auto;
-        padding-top: 10px;
-        padding-bottom: 10px;
-    }
 
-    .right-items .navbar-nav {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .right-items .nav-item {
-        margin-left: 0;
-        margin-top: 10px;
-    }
+/* 用户头像按钮 */
+.user-avatar {
+    position: relative;
 }
+
+.avatar-btn {
+    width: 50px;
+    height: 50px;
+    background-color: #6B705C; /* 深绿背景 */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.avatar-btn:hover {
+    background-color: #5a6350; /* hover颜色 */
+}
+
+/* 下拉菜单 */
+.dropdown-menu {
+    min-width: 120px;
+    font-size: 16px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* Sidebar 基础样式 */
@@ -175,7 +219,36 @@
 
 /* 小屏幕优化 */
 @media (max-width: 768px) {
+    #site-logo {
+        height: 70px;
+        content: url("/static/images/logo-small.png"); /* 小屏logo路径 */
+    }
     .sidebar {
         width: 250px;
     }
 }
+/* 小屏幕适配 */
+@media (max-width: 768px) {
+    .navbar-inner {
+        flex-direction: row;       /* ✅ 保持水平布局 */
+        align-items: center;       /* ✅ 垂直居中 */
+        justify-content: space-between;
+        height: auto;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+
+    .right-items .navbar-nav {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .right-items .nav-item {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+

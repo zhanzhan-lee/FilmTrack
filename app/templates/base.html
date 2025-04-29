@@ -28,24 +28,18 @@
         </div>
 
         <div class="right-items d-flex align-items-center">
-            <ul class="navbar-nav d-flex flex-row align-items-center">
-                {% if current_user.is_authenticated %}
-                    <li class="nav-item me-3">
-                        <span class="nav-link">Welcome, {{ current_user.username }}</span>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-logout nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="btn btn-login nav-link" href="{{ url_for('auth.login') }}">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-signup nav-link" href="{{ url_for('auth.register') }}">Sign Up</a>
-                    </li>
-                {% endif %}
-            </ul>
-        </div>
+            {% if current_user.is_authenticated %}
+                <div class="user-avatar">
+                    <button class="avatar-btn" data-bs-toggle="modal" data-bs-target="#profileModal">
+                    {{ current_user.username[0]|upper }}
+                    </button>
+                </div>
+                
+            {% else %}
+                <a class="btn btn-login nav-link" href="{{ url_for('auth.login') }}">Login</a>
+                <a class="btn btn-signup nav-link" href="{{ url_for('auth.register') }}">Sign Up</a>
+            {% endif %}
+        </div>        
     </div>
 </nav>
 
@@ -84,5 +78,18 @@
 <script src="{{ url_for('static', filename='js/base-navbar.js') }}"></script>
 
 {% block scripts %}{% endblock %}
+
+<!-- Profile Modal -->
+<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        {% include '_modals/profile.html' %}
+      </div>
+    </div>
+  </div>
+  
+
+
+
 </body>
 </html>
