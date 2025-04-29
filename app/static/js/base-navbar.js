@@ -1,24 +1,19 @@
-const sidebar = document.getElementById('sidebar');
-const sidebarToggle = document.getElementById('sidebarToggle');
-const sidebarClose = document.getElementById('sidebarClose');
+document.addEventListener('DOMContentLoaded', function() {
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
 
-// Toggle sidebar and change button content
-sidebarToggle?.addEventListener('click', function () {
-    sidebar.classList.toggle('active');
-
-    // Change button content based on sidebar state
-    if (sidebar.classList.contains('active')) {
-        sidebarToggle.textContent = '✕'; 
-      
-    } else {
-        sidebarToggle.textContent = '☰';
-       
+    if (sidebarToggle) {
+        sidebarToggle.addEventListener('click', function() {
+            sidebar.classList.add('active');
+            sidebarOverlay.classList.add('active');
+        });
     }
-});
 
-// Close sidebar and reset button content
-sidebarClose?.addEventListener('click', function () {
-    sidebar.classList.remove('active');
-    sidebarToggle.textContent = '☰'; 
-    // Reset to "☰" when sidebar is closed
+    if (sidebarOverlay) {
+        sidebarOverlay.addEventListener('click', function() {
+            sidebar.classList.remove('active');
+            sidebarOverlay.classList.remove('active');
+        });
+    }
 });
