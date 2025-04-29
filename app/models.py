@@ -10,7 +10,8 @@ class User(db.Model, UserMixin):  # ⬅ 加上 UserMixin
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
-
+    image_path = db.Column(db.String(200))
+    
     cameras = db.relationship('Camera', backref='owner', lazy=True)
     lenses = db.relationship('Lens', backref='owner', lazy=True)
     films = db.relationship('Film', backref='owner', lazy=True)
