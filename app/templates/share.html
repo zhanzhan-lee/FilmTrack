@@ -2,7 +2,15 @@
 
 {% block title %}Share{% endblock %}
 
-{% block styles %}
+{% block content %}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title or "Share Data" }}</title>
   <style>
     :root {
       --main: #6B705C;
@@ -15,7 +23,6 @@
     body {
       background-color: var(--bg);
       font-family: system-ui, sans-serif;
-      padding: 140px 20px 20px; /* 避开 fixed-top 导航 */
       color: #333;
     }
 
@@ -77,6 +84,7 @@
       width: 100%;
       padding: 8px;
       margin: 6px 0 12px;
+      margin: 6px 0 12px;
       border: 1px solid #ccc;
       border-radius: 6px;
       font-size: 14px;
@@ -111,14 +119,17 @@
     }
     .btn-share {
       background-color: var(--main);
-      color: white;
+      color: #fff;
+    }
+    .btn-share:hover {
+      background-color: #55614C;
     }
     .btn-share:hover {
       background-color: #55614C;
     }
     .btn-cancel {
       background-color: var(--accent);
-      color: white;
+      color: #fff;
     }
     .btn-cancel:hover {
       background-color: #9E6B77;
