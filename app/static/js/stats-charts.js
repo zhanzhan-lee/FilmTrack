@@ -143,6 +143,7 @@ function gearChart(elementID) {
         },
         options: {
           responsive: true,
+          maintainAspectRatio: true,
           animation: {
             duration: 1000,
             easing: 'easeOutQuart'
@@ -151,9 +152,26 @@ function gearChart(elementID) {
             legend: {
               display: false
             },
+            datalabels: {
+              color: '#eee', // Text color
+              font: {
+                size: 12,
+                weight: 'bold'
+              },
+              formatter: function(value) {
+                return value;
+              }
+            },
             tooltip: {
-              enabled: false
-            }
+              enabled: true,
+              callbacks: {
+                label: function(context) {
+                  const label = context.label || '';
+                  const value = context.raw || 0;
+                  return ` ${value} photos`; // TODO: Make singular when only 1 photo
+                }
+              }
+            },
           },
           scales: {
             x: {
