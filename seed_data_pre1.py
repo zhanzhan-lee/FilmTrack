@@ -77,7 +77,7 @@ def create_rolls(users, films):
                 user_id=user.id,
                 start_date=base_date + timedelta(days=i * 10 + j * 5),
                 end_date=base_date + timedelta(days=i * 10 + j * 5 + 2),
-                status="scanned",
+                status="in use",
                 notes=f"Example roll {j+1} for {user.username}"
             )
             db.session.add(roll)
