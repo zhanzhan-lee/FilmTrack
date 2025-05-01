@@ -64,7 +64,7 @@ body {
     background-color: #f8f9fa;
     box-shadow: 10px 0 10px rgba(0,0,0,0.1);
     transition: left 0.3s ease;
-    z-index: 1000;
+    z-index: 2000;
     padding-top: 20px;
     padding-left: 20px;
 }
