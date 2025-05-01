@@ -21,7 +21,6 @@ body {
     flex-direction: row;
     gap: 2rem;
     justify-content: center;
-    
 }
 
 .chart-container {
@@ -43,6 +42,18 @@ body {
     padding: 25px;
     border-radius: 15px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+@media (max-width: 1000px) {
+    .chart-row {
+        flex-direction: column; /* Stack tiles vertically on smaller screens */
+        gap: 1rem; /* Reduce spacing between tiles */
+    }
+
+    .chart-tile {
+        flex: 1 1 100%; /* Allow tiles to take the full width of the screen */
+        min-width: 100%; /* Prevent tiles from shrinking too much */
+    }
 }
 
 .bar {
@@ -169,14 +180,19 @@ body {
 
 #monthly {
     flex: 2;
+    width: 100%;
 }
 
 #map {
+    min-width: 400px;
+    max-width: 600px;
     height: 400px;
-    width: 600px;
+    width: 100%;
     border-radius: 15px;
+    justify-content: center;
 }
 
 #location-stats {
     flex: 1;
+    min-width: 400px;
 }
