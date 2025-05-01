@@ -131,10 +131,6 @@ function updateFilmLeaderboard() {
       console.log(data);
 
       data.labels.forEach((filmName, index) => {
-        
-        const count = data.data[index];
-        const imageUrl = `/static/images/films/${filmName.replace(/\s+/g, '-').toLowerCase()}.jpg`; // Example image path
-
         const position = document.createElement('div');
         position.className = 'film-leaderboard';
         if (index == 0)
@@ -142,7 +138,7 @@ function updateFilmLeaderboard() {
           position.innerHTML = `
           <div class="film-leaderboard-position">
             <img
-              src="https://images.squarespace-cdn.com/content/v1/579d7b8c29687f4dd9d83ad9/775260f5-a308-4f4f-ad52-26e2032c918d/000048930026.jpg?format=1000w"
+              src="/static/images/${data.images[index]}"
               id="favourite-film-img">
             <div class="first-place-film">
               <h1>#1</h1>
