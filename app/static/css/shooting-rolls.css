@@ -28,8 +28,16 @@ body {
     padding: 15px;
     font-family: sans-serif;
     transition: all 0.3s ease; 
-    
 }
+
+.subtext {
+    font-size: 14px;
+    color: #555;
+    margin: 0.2rem 0;  /* ✅ 减小上下间距 */
+    line-height: 1.4;
+  }
+  
+
 
 /* .gear-card:hover {
     transform: scale(1.02);

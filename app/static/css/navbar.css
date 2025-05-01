@@ -1,5 +1,11 @@
+/* ---------------------------- */
+/*  Navbar MAIN        */
+/* ---------------------------- */
 .custom-navbar {
-    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
     height: 100px;
     background-color: #F2E8CF;
     color: #6B705C;
@@ -7,37 +13,39 @@
     padding: 0 20px;
     display: flex;
     align-items: center;
+    box-sizing: border-box;
     z-index: 1000;
+    transition: all 0.3s ease;
 }
 
-/* 内部整体结构 */
 .navbar-inner {
     width: 100%;
     max-width: 1600px;
     margin: 0 auto;
     display: flex;
-    flex-wrap: nowrap; /* ✅加这句，防止换行 */
     justify-content: space-between;
     align-items: center;
+    flex-wrap: nowrap; /* 避免内容换行 */
 }
 
-/* 左侧：sidebar按钮 + logo */
+/* ---------------------------- */
+/*  Navbar LEFT        */
+/* ---------------------------- */
 .left-items {
     display: flex;
     align-items: center;
     gap: 20px;
 }
 
-/* Logo调整 */
-.navbar-brand img {
-    height: 70px;
-}
-
+.navbar-brand img,
 #site-logo {
     height: 70px;
-    content: url("/static/images/logo.png"); /* 默认大屏logo路径 */
+    content: url("/static/images/logo.png");
 }
-/* 右侧：登录登出按钮 */
+
+/* ---------------------------- */
+/*  Navbar RIGHT        */
+/* ---------------------------- */
 .right-items .navbar-nav {
     display: flex;
     align-items: center;
@@ -51,10 +59,6 @@
     color: #6B705C;
     font-size: 20px;
     font-weight: bold;
-}
-
-.container {
-    margin-top: 120px; /* 向下移动主内容，调整值以适应你的需求 */
 }
 
 .custom-navbar .btn {
@@ -76,7 +80,36 @@
     color: white;
 }
 
-/* Sidebar Toggle按钮 */
+/* ---------------------------- */
+/* User avatar button              */
+/* ---------------------------- */
+.user-avatar {
+    position: relative;
+}
+
+.avatar-btn {
+    width: 50px;
+    height: 50px;
+    background-color: #6B705C;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 50px;
+    cursor: pointer;
+    margin-right: 20px;
+    transition: all 0.3s ease;
+}
+
+.avatar-btn:hover {
+    background-color: #5a6350;
+}
+
+/* ---------------------------- */
+/* ☰ Sidebar Toggle         */
+/* ---------------------------- */
 #sidebarToggle {
     width: 50px;
     height: 50px;
@@ -95,32 +128,9 @@
     color: white;
 }
 
-
-/* 用户头像按钮 */
-.user-avatar {
-    position: relative;
-}
-
-.avatar-btn {
-    width: 50px;
-    height: 50px;
-    background-color: #6B705C; /* 深绿背景 */   
-    color: white;
-    border: none;
-    border-radius: 50%;
-    font-size: 24px;
-    font-weight: bold;
-    text-align: center;
-    line-height: 50px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.avatar-btn:hover {
-    background-color: #5a6350; /* hover颜色 */
-}
-
-/* 下拉菜单 */
+/* ---------------------------- */
+/*  Bootstrap Drop-down menu adjustment   */
+/* ---------------------------- */
 .dropdown-menu {
     min-width: 120px;
     font-size: 16px;
@@ -128,8 +138,16 @@
     margin-top: 10px;
 }
 
+/* ---------------------------- */
+/* Main content container offset */
+/* ---------------------------- */
+.container {
+    margin-top: 120px;
+}
 
-/* Sidebar 基础样式 */
+/* ---------------------------- */
+/*  Sidebar               */
+/* ---------------------------- */
 .sidebar {
     position: fixed;
     top: 0;
@@ -143,12 +161,10 @@
     padding: 100px 20px 20px 20px; /* 预留 navbar 高度 */
 }
 
-/* Sidebar 展开时 */
 .sidebar.active {
     left: 0;
 }
 
-/* Sidebar link 样式 */
 .sidebar a {
     display: block;
     text-decoration: none;
@@ -168,16 +184,14 @@
     color: #666;
 }
 
-/* Home link 特别处理 */
 .sidebar-home {
-    display: block;
     font-size: 28px;
     font-weight: bold;
     margin-bottom: 20px;
     color: #333;
 }
 
-/* 透明遮罩，用来关闭 sidebar */
+/*  Sidebar Mask layer */
 #sidebar-overlay {
     position: fixed;
     top: 0;
@@ -189,35 +203,57 @@
     display: none;
 }
 
-/* 展开时显示遮罩 */
 #sidebar-overlay.active {
     display: block;
 }
 
-/* 小屏幕优化 */
+/* ---------------------------- */
+/*Small screen adaptation（≤768px)*/
+/* ---------------------------- */
 @media (max-width: 768px) {
-    #site-logo {
+    .custom-navbar {
         height: 70px;
-        content: url("/static/images/logo-small.png"); /* 小屏logo路径 */
+        padding-top: 0;
+        padding-bottom: 0;
     }
+
+    .navbar-inner {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        height: auto;
+        padding: 0 10px;
+    }
+
+    #site-logo {
+        height: 50px;
+        content: url("/static/images/logo-small.png");
+    }
+
+    .avatar-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+        line-height: 40px;
+    }
+
+    #sidebarToggle {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+
     .sidebar {
         width: 250px;
     }
-}
-/* 小屏幕适配 */
-@media (max-width: 768px) {
-    .navbar-inner {
-        flex-direction: row;       /* ✅ 保持水平布局 */
-        align-items: center;       /* ✅ 垂直居中 */
-        justify-content: space-between;
-        height: auto;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        padding-left: 0px;
-        padding-right: 0px;
-    }
-}
 
+    .navbar-brand img {
+        height: 50px;
+    }
+
+    .container {
+        margin-top: 80px;
+    }
 
     .right-items .navbar-nav {
         flex-direction: column;
@@ -228,4 +264,4 @@
         margin-left: 0;
         margin-top: 10px;
     }
-
+}

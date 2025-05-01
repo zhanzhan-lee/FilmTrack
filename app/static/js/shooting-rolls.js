@@ -15,10 +15,14 @@ function loadRolls() {
         .then(data => {
             const container = document.getElementById('roll-list');
             container.innerHTML = '';
-            data.forEach(roll => {
+            const inUseRolls = data.filter(roll => roll.status === 'in use');
+
+            inUseRolls.forEach(roll => {
                 const card = createRollCard(roll);
                 container.appendChild(card);
             });
+
+
             const addCard = document.createElement('div');
             addCard.className = 'gear-card';
             
@@ -89,14 +93,21 @@ function createRollCard(roll) {
         </div>
 
         
-        
         <div class="info">
+            <h5>${roll.roll_name || '(Untitled Roll)'}</h5>
+            <p class="subtext"><strong>Film:</strong> ${roll.film_name || '—'}</p>
+            <p class="subtext"><strong>Start:</strong> ${roll.start_date || '—'}</p>
+            <button class="btn btn-sm btn-outline-success mt-2" data-finish-roll="${roll.id}">
+                 Mark as Finished
+            </button>
+        </div>
+        <!--<div class="info">
             <h5>${roll.roll_name || '(Untitled Roll)'}</h5>
             <p class="subtext"><strong>Film:</strong> ${roll.film_name || '—'}</p>
             <p class="subtext"><strong>Status:</strong> ${roll.status || '—'}</p>
             <p class="subtext"><strong>Start:</strong> ${roll.start_date || '—'} <br> <strong>End:</strong> ${roll.end_date || '—'}</p>
             <p class="subtext"><strong>Notes:</strong> ${roll.notes}</p>
-        </div>
+        </div>  
  
     `;
     card.querySelector('.film-logo-container').addEventListener('click', () => {
@@ -228,3 +239,34 @@ function openAddRollModal() {
     const modal = new bootstrap.Modal(document.getElementById('rollModal'));
     modal.show();
 }
+
+
+
+
+
+// finish roll
+
+document.addEventListener('click', function (e) {
+    if (e.target.matches('[data-finish-roll]')) {
+      const rollId = e.target.getAttribute('data-finish-roll');
+  
+      fetch(`/shooting/finish_roll/${rollId}`, {
+        method: 'POST'
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            // 1. 移除当前 roll 卡片
+            const card = e.target.closest('.gear-card');
+            if (card) card.remove();
+  
+            // 2. 插入到 strip 区域（如果 strip 模块已注册函数）
+            if (data.roll.status === 'finished' && window.createRollRow) {
+              const row = createRollRow(data.roll);
+              document.getElementById('roll-detail-list').appendChild(row);
+            }
+          }
+        });
+    }
+  });
+  
