@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}My Gear{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/gear.css') }}">
+{% endblock %}
+
+{% block content %}
+<!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/gear.css') }}"> -->
+
+{% include "_modals/camera_modal.html" %}
+{% include "_modals/lens_modal.html" %}
+{% include "_modals/film_modal.html" %}
+
+{% include "_modals/camera_edit_modal.html" %}
+{% include "_modals/lens_edit_modal.html" %}
+{% include "_modals/film_edit_modal.html" %}
+
+
+<div class="content-container">
+
+
+        <h2>Cameras</h2>
+        <div id="camera-list" class="gear-section"></div>
+        <hr>
+        
+        <h2>Lenses</h2>
+        <div id="lens-list" class="gear-section"></div>
+
+        <hr>
+        <h2>Film</h2>
+        <div id="film-list" class="gear-section"></div>
+
+    </div>
+   
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/gear.js') }}"></script>
+{% endblock %}
+
+

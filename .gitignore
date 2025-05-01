@@ -178,3 +178,4 @@ cython_debug/
 
 # Local virtualenv!!!
 venv/
+app/static/uploads/

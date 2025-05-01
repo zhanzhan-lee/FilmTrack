@@ -47,6 +47,7 @@ class Lens(db.Model):
     brand = db.Column(db.String(50))
     mount_type = db.Column(db.String(50))
     is_public = db.Column(db.Boolean, default=False)
+    image_path = db.Column(db.String(200))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     
@@ -66,6 +67,7 @@ class Film(db.Model):
     iso = db.Column(db.String(20))
     format = db.Column(db.String(20))     # e.g. 35mm, 120
     is_public = db.Column(db.Boolean, default=False)
+    image_path = db.Column(db.String(200))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     photos = db.relationship('Photo', backref='film', lazy=True)
@@ -87,7 +89,7 @@ class Roll(db.Model):
     status = db.Column(db.String(20))         # e.g. in use / developed
     notes = db.Column(db.Text)
 
-
+    film = db.relationship('Film')
     photos = db.relationship('Photo', backref='roll', lazy=True)
 
     def __repr__(self):
@@ -109,7 +111,7 @@ class Photo(db.Model):
     location = db.Column(db.String(100))
 
     #  Equipment used (camera, lens, film)
-    camera_id = db.Column(db.Integer, db.ForeignKey('camera.id'), nullable=False)
+    camera_id = db.Column(db.Integer, db.ForeignKey('camera.id'), nullable=True)
     lens_id = db.Column(db.Integer, db.ForeignKey('lens.id'), nullable=True)
     film_id = db.Column(db.Integer, db.ForeignKey('film.id'), nullable=True)
 

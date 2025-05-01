@@ -42,7 +42,15 @@
 }
 
 
+.btn-login,
+.btn-signup,
+.btn-logout {
+    margin-left: 10px;
+}
 
+body {
+    padding-top: 130px; 
+}
 /* _________________________________________________________________ */
 
 
@@ -51,7 +59,7 @@
     position: fixed;
     top: 100px; /* Adjusted to match the navbar height */
     left: -250px;
-    width: 250px;
+    width: 340px;
     height: 100%;
     background-color: #f8f9fa;
     box-shadow: 10px 0 10px rgba(0,0,0,0.1);
@@ -65,20 +73,90 @@
     left: 0;
 }
 
-.sidebar a {
+
+.sidebar-home {
+    font-size: 28px;
+    font-weight: bold;
+    padding: 24px 0;
+    position: relative;
     color: #333;
     text-decoration: none;
 }
 
-.btn-login,
-.btn-signup,
-.btn-logout {
-    margin-left: 10px;
+.sidebar-title {
+    font-size: 28px;
 }
 
-body {
-    padding-top: 130px; 
+.sidebar-home .title-icon {
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 35px;
+    color: #666;
+    padding-right: 2px; 
+    padding-right: 24px;
 }
+
+.sidebar a {
+    position: relative; 
+    display: block;
+    text-decoration: none;
+    color: #333;
+    padding: 20px 0;
+    width: 100%;
+    font-size: 25px;
+}
+
+.sidebar a .icon {
+    position: absolute;
+    right: 0; 
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 35px;
+    color: #533737;
+    padding-right: 9px; 
+}
+
+
+
+/* Sidebar link hover styles */
+.sidebar a,
+.sidebar-home {
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.sidebar a:hover,
+.sidebar-home:hover {
+    color: #000;
+    transform: scale(1.05);
+}
+
+
+.sidebar-home .sidebar-title {
+    display: inline-block;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.sidebar-home:hover .sidebar-title {
+    color: #000;
+    transform: scale(1.05);
+}
+
+.sidebar a .icon,
+.sidebar-home .title-icon {
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.sidebar a:hover .icon,
+.sidebar-home:hover .title-icon {
+    color: #000;
+    transform: translateY(-50%) scale(1.08);
+}
+
+
+
+
 
 
 /* Sidebar toggle button styles */

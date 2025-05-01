@@ -1,0 +1,23 @@
+<div class="modal fade" id="filmModal" tabindex="-1" aria-labelledby="filmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form id="film-form" enctype="multipart/form-data" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="filmModalLabel">Upload Film</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          {{ film_form.hidden_tag() }}
+          {{ film_form.name.label }} {{ film_form.name(class="form-control") }}
+          {{ film_form.brand.label }} {{ film_form.brand(class="form-control") }}
+          {{ film_form.iso.label }} {{ film_form.iso(class="form-control") }}
+          {{ film_form.format.label }} {{ film_form.format(class="form-select") }}
+          {{ film_form.image.label }} {{ film_form.image(class="form-control") }}
+          {{ film_form.is_public() }} {{ film_form.is_public.label }}
+        </div>
+        <div class="modal-footer">
+          {{ film_form.submit(class="btn btn-dark") }}
+        </div>
+      </form>
+    </div>
+  </div>
+  

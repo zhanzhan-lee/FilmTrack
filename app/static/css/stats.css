@@ -132,7 +132,7 @@ body {
     width: 130px !important;
 }
 
-#apeture-distribution {
+#aperture-distribution {
     width: 300px;
 }
 
@@ -175,6 +175,6 @@ body {
     border-radius: 15px;
 }
 
-#city-stats {
+#location-stats {
     flex: 1;
 }

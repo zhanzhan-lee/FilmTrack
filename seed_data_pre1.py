@@ -30,9 +30,9 @@ def create_users():
 def create_films(users):
     """Create sample films for each user."""
     films = [
-        Film(name="Portra 400", brand="Kodak", iso="400", format="35mm", user_id=users[0].id),
-        Film(name="HP5 Plus", brand="Ilford", iso="400", format="35mm", user_id=users[0].id),
-        Film(name="Ektar 100", brand="Kodak", iso="100", format="35mm", user_id=users[1].id),
+        Film(name="Portra 400", brand="Kodak", iso="400", format="35mm", user_id=users[0].id, image_path="Portra 400.jpg"),
+        Film(name="Kodak gold 200", brand="Kodak", iso="200", format="35mm", user_id=users[0].id, image_path="Kodak gold 200.png"),
+        Film(name="Velvia 100", brand="Fujifilm", iso="100", format="35mm", user_id=users[0].id, image_path="Velvia 100.jpg"),
         Film(name="Superia X-TRA 400", brand="Fujifilm", iso="400", format="35mm", user_id=users[2].id)
     ]
     db.session.add_all(films)
@@ -44,7 +44,7 @@ def create_cameras(users):
     cameras = [
         Camera(name="Nikon F", brand="Nikon", type="SLR", format="35mm", user_id=users[0].id, image_path="nikon_f.jpg"),
         Camera(name="Canon AE-1", brand="Canon", type="SLR", format="35mm", user_id=users[0].id),
-        Camera(name="Leica IIIG", brand="Leica", type="Rangefinder", format="35mm", user_id=users[1].id, image_path="leica_iiig.jpg"),
+        Camera(name="Leica IIIG", brand="Leica", type="Rangefinder", format="35mm", user_id=users[0].id, image_path="leica_iiig.jpg"),
         Camera(name="Pentax K1000", brand="Pentax", type="SLR", format="35mm", user_id=users[2].id)
     ]
     db.session.add_all(cameras)
@@ -55,8 +55,8 @@ def create_lenses(users):
     """Create sample lenses for each user."""
     lenses = [
         Lens(name="Nikkor 50mm f/1.4", brand="Nikon", mount_type="F", user_id=users[0].id),
-        Lens(name="Leitz 50mm f/3.5 Elmar", brand="Leitz", mount_type="L39", user_id=users[1].id, image_path="leitz_50mm_elmar.jpg"),
-        Lens(name="Canon FD 50mm f/1.8", brand="Canon", mount_type="FD", user_id=users[0].id),
+        Lens(name="Leitz 50mm f/3.5 Elmar", brand="Leitz", mount_type="L39", user_id=users[0].id, image_path="leitz_50mm_elmar.jpg"),
+        Lens(name="Canon FD 50mm f/1.8", brand="Canon", mount_type="FD", user_id=users[1].id),
         Lens(name="Pentax 50mm f/2", brand="Pentax", mount_type="K", user_id=users[2].id)
     ]
     db.session.add_all(lenses)
@@ -72,7 +72,7 @@ def create_rolls(users, films):
     for i, user in enumerate(users):
         for j in range(2):  # Two rolls per user
             roll = Roll(
-                roll_name=f"{roll_names[j]} ({user.username})",
+                roll_name=f"{roll_names[j]} ",
                 film_id=films[(i + j) % len(films)].id,
                 user_id=user.id,
                 start_date=base_date + timedelta(days=i * 10 + j * 5),

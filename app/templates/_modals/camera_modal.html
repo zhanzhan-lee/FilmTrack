@@ -1,0 +1,23 @@
+<div class="modal fade" id="cameraModal" tabindex="-1" aria-labelledby="cameraModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form id="camera-form" enctype="multipart/form-data" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="cameraModalLabel">Upload Camera</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          {{ camera_form.hidden_tag() }}
+          {{ camera_form.name.label }} {{ camera_form.name(class="form-control") }}
+          {{ camera_form.brand.label }} {{ camera_form.brand(class="form-control") }}
+          {{ camera_form.type.label }} {{ camera_form.type(class="form-select") }}
+          {{ camera_form.format.label }} {{ camera_form.format(class="form-select") }}
+          {{ camera_form.image.label }} {{ camera_form.image(class="form-control") }}
+          {{ camera_form.is_public() }} {{ camera_form.is_public.label }}
+        </div>
+        <div class="modal-footer">
+          {{ camera_form.submit(class="btn btn-dark") }}
+        </div>
+      </form>
+    </div>
+  </div>
+  
