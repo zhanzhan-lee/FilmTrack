@@ -122,6 +122,49 @@ function apertureDistributionChart() {
   .catch(error => console.error('Error fetching aperture distribution data:', error));
 }
 
+function updateFilmLeaderboard() {
+  fetch('/api/film-chart-preference')
+    .then(response => response.json())
+    .then(data => {
+      const leaderboard = document.querySelector('#favourite-film .chart-container');
+
+      console.log(data);
+
+      data.labels.forEach((filmName, index) => {
+        
+        const count = data.data[index];
+        const imageUrl = `/static/images/films/${filmName.replace(/\s+/g, '-').toLowerCase()}.jpg`; // Example image path
+
+        const position = document.createElement('div');
+        position.className = 'film-leaderboard';
+        if (index == 0)
+        {
+          position.innerHTML = `
+          <div class="film-leaderboard-position">
+            <img
+              src="https://images.squarespace-cdn.com/content/v1/579d7b8c29687f4dd9d83ad9/775260f5-a308-4f4f-ad52-26e2032c918d/000048930026.jpg?format=1000w"
+              id="favourite-film-img">
+            <div class="first-place-film">
+              <h1>#1</h1>
+              <p>${filmName}</p>
+            </div>
+          </div>
+          `;
+        }
+        else {
+          position.innerHTML = `
+          <div class="film-leaderboard-position">
+            <h3>#${index+1} ${filmName}</h3>
+          </div>
+        `;
+        }
+
+        leaderboard.append(position)
+      });
+    })
+    .catch(error => console.error('Error fetching film leaderboard:', error));
+}
+
 function gearChart(elementID) {
   fetch('/api/' + elementID + '-preference')
     .then(response => response.json())
@@ -250,6 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   monthlyTrendChart();
   apertureDistributionChart();
+  updateFilmLeaderboard();
 
   gearChart('lenses-chart');
   gearChart('film-chart');
