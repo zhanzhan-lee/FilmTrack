@@ -2,15 +2,7 @@
 
 {% block title %}Share{% endblock %}
 
-{% block content %}
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>{{ title or "Share Data" }}</title>
+{% block styles %}
   <style>
     :root {
       --main: #6B705C;
@@ -23,6 +15,7 @@
     body {
       background-color: var(--bg);
       font-family: system-ui, sans-serif;
+      padding: 140px 20px 20px; /* 避开 fixed-top 导航 */
       color: #333;
     }
 
@@ -84,7 +77,6 @@
       width: 100%;
       padding: 8px;
       margin: 6px 0 12px;
-      margin: 6px 0 12px;
       border: 1px solid #ccc;
       border-radius: 6px;
       font-size: 14px;
@@ -119,17 +111,14 @@
     }
     .btn-share {
       background-color: var(--main);
-      color: #fff;
-    }
-    .btn-share:hover {
-      background-color: #55614C;
+      color: white;
     }
     .btn-share:hover {
       background-color: #55614C;
     }
     .btn-cancel {
       background-color: var(--accent);
-      color: #fff;
+      color: white;
     }
     .btn-cancel:hover {
       background-color: #9E6B77;
@@ -222,16 +211,17 @@
       }
     }
     /* 让外层 .container 有平滑右移动画 */
-    .container{
-      transition: margin-left .3s ease;
-    }
+.container{
+  transition: margin-left .3s ease;
+}
 
-    /* 侧栏展开(active)时，桌面(>=768px)整体右移，避免遮挡 */
-    @media (min-width: 768px){
-      #sidebar.active ~ .container{
-        margin-left: 260px;          /* 与侧栏宽度保持一致 */
-      }
-    }
+/* 侧栏展开(active)时，桌面(>=768px)整体右移，避免遮挡 */
+@media (min-width: 768px){
+  #sidebar.active ~ .container{
+    margin-left: 260px;          /* 与侧栏宽度保持一致 */
+  }
+}
+
   </style>
 {% endblock %}
 
