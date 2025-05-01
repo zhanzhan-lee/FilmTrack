@@ -20,7 +20,8 @@ body {
     flex-wrap: wrap;
     flex-direction: row;
     gap: 2rem;
-    justify-content: space-between;
+    justify-content: center;
+    
 }
 
 .chart-container {
