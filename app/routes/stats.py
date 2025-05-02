@@ -162,15 +162,17 @@ def get_film_preference():
 
     labels = []
     data = []
+    images = []
 
     for film_id, count in results:
         film = Film.query.get(film_id) 
         if film:
             labels.append(film.name) 
             data.append(count)
+            images.append(film.image_path)
 
     # Return the data as JSON
-    return jsonify({"labels": labels, "data": data})
+    return jsonify({"labels": labels, "data": data, "images": images})
 
 @stats.route('/api/top-locations', methods=['GET'])
 def get_top_locations():

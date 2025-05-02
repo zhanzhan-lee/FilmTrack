@@ -30,9 +30,9 @@ def create_users():
 def create_films(users):
     """Create sample films for each user."""
     films = [
-        Film(name="Portra 400", brand="Kodak", iso="400", format="35mm", user_id=users[0].id, image_path="Portra 400.jpg"),
-        Film(name="Kodak gold 200", brand="Kodak", iso="200", format="35mm", user_id=users[0].id, image_path="Kodak gold 200.png"),
-        Film(name="Velvia 100", brand="Fujifilm", iso="100", format="35mm", user_id=users[0].id, image_path="Velvia 100.jpg"),
+        Film(name="Portra 400", brand="Kodak", iso="400", format="35mm", user_id=users[0].id, image_path="Portra_400.jpg"),
+        Film(name="Kodak gold 200", brand="Kodak", iso="200", format="35mm", user_id=users[0].id, image_path="Kodak_gold_200.jpg"),
+        Film(name="Velvia 100", brand="Fujifilm", iso="100", format="35mm", user_id=users[0].id, image_path="Velvia_100.jpg"),
         Film(name="Superia X-TRA 400", brand="Fujifilm", iso="400", format="35mm", user_id=users[2].id)
     ]
     db.session.add_all(films)
@@ -70,7 +70,7 @@ def create_rolls(users, films):
     rolls = []
 
     for i, user in enumerate(users):
-        for j in range(2):  # Two rolls per user
+        for j in range(3):  # Three rolls per user
             roll = Roll(
                 roll_name=f"{roll_names[j]} ",
                 film_id=films[(i + j) % len(films)].id,
@@ -94,7 +94,7 @@ def create_photos(users, rolls, cameras, lenses, films):
     current_date = datetime.now()
 
     for roll in rolls:
-        for j in range(5):  # Five photos per roll
+        for j in range(10):  # Ten photos per roll
             # Spread the shot_date between the roll's start_date and the current date
             days_difference = (current_date - roll.start_date).days
             random_days_offset = random.randint(0, days_difference)
