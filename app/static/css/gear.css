@@ -3,9 +3,6 @@ body {
 
 }
 
-/* .content-container {
-    transform: translateX(50px);
-} */
 
 .gear-section {
     display: flex;
@@ -14,19 +11,7 @@ body {
     margin-bottom: 20px;
 }
 
-/* .gear-card {
-    width: 309px;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    text-align: center;
-    padding: 10px;
-    font-family: sans-serif;
 
-    transition: all 0.3s ease; 
-   
-} */
 
 .gear-card {
     flex: 1 1 calc(25% - 15px);
@@ -51,8 +36,8 @@ body {
 
 .gear-card img {
     width: 100%;
-    aspect-ratio: 5/ 4; /* 固定宽高比例 */
-    object-fit: cover;   /* 图片铺满区域，但保持比例，裁边 */
+    aspect-ratio: 5/ 4; /* Fixed aspect ratio */
+    object-fit: cover;   /* The image fills the area but maintains the proportions and crops the edges */
     display: block;
     border-radius: 8px;
 }
