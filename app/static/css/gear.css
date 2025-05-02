@@ -3,9 +3,6 @@ body {
 
 }
 
-.content-container {
-    transform: translateX(50px);
-}
 
 .gear-section {
     display: flex;
@@ -14,8 +11,11 @@ body {
     margin-bottom: 20px;
 }
 
+
+
 .gear-card {
-    width: 309px;
+    flex: 1 1 calc(25% - 15px);
+    max-width: calc(25% - 15px);
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
@@ -23,9 +23,7 @@ body {
     text-align: center;
     padding: 10px;
     font-family: sans-serif;
-
     transition: all 0.3s ease; 
-    /* transition: transform 0.2s ease, box-shadow 0.2s ease; */
 }
 
 .gear-card:hover {
@@ -34,12 +32,17 @@ body {
     cursor: pointer;
 } 
 
+
+
 .gear-card img {
     width: 100%;
-    height: 220px;
-    object-fit: cover;
+    aspect-ratio: 5/ 4; /* Fixed aspect ratio */
+    object-fit: cover;   /* The image fills the area but maintains the proportions and crops the edges */
+    display: block;
     border-radius: 8px;
 }
+
+
 
 .gear-card .info {
     margin-top: 8px;
@@ -67,4 +70,11 @@ body {
     border-color: #5e5c5c;
 
     /* background-color: #fff; */
+}
+
+@media (max-width: 768px) {
+    .gear-card {
+        flex: 1 1 calc(50% - 12px);
+        max-width: calc(50% - 12px);
+    }
 }

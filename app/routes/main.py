@@ -14,3 +14,6 @@ def about():
 def contact():
     return render_template('contact.html', title="Contact Us", message="Get in touch with us.")
 
+@main.route('/intro')
+def intro():
+    return render_template('intro.html', title="Home Page", message="Home Page!")

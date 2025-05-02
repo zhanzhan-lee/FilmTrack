@@ -108,3 +108,30 @@ def delete_roll(id):
     db.session.delete(roll)
     db.session.commit()
     return jsonify({'message': 'deleted'}), 200
+
+
+# -----------------------------
+# 完成拍摄（POST）
+# finish shooting (POST)
+# -----------------------------
+
+
+@shooting.route('/shooting/finish_roll/<int:id>', methods=['POST'])
+@login_required
+def finish_roll(id):
+    roll = Roll.query.filter_by(id=id, user_id=current_user.id).first_or_404()
+    roll.status = 'finished'
+    db.session.commit()
+
+    return jsonify({
+        'success': True,
+        'roll': {
+            'id': roll.id,
+            'roll_name': roll.roll_name,
+            'film_id': roll.film_id,
+            'film_name': f"{roll.film.brand} {roll.film.name}" if roll.film else None,
+            'film_image': roll.film.image_path if roll.film else None,
+            'start_date': roll.start_date.strftime('%Y-%m-%d') if roll.start_date else None,
+            'status': roll.status
+        }
+    })

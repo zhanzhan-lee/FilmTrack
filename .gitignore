@@ -179,3 +179,7 @@ cython_debug/
 # Local virtualenv!!!
 venv/
 app/static/uploads/
+
+# SQLite database
+db.sqlite
+db.sqlite-journal

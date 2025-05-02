@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 // -----------------------------
-// 加载 roll 卡片列表
+// 加载 roll 卡片列表 loadRolls card list
 // -----------------------------
 function loadRolls() {
     fetch('/shooting/data/rolls')
@@ -15,14 +15,18 @@ function loadRolls() {
         .then(data => {
             const container = document.getElementById('roll-list');
             container.innerHTML = '';
-            data.forEach(roll => {
+            const inUseRolls = data.filter(roll => roll.status === 'in use');
+
+            inUseRolls.forEach(roll => {
                 const card = createRollCard(roll);
                 container.appendChild(card);
             });
+
+
             const addCard = document.createElement('div');
             addCard.className = 'gear-card';
             
-            // 直接构造一个假的胶卷罐
+            // create a fake roll pot
             addCard.innerHTML = `
                 <div class="film-logo-container" id="add-roll-btn">
                     <div class="film-cap axle"></div>
@@ -36,7 +40,7 @@ function loadRolls() {
              
             `;
             
-            // 点击罐子就打开 modal
+            // click roll pot to open modal 
             addCard.querySelector('#add-roll-btn').addEventListener('click', openAddRollModal);
             
             container.appendChild(addCard);
@@ -46,7 +50,7 @@ function loadRolls() {
 
 
 // -----------------------------
-// 加载 film 下拉选项（用于两个 modal）
+// Load the film dropdown options (for both modals)
 // -----------------------------
 function loadFilmOptions() {
     fetch('/gear/data/films')
@@ -72,7 +76,7 @@ function createRollCard(roll) {
     const card = document.createElement('div');
     card.className = 'gear-card';
 
-    // 判断图片
+
     const imgUrl = (!roll.film_image)
         ? "/static/images/film_placeholder.png"
         : (roll.film_image.startsWith("http")
@@ -89,14 +93,21 @@ function createRollCard(roll) {
         </div>
 
         
-        
         <div class="info">
+            <h5>${roll.roll_name || '(Untitled Roll)'}</h5>
+            <p class="subtext"><strong>Film:</strong> ${roll.film_name || '—'}</p>
+            <p class="subtext"><strong>Start:</strong> ${roll.start_date || '—'}</p>
+            <button class="btn btn-sm btn-outline-success mt-2" data-finish-roll="${roll.id}">
+                 Mark as Finished
+            </button>
+        </div>
+        <!--<div class="info">
             <h5>${roll.roll_name || '(Untitled Roll)'}</h5>
             <p class="subtext"><strong>Film:</strong> ${roll.film_name || '—'}</p>
             <p class="subtext"><strong>Status:</strong> ${roll.status || '—'}</p>
             <p class="subtext"><strong>Start:</strong> ${roll.start_date || '—'} <br> <strong>End:</strong> ${roll.end_date || '—'}</p>
             <p class="subtext"><strong>Notes:</strong> ${roll.notes}</p>
-        </div>
+        </div>  
  
     `;
     card.querySelector('.film-logo-container').addEventListener('click', () => {
@@ -109,7 +120,7 @@ function createRollCard(roll) {
 
 
 function openEditRoll(id) {
-    fetch('/shooting/data/rolls')  // 简化用全部数据找对应 roll（你也可以开个 /shooting/data/rolls/<id> 接口）
+    fetch('/shooting/data/rolls')  
         .then(response => response.json())
         .then(data => {
             const roll = data.find(r => r.id === id);
@@ -139,7 +150,7 @@ function deleteRoll(id) {
     })
     .then(response => {
         if (response.ok) {
-            loadRolls(); // 刷新列表
+            loadRolls(); // Refresh List
         } else {
             alert('Failed to delete roll.');
         }
@@ -171,7 +182,6 @@ function bindEditRollForm() {
         });
     });
 
-    // ✅ 注意：下面是和 submit 并列，不在 submit 内部
     const deleteBtn = document.getElementById('delete-roll-btn');
     deleteBtn.addEventListener('click', function () {
         const rollId = document.getElementById('edit-roll-id').value;
@@ -195,10 +205,10 @@ function bindEditRollForm() {
 
 
 function bindRollForm() {
-    const form = document.getElementById('roll-form');  // ⬅️ 你的 add Roll form id 是 roll-form
+    const form = document.getElementById('roll-form');  
 
     form.addEventListener('submit', function (e) {
-        e.preventDefault(); // 阻止浏览器默认提交
+        e.preventDefault(); //Prevent browsers from submitting by default
 
         const formData = new FormData(form);
 
@@ -208,14 +218,14 @@ function bindRollForm() {
         })
         .then(response => {
             if (response.ok) {
-                // 隐藏 modal
+                // hide modal
                 const modal = bootstrap.Modal.getInstance(document.getElementById('rollModal'));
                 modal.hide();
 
-                // 清空表单
+                // Clear form
                 form.reset();
 
-                // 刷新 roll 列表
+                // Refresh the roll list
                 loadRolls();
             } else {
                 alert('Failed to add roll.');
@@ -228,3 +238,34 @@ function openAddRollModal() {
     const modal = new bootstrap.Modal(document.getElementById('rollModal'));
     modal.show();
 }
+
+
+
+
+
+// finish roll
+
+document.addEventListener('click', function (e) {
+    if (e.target.matches('[data-finish-roll]')) {
+      const rollId = e.target.getAttribute('data-finish-roll');
+  
+      fetch(`/shooting/finish_roll/${rollId}`, {
+        method: 'POST'
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            // 1. Remove the current roll card
+            const card = e.target.closest('.gear-card');
+            if (card) card.remove();
+  
+            // 2. Insert into the frames area 
+            if (data.roll.status === 'finished' && window.createRollRow) {
+              const row = createRollRow(data.roll);
+              document.getElementById('roll-detail-list').appendChild(row);
+            }
+          }
+        });
+    }
+  });
+  

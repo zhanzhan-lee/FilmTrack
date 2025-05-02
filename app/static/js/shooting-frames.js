@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     loadRollDetailView();
+    bindRollForm();
 });
 
 function loadRollDetailView() {
@@ -8,8 +9,9 @@ function loadRollDetailView() {
         .then(data => {
             const container = document.getElementById('roll-detail-list');
             container.innerHTML = '';
+            const finishedRolls = data.filter(roll => roll.status === 'finished');
 
-            data.forEach(roll => {
+            finishedRolls.forEach(roll => {
                 const row = createRollRow(roll);
                 container.appendChild(row);
             });
@@ -77,3 +79,4 @@ function createRollRow(roll) {
 }
 
 
+window.createRollRow = createRollRow;

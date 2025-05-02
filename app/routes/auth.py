@@ -2,7 +2,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required
-
+from flask_login import login_required, current_user
 from app.models import User
 from app import db
 
@@ -48,3 +48,11 @@ def logout():
     logout_user()  # Flask-Login to logout
     flash('You have been logged out.', 'info')
     return redirect(url_for('main.home'))
+
+
+
+
+@auth.route('/profile')
+@login_required
+def profile():
+    return render_template('_modals/profile.html', user=current_user)

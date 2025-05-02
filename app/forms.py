@@ -41,7 +41,7 @@ class RollForm(FlaskForm):
     film_id = SelectField('Film Used', coerce=int, validators=[DataRequired()])
     start_date = DateField('Start Date', validators=[Optional()])
     end_date = DateField('End Date', validators=[Optional()])
-    status = SelectField('Status', choices=[('in use', 'In Use'), ('developed', 'Developed')], validators=[Optional()])
+    status = SelectField('Status', choices=[('in use', 'In Use'), ('finished', 'Finished')], validators=[Optional()])
     notes = TextAreaField('Notes', validators=[Optional()])
     submit = SubmitField('Save Roll')
 

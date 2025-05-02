@@ -10,7 +10,8 @@ class User(db.Model, UserMixin):  # ⬅ 加上 UserMixin
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
-
+    image_path = db.Column(db.String(200))
+    
     cameras = db.relationship('Camera', backref='owner', lazy=True)
     lenses = db.relationship('Lens', backref='owner', lazy=True)
     films = db.relationship('Film', backref='owner', lazy=True)
@@ -120,3 +121,29 @@ class Photo(db.Model):
 
     def __repr__(self):
         return f'<Photo {self.shot_date} ISO {self.iso}>'
+    
+# -------------------------
+# Share
+# -------------------------
+
+class Share(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    from_user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)  # User who initiated the share
+    to_user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)    # User who received the share
+    start_date = db.Column(db.DateTime, nullable=False)  # Start date of the shared period
+    end_date = db.Column(db.DateTime, nullable=False)    # End date of the shared period
+    note = db.Column(db.String(200))  # Optional note
+    created_at = db.Column(db.DateTime, default=db.func.now())  # Timestamp when the share was created
+
+    # Fields to control shared content
+    share_exposure = db.Column(db.Boolean, default=False)        # Shutter speed/ISO distribution
+    share_aperture = db.Column(db.Boolean, default=False)        # Aperture distribution
+    share_favorite_film = db.Column(db.Boolean, default=False)   # Favorite film preferences
+    share_gear = db.Column(db.Boolean, default=False)            # Camera/lens preferences
+    share_shoot_time = db.Column(db.Boolean, default=False)      # Shooting time chart
+
+    from_user = db.relationship('User', foreign_keys=[from_user_id], backref='shares_made')  # Relationship to the user who shared
+    to_user = db.relationship('User', foreign_keys=[to_user_id], backref='shares_received')  # Relationship to the user who received
+
+    # The same from_user can only have one sharing record with to_user
+    __table_args__ = (db.UniqueConstraint('from_user_id', 'to_user_id', name='unique_user_share'),)
