@@ -1,184 +1,267 @@
+/* ---------------------------- */
+/*  Navbar MAIN        */
+/* ---------------------------- */
 .custom-navbar {
-    background-color: #F2E8CF; /* Custom background color */
-    color: #6B705C; /* Custom text color */
-    border-bottom: 2px solid #6B705C; /* Add a bottom border */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100px;
+    background-color: #F2E8CF;
+    color: #6B705C;
+    border-bottom: 2px solid #6B705C;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.navbar-inner {
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap; /* 避免内容换行 */
+}
+
+/* ---------------------------- */
+/*  Navbar LEFT        */
+/* ---------------------------- */
+.left-items {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.navbar-brand img,
+#site-logo {
+    height: 70px;
+    content: url("/static/images/logo.png");
+}
+
+/* ---------------------------- */
+/*  Navbar RIGHT        */
+/* ---------------------------- */
+.right-items .navbar-nav {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-nav .nav-item {
+    margin-left: 20px;
 }
 
 .custom-navbar .nav-link {
-    color: #6B705C; /* Navigation link text color */
+    color: #6B705C;
     font-size: 20px;
-}
-
-.custom-navbar .nav-item {
-    display: flex; /* Use Flexbox layout */
-    align-items: center; /* Vertically align items */
     font-weight: bold;
 }
 
-/* Custom navbar button styles */
 .custom-navbar .btn {
-    margin-left: 20px; /* Spacing between buttons */
-    border-radius: 15px; /* Rounded corners */
-    font-size: 20px;
-    font-weight: bold; /* Bold text */
-    padding: 12px 20px; /* Adjust button padding */
-    transition: background-color 0.3s ease, color 0.3s ease; /* Add transition effect */
+    border-radius: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Hover effect for buttons */
-.custom-navbar .btn-login:hover {
-    background-color: #6B705C; /* Background color on hover */
-    color: white; /* Text color on hover */
-}
-
+.custom-navbar .btn-login:hover,
 .custom-navbar .btn-signup:hover {
-    background-color: #6B705C; /* Background color on hover */
-    color: white; /* Text color on hover */
+    background-color: #6B705C;
+    color: white;
 }
 
 .custom-navbar .btn-logout:hover {
-    background-color: #B5838D; /* Background color on hover */
-    color: white; /* Text color on hover */
+    background-color: #B5838D;
+    color: white;
 }
 
-
-.btn-login,
-.btn-signup,
-.btn-logout {
-    margin-left: 10px;
+/* ---------------------------- */
+/* User avatar button              */
+/* ---------------------------- */
+.user-avatar {
+    position: relative;
 }
 
-body {
-    padding-top: 130px; 
+.avatar-btn {
+    width: 50px;
+    height: 50px;
+    background-color: #6B705C;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 50px;
+    cursor: pointer;
+    
+    transition: all 0.3s ease;
 }
-/* _________________________________________________________________ */
 
+.avatar-btn:hover {
+    background-color: #5a6350;
+}
 
+/* ---------------------------- */
+/* ☰ Sidebar Toggle         */
+/* ---------------------------- */
+#sidebarToggle {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 26px;
+    border: 1px solid #6B705C;
+    border-radius: 8px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
 
+#sidebarToggle:hover {
+    transform: scale(1.1);
+    background-color: #6B705C;
+    color: white;
+}
+
+/* ---------------------------- */
+/*  Bootstrap Drop-down menu adjustment   */
+/* ---------------------------- */
+.dropdown-menu {
+    min-width: 120px;
+    font-size: 16px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+/* ---------------------------- */
+/* Main content container offset */
+/* ---------------------------- */
+.container {
+    margin-top: 120px;
+}
+
+/* ---------------------------- */
+/*  Sidebar               */
+/* ---------------------------- */
 .sidebar {
     position: fixed;
-    top: 100px; /* Adjusted to match the navbar height */
-    left: -250px;
-    width: 340px;
+    top: 0;
+    left: -300px;
+    width: 300px;
     height: 100%;
     background-color: #f8f9fa;
-    box-shadow: 10px 0 10px rgba(0,0,0,0.1);
+    box-shadow: 5px 0 15px rgba(0,0,0,0.1);
     transition: left 0.3s ease;
-    z-index: 1001;
-    padding-top: 20px;
-    padding-left: 20px;
+    z-index: 1100;
+    padding: 100px 20px 20px 20px; /* 预留 navbar 高度 */
 }
 
 .sidebar.active {
     left: 0;
 }
 
-
-.sidebar-home {
-    font-size: 28px;
-    font-weight: bold;
-    padding: 24px 0;
-    position: relative;
-    color: #333;
-    text-decoration: none;
-}
-
-.sidebar-title {
-    font-size: 28px;
-}
-
-.sidebar-home .title-icon {
-    position: absolute;
-    right: 0px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 35px;
-    color: #666;
-    padding-right: 2px; 
-    padding-right: 24px;
-}
-
 .sidebar a {
-    position: relative; 
     display: block;
     text-decoration: none;
     color: #333;
-    padding: 20px 0;
-    width: 100%;
-    font-size: 25px;
+    padding: 15px 0;
+    font-size: 22px;
+    font-weight: bold;
+    position: relative;
 }
 
 .sidebar a .icon {
     position: absolute;
-    right: 0; 
+    right: 10px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 35px;
-    color: #533737;
-    padding-right: 9px; 
+    font-size: 28px;
+    color: #666;
 }
 
-
-
-/* Sidebar link hover styles */
-.sidebar a,
 .sidebar-home {
-    transition: transform 0.2s ease, color 0.2s ease;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
 }
 
-.sidebar a:hover,
-.sidebar-home:hover {
-    color: #000;
-    transform: scale(1.05);
+/*  Sidebar Mask layer */
+#sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1050;
+    display: none;
 }
 
-
-.sidebar-home .sidebar-title {
-    display: inline-block;
-    transition: transform 0.2s ease, color 0.2s ease;
+#sidebar-overlay.active {
+    display: block;
 }
 
-.sidebar-home:hover .sidebar-title {
-    color: #000;
-    transform: scale(1.05);
+/* ---------------------------- */
+/*Small screen adaptation（≤768px)*/
+/* ---------------------------- */
+@media (max-width: 768px) {
+    .custom-navbar {
+        height: 70px;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .navbar-inner {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        height: auto;
+        padding: 0 10px;
+    }
+
+    #site-logo {
+        height: 50px;
+        content: url("/static/images/logo-small.png");
+    }
+
+    .avatar-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+        line-height: 40px;
+    }
+
+    #sidebarToggle {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+
+    .sidebar {
+        width: 250px;
+    }
+
+    .navbar-brand img {
+        height: 50px;
+    }
+
+    .container {
+        margin-top: 80px;
+    }
+
+    .right-items .navbar-nav {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .right-items .nav-item {
+        margin-left: 0;
+        margin-top: 10px;
+    }
 }
-
-.sidebar a .icon,
-.sidebar-home .title-icon {
-    transition: transform 0.2s ease, color 0.2s ease;
-}
-
-.sidebar a:hover .icon,
-.sidebar-home:hover .title-icon {
-    color: #000;
-    transform: translateY(-50%) scale(1.08);
-}
-
-
-
-
-
-
-/* Sidebar toggle button styles */
-#sidebarToggle {
-    width: 55px; /* Fixed width */
-    height: 55px; /* Fixed height */
-    display: flex; /* Use Flexbox for centering */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    font-size: 24px; /* Ensure consistent font size */
-    line-height: 1; /* Avoid font height affecting layout */
-    transition: transform 0.3s ease, background-color 0.3s ease; /* Add smooth transitions */
-    border: 1px solid #6B705C; /* Border */
-    border-radius: 5px; /* Rounded corners */
-    overflow: hidden;  
-    
-}
-
-/* Hover effect for the toggle button */
-#sidebarToggle:hover {
-    transform: scale(1.1); /* Slightly enlarge on hover */
-    background-color: #6B705C; /* Change background color */
-    color: white; /* Change text color */
-}
-

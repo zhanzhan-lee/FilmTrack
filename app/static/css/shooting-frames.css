@@ -33,7 +33,7 @@
     top: 5px;
     left: 0;
     right: 0;
-    height: 12px; /* 打孔高度 */
+    height: 12px; /* Punching height */
     background: repeating-linear-gradient(
         to right,
         transparent 0px,
