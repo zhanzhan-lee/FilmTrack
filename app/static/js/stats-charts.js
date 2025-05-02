@@ -122,6 +122,45 @@ function apertureDistributionChart() {
   .catch(error => console.error('Error fetching aperture distribution data:', error));
 }
 
+function updateFilmLeaderboard() {
+  fetch('/api/film-chart-preference')
+    .then(response => response.json())
+    .then(data => {
+      const leaderboard = document.querySelector('#favourite-film .chart-container');
+
+      console.log(data);
+
+      data.labels.forEach((filmName, index) => {
+        const position = document.createElement('div');
+        position.className = 'film-leaderboard';
+        if (index == 0)
+        {
+          position.innerHTML = `
+          <div class="film-leaderboard-position">
+            <img
+              src="/static/images/${data.images[index]}"
+              id="favourite-film-img">
+            <div class="first-place-film">
+              <h1>#1</h1>
+              <p>${filmName}</p>
+            </div>
+          </div>
+          `;
+        }
+        else {
+          position.innerHTML = `
+          <div class="film-leaderboard-position">
+            <h3>#${index+1} ${filmName}</h3>
+          </div>
+        `;
+        }
+
+        leaderboard.append(position)
+      });
+    })
+    .catch(error => console.error('Error fetching film leaderboard:', error));
+}
+
 function gearChart(elementID) {
   fetch('/api/' + elementID + '-preference')
     .then(response => response.json())
@@ -143,6 +182,7 @@ function gearChart(elementID) {
         },
         options: {
           responsive: true,
+          maintainAspectRatio: true,
           animation: {
             duration: 1000,
             easing: 'easeOutQuart'
@@ -151,9 +191,26 @@ function gearChart(elementID) {
             legend: {
               display: false
             },
+            datalabels: {
+              color: '#eee', // Text color
+              font: {
+                size: 12,
+                weight: 'bold'
+              },
+              formatter: function(value) {
+                return value;
+              }
+            },
             tooltip: {
-              enabled: false
-            }
+              enabled: true,
+              callbacks: {
+                label: function(context) {
+                  const label = context.label || '';
+                  const value = context.raw || 0;
+                  return ` ${value} photos`; // TODO: Make singular when only 1 photo
+                }
+              }
+            },
           },
           scales: {
             x: {
@@ -232,6 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   monthlyTrendChart();
   apertureDistributionChart();
+  updateFilmLeaderboard();
 
   gearChart('lenses-chart');
   gearChart('film-chart');
