@@ -5,44 +5,36 @@
 {% block styles %}
 <style>
 /* ----------- 全局色板 ----------- */
-:root {
-  --main: #6B705C;
-  --bg:   #F2E8CF;
-  --accent: #B5838D;
-  --secondary: #A5A58D;
+:root{
+  --main:#6B705C;
+  --bg:#F2E8CF;
+  --accent:#B5838D;
+  --secondary:#A5A58D;
 }
 
 /* ----------- 页面基础 ----------- */
 body{
-  background: var(--bg);
-  font-family: system-ui, sans-serif;
-  /* 给固定导航留出空间 */
-  padding: 140px 20px 20px;
+  background:var(--bg);
+  font-family:system-ui,sans-serif;
+  padding:140px 20px 20px;          /* 避开 fixed 顶栏 */
   color:#333;
 }
 
-/* 让外层 .container 透明 & 可右移 */
-.container{
-  background: transparent !important;
-  box-shadow:none !important;
-  padding:0 !important;
-  transition: margin-left .3s ease;
+.container{                          /* 外层透明，可右移 */
+  background:transparent!important;
+  box-shadow:none!important;
+  padding:0!important;
+  transition:margin-left .3s ease;
+}
+/* 桌面端侧栏展开右移 */
+@media(min-width:992px){
+  #sidebar.active + .container{margin-left:260px;}
 }
 
-/* 桌面端：侧栏展开时整体右移 260px */
-@media (min-width: 992px){
-  #sidebar.active + .container{
-    margin-left:260px;
-  }
-}
-
-/* ----------- 白色内容卡片 ----------- */
+/* ----------- 白色卡片 ----------- */
 .share-container{
-  width:85%;
-  max-width:900px;
-  margin:auto;
-  background:#fff;
-  border-radius:12px;
+  width:85%;max-width:900px;margin:auto;
+  background:#fff;border-radius:12px;
   padding:30px 40px;
   box-shadow:0 4px 12px rgba(0,0,0,0.06);
 }
@@ -50,16 +42,15 @@ body{
 /* ----------- 文字 & 表单 ----------- */
 h1{font-size:24px;color:var(--main);margin-bottom:6px;}
 p.subtext{color:#666;font-size:14px;margin-bottom:24px;}
-
 fieldset{border:none;margin-bottom:20px;}
 legend{font-weight:bold;margin-bottom:10px;color:var(--main);}
-
 .checkbox-grid{display:flex;flex-wrap:wrap;gap:20px;margin-top:8px;}
 .checkbox-grid label{display:flex;align-items:center;gap:6px;font-size:14px;}
 
 input[type="date"],input[type="text"],textarea{
   width:100%;padding:8px;margin:6px 0 12px;
-  border:1px solid #ccc;border-radius:6px;font-size:14px;background:#fff;
+  border:1px solid #ccc;border-radius:6px;
+  font-size:14px;background:#fff;
   box-shadow:inset 0 1px 2px rgba(0,0,0,0.05);
 }
 textarea{height:80px;resize:vertical;}
@@ -68,8 +59,9 @@ textarea{height:80px;resize:vertical;}
 
 .buttons{margin-top:20px;display:flex;gap:12px;}
 .buttons button{
-  padding:10px 20px;border:none;border-radius:6px;cursor:pointer;
-  font-size:14px;font-weight:bold;transition:background-color .3s ease;
+  padding:10px 20px;border:none;border-radius:6px;
+  cursor:pointer;font-size:14px;font-weight:bold;
+  transition:background-color .3s ease;
 }
 .btn-share{background:var(--main);color:#fff;}
 .btn-share:hover{background:#55614C;}
@@ -78,27 +70,37 @@ textarea{height:80px;resize:vertical;}
 
 /* ----------- 表格 ----------- */
 .section-title{margin-top:40px;font-size:18px;color:var(--main);}
+
+/* 新增：表格横向滚动容器 */
+.table-responsive{
+  width:100%;
+  overflow-x:auto;
+}
 .shared-table{
-  margin-top:20px;width:100%;border-collapse:collapse;font-size:14px;
-  background:#fff;border-radius:6px;overflow:hidden;
+  width:100%;min-width:600px;        /* 表格内容宽度 */
+  border-collapse:collapse;font-size:14px;
+  background:#fff;border-radius:6px;
   box-shadow:0 2px 6px rgba(0,0,0,0.05);
 }
-.shared-table th,.shared-table td{
-  border:1px solid #ddd;padding:10px;text-align:left;
+.shared-table th,
+.shared-table td{
+  border:1px solid #ddd;
+  padding:10px;text-align:left;
 }
-.shared-table th{background:#f9f7f1;color:var(--main);}
+.shared-table th{
+  background:#f9f7f1;color:var(--main);
+}
 .revoke-btn{
-  background:crimson;color:#fff;border:none;padding:6px 10px;
-  border-radius:4px;cursor:pointer;
+  background:crimson;color:#fff;border:none;
+  padding:6px 10px;border-radius:4px;cursor:pointer;
 }
 
-/* Emoji 回退字体，确保 🎞 图标正常 */
+/* Emoji 回退 */
 .icon,.title-icon{
   font-family:'Segoe UI Emoji','Apple Color Emoji','Noto Color Emoji',system-ui,sans-serif;
 }
 
 /* ----------- 响应式 ----------- */
-/* 平板及以下 */
 @media(max-width:768px){
   .share-container{width:100%;max-width:none;padding:20px;}
   .checkbox-grid{flex-direction:column;gap:12px;}
@@ -106,14 +108,10 @@ textarea{height:80px;resize:vertical;}
   .buttons{flex-direction:column;}
   .buttons button{width:100%;}
 }
-/* 手机 */
 @media(max-width:480px){
-  h1{font-size:20px;}
-  p.subtext{font-size:13px;}
+  h1{font-size:20px;}p.subtext{font-size:13px;}
   legend,.section-title{font-size:16px;}
   input,textarea{padding:6px;font-size:13px;}
-  .shared-table{display:block;overflow-x:auto;width:100%;}
-  .shared-table th,.shared-table td{white-space:nowrap;}
 }
 </style>
 {% endblock %}
@@ -164,17 +162,21 @@ textarea{height:80px;resize:vertical;}
     </div>
 
     <h2 class="section-title">Data Shared by You</h2>
-    <table class="shared-table">
-      <tr>
-        <th>Date</th><th>Users</th><th>Data</th><th>Time Range</th><th>Actions</th>
-      </tr>
-      <tr>
-        <td>2025-04-11</td><td>@alice, @zane</td>
-        <td>Exposure, Gear Pref...</td>
-        <td>2025-03-01 to 2025-03-31</td>
-        <td><button class="revoke-btn">Revoke</button></td>
-      </tr>
-    </table>
+    <div class="table-responsive">
+      <table class="shared-table">
+        <tr>
+          <th>Date</th><th>Users</th><th>Data</th><th>Time Range</th><th>Actions</th>
+        </tr>
+        <tr>
+          <td>2025-04-11</td>
+          <td>@alice, @zane</td>
+          <td>Exposure, Gear Pref...</td>
+          <td>2025-03-01 to<br>2025-03-31</td>
+          <td><button class="revoke-btn">Revoke</button></td>
+        </tr>
+      </table>
+    </div>
   </form>
 </div>
 {% endblock %}
+
