@@ -2,7 +2,7 @@
 
 from flask import Blueprint, request, render_template, jsonify
 from flask_login import login_required, current_user
-from app.models import Roll, Film, Photo
+from app.models import Roll, Film, Photo, Camera, Lens
 from app.forms import RollForm
 from app import db
 import os
@@ -223,3 +223,24 @@ def upload_photo():
     db.session.commit()
 
     return jsonify({'success': True})
+
+
+@shooting.route('/gear/data/cameras')
+@login_required
+def get_cameras():
+    cameras = Camera.query.filter_by(user_id=current_user.id).all()
+    return jsonify([{
+        'id': cam.id,
+        'brand': cam.brand,
+        'model': cam.model
+    } for cam in cameras])
+
+@shooting.route('/gear/data/lenses')
+@login_required
+def get_lenses():
+    lenses = Lens.query.filter_by(user_id=current_user.id).all()
+    return jsonify([{
+        'id': lens.id,
+        'brand': lens.brand,
+        'model': lens.model
+    } for lens in lenses])

@@ -169,14 +169,30 @@ function createRollRow(roll) {
 
 
 // 出发frame的上传 modal
+// 打开上传 Frame (Photo) 的 Modal
 function openPhotoUploadModal(rollId) {
-    const form = document.getElementById('upload-photo-form');
-    form.reset();
-    form.roll_id.value = rollId;
+    fetch(`/shooting/data/rolls`)
+      .then(res => res.json())
+      .then(rolls => {
+        const roll = rolls.find(r => r.id === rollId);
+        if (!roll) return;
+  
+        const form = document.getElementById('upload-photo-form');
+        form.reset();
+  
+        // 设置 roll_id 和 film_id
+        form.roll_id.value = rollId;
+        form.film_id.value = roll.film_id;
+        form.film_id.disabled = true;
+  
 
-    const modal = new bootstrap.Modal(document.getElementById('uploadPhotoModal'));
-    modal.show();
-}
+  
+        const modal = new bootstrap.Modal(document.getElementById('uploadPhotoModal'));
+        modal.show();
+      });
+  }
+  
+
 
 // 处理上传照片的表单提交
 document.getElementById('upload-photo-form').addEventListener('submit', function (e) {
@@ -196,10 +212,52 @@ document.getElementById('upload-photo-form').addEventListener('submit', function
             // 清空并重新渲染当前 roll row
             const parent = document.getElementById('roll-detail-list'); // or your strip container
             parent.innerHTML = '';
-            loadFrames(); // 你已有的刷新函数
+            loadRollDetailView(); // ✅ 这是用于刷新“finished rolls + frames”的正确函数
+
         }
     });
 });
+
+
+
+const form = document.getElementById('upload-photo-form');
+// 获取用户的相机列表
+fetch('/gear/data/cameras')
+  .then(res => res.json())
+  .then(cameras => {
+    const cameraSelect = form.querySelector('[name="camera_id"]');
+    cameraSelect.innerHTML = '<option value="">Select Camera</option>';
+    cameras.forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c.id;
+      opt.textContent = `${c.brand} | ${c.name}`;
+      cameraSelect.appendChild(opt);
+    });
+  });
+
+// 获取用户的镜头列表
+fetch('/gear/data/lenses')
+  .then(res => res.json())
+  .then(lenses => {
+    const lensSelect = form.querySelector('[name="lens_id"]');
+    lensSelect.innerHTML = '<option value="">Select Lens</option>';
+    lenses.forEach(l => {
+      const opt = document.createElement('option');
+      opt.value = l.id;
+      opt.textContent = `${l.brand} | ${l.name}`;
+      lensSelect.appendChild(opt);
+    });
+  });
+
+
+
+
+
+
+
+
+
+
 
 
 

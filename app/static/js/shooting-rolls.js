@@ -256,32 +256,3 @@ document.addEventListener('click', function (e) {
     }
 });
 
-document.getElementById('finish-roll-form').addEventListener('submit', function (e) {
-    e.preventDefault();
-    const form = e.target;
-    const rollId = form.querySelector('[name=roll_id]').value;
-    const endDate = form.querySelector('[name=end_date]').value;
-
-    const formData = new FormData();
-    formData.set('status', 'finished');
-    formData.set('end_date', endDate);
-
-    fetch(`/shooting/finish_roll/${rollId}`, {
-        method: 'POST',
-        body: formData
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.success) {
-            bootstrap.Modal.getInstance(document.getElementById('finishRollModal')).hide();
-
-            const card = document.querySelector(`[data-finish-roll="${rollId}"]`)?.closest('.gear-card');
-            if (card) card.remove();
-
-            if (data.roll.status === 'finished' && window.createRollRow) {
-                const row = createRollRow(data.roll);
-                document.getElementById('roll-detail-list').appendChild(row);
-            }
-        }
-    });
-});

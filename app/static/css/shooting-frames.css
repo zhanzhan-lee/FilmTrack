@@ -126,3 +126,26 @@
     text-align: center;
     font-weight: bold;
 }
+
+@media (max-width: 640px) {
+    .film-strip {
+        
+        gap: 6px;
+        transform: translate(-30px, -10px); /* 取消横移 */
+    }
+
+    .film-frame {
+        width: 180px;
+        height: 120px;
+        font-size: 18px;
+    }
+
+    .film-logo-container-frame {
+        width: 140px;
+        height: 200px;
+    }
+
+    .roll-name-label {
+        font-size: 12px;
+    }
+}
