@@ -1,0 +1,41 @@
+<!-- Modal: Edit In-Use Roll -->
+<div class="modal fade" id="editRollModalUse" tabindex="-1" aria-labelledby="editRollModalUseLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="edit-roll-form-use" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editRollModalUseLabel">Edit Roll (In Use)</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <input type="hidden" name="roll_id">
+        <input type="hidden" name="status" value="in use">
+
+        <div class="form-group mb-3">
+          <label for="edit-roll-name-use">Roll Name</label>
+          <input type="text" name="roll_name" id="edit-roll-name-use" class="form-control">
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="edit-roll-film-select-use">Film Used</label>
+          <select name="film_id" id="edit-roll-film-select-use" class="form-select"></select>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="edit-roll-start-use">Start Date</label>
+          <input type="date" name="start_date" id="edit-roll-start-use" class="form-control">
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="edit-roll-notes-use">Notes</label>
+          <textarea name="notes" id="edit-roll-notes-use" class="form-control" rows="3"></textarea>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-dark">Save Changes</button>
+        <button type="button" id="delete-roll-btn-use" class="btn btn-danger">Delete</button>
+      </div>
+    </form>
+  </div>
+</div>

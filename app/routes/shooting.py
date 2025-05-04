@@ -63,7 +63,7 @@ def upload_roll():
             roll_name=form.roll_name.data,
             start_date=form.start_date.data,
             end_date=form.end_date.data,
-            status=form.status.data,
+            status='in use',
             notes=form.notes.data
         )
         db.session.add(new_roll)
@@ -116,11 +116,21 @@ def delete_roll(id):
 # -----------------------------
 
 
-@shooting.route('/shooting/finish_roll/<int:id>', methods=['POST'])
+@shooting.route('/shooting/finish_roll/<int:roll_id>', methods=['POST'])
 @login_required
-def finish_roll(id):
-    roll = Roll.query.filter_by(id=id, user_id=current_user.id).first_or_404()
+def finish_roll(roll_id):
+    roll = Roll.query.get_or_404(roll_id)
+    if roll.user_id != current_user.id:
+        return jsonify({'success': False}), 403
+
+    from datetime import datetime
     roll.status = 'finished'
+    end_date_str = request.form.get('end_date')
+    if end_date_str:
+        roll.end_date = datetime.strptime(end_date_str, '%Y-%m-%d')
+    else:
+        roll.end_date = datetime.utcnow()
+
     db.session.commit()
 
     return jsonify({
@@ -128,10 +138,13 @@ def finish_roll(id):
         'roll': {
             'id': roll.id,
             'roll_name': roll.roll_name,
-            'film_id': roll.film_id,
-            'film_name': f"{roll.film.brand} {roll.film.name}" if roll.film else None,
-            'film_image': roll.film.image_path if roll.film else None,
-            'start_date': roll.start_date.strftime('%Y-%m-%d') if roll.start_date else None,
+            'film_name': f"{roll.film.brand} {roll.film.name}" if roll.film else '',
+            'film_image': roll.film.image_path if roll.film else '',
+            'start_date': roll.start_date.strftime('%Y-%m-%d') if roll.start_date else '',
+            'end_date': roll.end_date.strftime('%Y-%m-%d') if roll.end_date else '',
             'status': roll.status
         }
     })
+
+
+

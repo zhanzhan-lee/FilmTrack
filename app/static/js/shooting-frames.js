@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     loadRollDetailView();
-    bindRollForm();
+    bindEditRollFormFin(); 
 });
 
 function loadRollDetailView() {
@@ -18,18 +18,88 @@ function loadRollDetailView() {
         });
 }
 
+
+function openEditRollFin(id) {
+    fetch('/shooting/data/rolls')
+        .then(response => response.json())
+        .then(data => {
+            const roll = data.find(r => r.id === id);
+            if (!roll) return;
+
+            const form = document.getElementById('edit-roll-form-fin');
+            form.reset();
+
+            form.querySelector('[name=roll_id]').value = roll.id;
+            form.querySelector('[name=roll_name]').value = roll.roll_name || '';
+            form.querySelector('[name=start_date]').value = roll.start_date || '';
+            form.querySelector('[name=end_date]').value = roll.end_date || '';
+            form.querySelector('[name=notes]').value = roll.notes || '';
+            form.querySelector('[name=film_id]').value = roll.film_id;
+
+            const modal = new bootstrap.Modal(document.getElementById('editRollModalFin'));
+            modal.show();
+        });
+}
+
+
+function bindEditRollFormFin() {
+    const form = document.getElementById('edit-roll-form-fin');
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const rollId = form.querySelector('[name=roll_id]').value;
+        const formData = new FormData(form);
+        formData.set('status', 'finished');  // 强制保持 finished 状态
+
+        fetch(`/shooting/edit_roll/${rollId}`, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                bootstrap.Modal.getInstance(document.getElementById('editRollModalFin')).hide();
+                loadRollDetailView(); // 刷新 finished 区域
+            } else {
+                alert("Failed to update roll.");
+            }
+        });
+    });
+
+    const deleteBtn = document.getElementById('delete-roll-btn-fin');
+    if (deleteBtn) {
+        deleteBtn.addEventListener('click', function () {
+            const rollId = form.querySelector('[name=roll_id]').value;
+            if (!confirm('Are you sure you want to delete this roll?')) return;
+
+            fetch(`/shooting/delete_roll/${rollId}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (response.ok) {
+                    bootstrap.Modal.getInstance(document.getElementById('editRollModalFin')).hide();
+                    loadRollDetailView(); // 删除后刷新
+                } else {
+                    alert('Failed to delete roll.');
+                }
+            });
+        });
+    }
+}
+
+
+
+//__________________________________________________________________________
+
+
+
+
+
+
+
 function createRollRow(roll) {
     const row = document.createElement('div');
     row.className = 'roll-row';
-
-    // const film = document.createElement('div');
-    // film.className = 'film-logo-container-frame';
-    // film.innerHTML = `
-    //     <div class="film-cap axle"></div>
-    //     <div class="film-cap top"></div>
-    //     <img src="${roll.film_image ? "/static/uploads/films/" + roll.film_image : "/static/images/film_placeholder.png"}" class="film-logo" alt="Film Logo">
-    //     <div class="film-cap bottom"></div>
-    // `;
     const filmWrapper = document.createElement('div');
     filmWrapper.className = 'film-wrapper';
     
@@ -44,7 +114,7 @@ function createRollRow(roll) {
     `;
     
     filmWrapper.querySelector('.film-logo-container-frame').addEventListener('click', () => {
-        openEditRoll(roll.id);
+        openEditRollFin(roll.id);
     });
     
     
