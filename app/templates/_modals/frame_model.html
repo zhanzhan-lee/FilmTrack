@@ -1,0 +1,75 @@
+<!-- Modal: Upload Photo to Roll -->
+<div class="modal fade" id="uploadPhotoModal" tabindex="-1" aria-labelledby="uploadPhotoModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="upload-photo-form" class="modal-content" enctype="multipart/form-data">
+      <div class="modal-header">
+        <h5 class="modal-title" id="uploadPhotoModalLabel">Upload Photo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <input type="hidden" name="roll_id">
+
+        <div class="mb-3">
+          <label for="image" class="form-label">Photo</label>
+          <input type="file" class="form-control" name="image" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Shot Date</label>
+          <input type="date" class="form-control" name="shot_date">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Shutter Speed</label>
+          <input type="text" class="form-control" name="shutter_speed">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Aperture</label>
+          <input type="text" class="form-control" name="aperture">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">ISO</label>
+          <input type="text" class="form-control" name="iso">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Frame Number</label>
+          <input type="text" class="form-control" name="frame_number">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Location</label>
+          <input type="text" class="form-control" name="location">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Camera</label>
+          <select name="camera_id" class="form-control">
+            <!-- 用 JS 动态填充 -->
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Lens</label>
+          <select name="lens_id" class="form-control">
+            <!-- 用 JS 动态填充 -->
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Film</label>
+          <select name="film_id" class="form-control">
+            <!-- 用 JS 动态填充 -->
+          </select>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-dark">Upload</button>
+      </div>
+    </form>
+  </div>
+</div>

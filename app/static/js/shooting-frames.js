@@ -90,12 +90,8 @@ function bindEditRollFormFin() {
 
 
 //__________________________________________________________________________
-
-
-
-
-
-
+// Create a new roll row-finished with row
+//__________________________________________________________________________
 
 function createRollRow(roll) {
     const row = document.createElement('div');
@@ -128,15 +124,38 @@ function createRollRow(roll) {
     strip.className = 'film-strip';
 
     
-    for (let i = 0; i < 5; i++) {
-        const frame = document.createElement('div');
-        frame.className = 'film-frame';
-        frame.innerText = '+';
-        frame.addEventListener('click', () => {
-            alert(`Upload photo to frame ${i+1} for roll ${roll.roll_name || roll.id}`);
+    // 获取该 roll 的照片（异步）
+    fetch(`/shooting/data/photos?roll_id=${roll.id}`)
+        .then(res => res.json())
+        .then(photos => {
+            photos.forEach(photo => {
+                const frame = document.createElement('div');
+                frame.className = 'film-frame';
+
+                const img = document.createElement('img');
+                img.src = photo.image_path.startsWith("http")
+                    ? photo.image_path
+                    : `/static/uploads/photos/${photo.image_path}`;
+                img.style.maxWidth = '100%';
+                img.style.maxHeight = '100%';
+                img.style.objectFit = 'cover';
+
+                frame.appendChild(img);
+                strip.appendChild(frame);
+            });
+
+            // 最后加一个上传按钮
+            const addFrame = document.createElement('div');
+            addFrame.className = 'film-frame upload-frame';
+            addFrame.innerHTML = '<span class="plus-icon">+</span>';
+
+            addFrame.addEventListener('click', () => {
+                openPhotoUploadModal(roll.id);  // 👈 新增 modal 弹出函数
+            });
+
+            strip.appendChild(addFrame);
+
         });
-        strip.appendChild(frame);
-    }
 
     // row.appendChild(film);
     // row.appendChild(strip);
@@ -147,6 +166,43 @@ function createRollRow(roll) {
 
     return row;
 }
+
+
+// 出发frame的上传 modal
+function openPhotoUploadModal(rollId) {
+    const form = document.getElementById('upload-photo-form');
+    form.reset();
+    form.roll_id.value = rollId;
+
+    const modal = new bootstrap.Modal(document.getElementById('uploadPhotoModal'));
+    modal.show();
+}
+
+// 处理上传照片的表单提交
+document.getElementById('upload-photo-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+
+    fetch('/shooting/upload_photo', {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success && form.roll_id.value) {
+            bootstrap.Modal.getInstance(document.getElementById('uploadPhotoModal')).hide();
+
+            // 清空并重新渲染当前 roll row
+            const parent = document.getElementById('roll-detail-list'); // or your strip container
+            parent.innerHTML = '';
+            loadFrames(); // 你已有的刷新函数
+        }
+    });
+});
+
+
+
 
 
 window.createRollRow = createRollRow;
