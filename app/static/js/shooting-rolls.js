@@ -256,3 +256,28 @@ document.addEventListener('click', function (e) {
     }
 });
 
+document.getElementById('finish-roll-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const rollId = form.querySelector('[name=roll_id]').value;
+    const formData = new FormData(form);
+
+    fetch(`/shooting/finish_roll/${rollId}`, {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            const modal = bootstrap.Modal.getInstance(document.getElementById('finishRollModal'));
+            modal.hide();
+            loadRolls(); // ✅ 刷新 roll 列表
+        } else {
+            alert(data.message || 'Failed to mark roll as finished.');
+        }
+    })
+    .catch(() => {
+        alert('Server error. Please try again.');
+    });
+});
