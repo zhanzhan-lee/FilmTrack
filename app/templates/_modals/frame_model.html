@@ -1,0 +1,104 @@
+<!-- Modal: Upload Photo to Roll -->
+<div class="modal fade" id="uploadPhotoModal" tabindex="-1" aria-labelledby="uploadPhotoModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="upload-photo-form" class="modal-content" enctype="multipart/form-data">
+      <div class="modal-header">
+        <h5 class="modal-title" id="uploadPhotoModalLabel">Upload Photo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <input type="hidden" name="roll_id">
+
+        <div class="mb-3">
+          <label for="image" class="form-label">Photo</label>
+          <input type="file" class="form-control" name="image" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Shot Date</label>
+          <input type="date" class="form-control" name="shot_date">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Shutter Speed</label>
+          <input type="text" list="shutter-suggestions" name="shutter_speed" class="form-control" placeholder="e.g. 1/250">
+          <datalist id="shutter-suggestions">
+            <option value="1/4000">
+            <option value="1/2000">
+            <option value="1/1000">
+            <option value="1/500">
+            <option value="1/250">
+            <option value="1/125">
+            <option value="1/60">
+            <option value="1/30">
+            <option value="1/15">
+            <option value="1/8">
+            <option value="1/4">
+            <option value="1/2">
+            <option value="1&quot;">
+          </datalist>
+
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Aperture</label>
+          <input type="text" list="aperture-suggestions" name="aperture" class="form-control" placeholder="e.g. f/2.8">
+          <datalist id="aperture-suggestions">
+            <option value="f/1.2">
+            <option value="f/1.4">
+            <option value="f/2">
+            <option value="f/2.8">
+            <option value="f/4">
+            <option value="f/5.6">
+            <option value="f/8">
+            <option value="f/11">
+            <option value="f/16">
+            <option value="f/22">
+          </datalist>
+          
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">ISO</label>
+          <input type="text" class="form-control" name="iso">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Frame Number</label>
+          <input type="text" class="form-control" name="frame_number">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Location</label>
+          <input type="text" class="form-control" name="location">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Camera</label>
+          <select name="camera_id" class="form-control">
+            <!-- 用 JS 动态填充 -->
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Lens</label>
+          <select name="lens_id" class="form-control">
+            <!-- 用 JS 动态填充 -->
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Film</label>
+          <select name="film_id" class="form-control">
+            <!-- 用 JS 动态填充 -->
+          </select>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-dark">Upload</button>
+      </div>
+    </form>
+  </div>
+</div>

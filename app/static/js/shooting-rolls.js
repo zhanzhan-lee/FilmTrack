@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     loadRolls();
     loadFilmOptions();
     bindRollForm();
-    bindEditRollForm();
+    bindEditRollFormUse();
 });
 
 
@@ -56,10 +56,14 @@ function loadFilmOptions() {
     fetch('/gear/data/films')
         .then(response => response.json())
         .then(films => {
-            const addSelect = document.getElementById('roll-film-select');
-            const editSelect = document.getElementById('edit-roll-film-select');
+            const targets = [
+                document.getElementById('roll-film-select'),
+                document.getElementById('edit-roll-film-select-use'),
+                document.getElementById('edit-roll-film-select-fin')
+            ];
 
-            [addSelect, editSelect].forEach(select => {
+            targets.forEach(select => {
+                if (!select) return;
                 select.innerHTML = '';
                 films.forEach(film => {
                     const opt = document.createElement('option');
@@ -70,6 +74,7 @@ function loadFilmOptions() {
             });
         });
 }
+
 
 
 function createRollCard(roll) {
@@ -101,17 +106,11 @@ function createRollCard(roll) {
                  Mark as Finished
             </button>
         </div>
-        <!--<div class="info">
-            <h5>${roll.roll_name || '(Untitled Roll)'}</h5>
-            <p class="subtext"><strong>Film:</strong> ${roll.film_name || '—'}</p>
-            <p class="subtext"><strong>Status:</strong> ${roll.status || '—'}</p>
-            <p class="subtext"><strong>Start:</strong> ${roll.start_date || '—'} <br> <strong>End:</strong> ${roll.end_date || '—'}</p>
-            <p class="subtext"><strong>Notes:</strong> ${roll.notes}</p>
-        </div>  
+
  
     `;
     card.querySelector('.film-logo-container').addEventListener('click', () => {
-        openEditRoll(roll.id);
+        openEditRollUse(roll.id);
     });
     return card;
 }
@@ -119,28 +118,27 @@ function createRollCard(roll) {
 
 
 
-function openEditRoll(id) {
-    fetch('/shooting/data/rolls')  
+function openEditRollUse(id) {
+    fetch('/shooting/data/rolls')
         .then(response => response.json())
         .then(data => {
             const roll = data.find(r => r.id === id);
             if (!roll) return;
 
-            document.getElementById('edit-roll-id').value = roll.id;
-            document.getElementById('edit-roll-name').value = roll.roll_name || '';
-            document.getElementById('edit-roll-start').value = roll.start_date || '';
-            document.getElementById('edit-roll-end').value = roll.end_date || '';
-            document.getElementById('edit-roll-status').value = roll.status || '';
-            document.getElementById('edit-roll-notes').value = roll.notes || '';
+            document.querySelector('#edit-roll-form-use [name=roll_id]').value = roll.id;
+            document.querySelector('#edit-roll-form-use [name=roll_name]').value = roll.roll_name || '';
+            document.querySelector('#edit-roll-form-use [name=start_date]').value = roll.start_date || '';
+            document.querySelector('#edit-roll-form-use [name=notes]').value = roll.notes || '';
 
-            const filmSelect = document.getElementById('edit-roll-film-select');
+            const filmSelect = document.querySelector('#edit-roll-form-use [name=film_id]');
             filmSelect.value = roll.film_id;
 
-            // modal
-            const modal = new bootstrap.Modal(document.getElementById('editRollModal'));
+            const modal = new bootstrap.Modal(document.getElementById('editRollModalUse'));
+            
             modal.show();
         });
 }
+
 
 function deleteRoll(id) {
     if (!confirm('Are you sure you want to delete this roll?')) return;
@@ -158,13 +156,13 @@ function deleteRoll(id) {
 }
 
 
-function bindEditRollForm() {
-    const form = document.getElementById('edit-roll-form');
+function bindEditRollFormUse() {
+    const form = document.getElementById('edit-roll-form-use');
 
     form.addEventListener('submit', function (e) {
         e.preventDefault();
 
-        const rollId = document.getElementById('edit-roll-id').value;
+        const rollId = form.querySelector('[name=roll_id]').value;
         const formData = new FormData(form);
 
         fetch(`/shooting/edit_roll/${rollId}`, {
@@ -173,33 +171,35 @@ function bindEditRollForm() {
         })
         .then(response => {
             if (response.ok) {
-                const modal = bootstrap.Modal.getInstance(document.getElementById('editRollModal'));
+                const modal = bootstrap.Modal.getInstance(document.getElementById('editRollModalUse'));
                 modal.hide();
-                loadRolls();
+                loadRolls(); // 重新加载卡片列表
             } else {
                 alert("Failed to update roll.");
             }
         });
     });
 
-    const deleteBtn = document.getElementById('delete-roll-btn');
-    deleteBtn.addEventListener('click', function () {
-        const rollId = document.getElementById('edit-roll-id').value;
-        if (!confirm('Are you sure you want to delete this roll?')) return;
+    const deleteBtn = document.getElementById('delete-roll-btn-use');
+    if (deleteBtn) {
+        deleteBtn.addEventListener('click', function () {
+            const rollId = form.querySelector('[name=roll_id]').value;
+            if (!confirm('Are you sure you want to delete this roll?')) return;
 
-        fetch(`/shooting/delete_roll/${rollId}`, {
-            method: 'DELETE'
-        })
-        .then(response => {
-            if (response.ok) {
-                const modal = bootstrap.Modal.getInstance(document.getElementById('editRollModal'));
-                modal.hide();
-                loadRolls();
-            } else {
-                alert('Failed to delete roll.');
-            }
+            fetch(`/shooting/delete_roll/${rollId}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (response.ok) {
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('editRollModalUse'));
+                    modal.hide();
+                    loadRolls(); // 删除后刷新
+                } else {
+                    alert('Failed to delete roll.');
+                }
+            });
         });
-    });
+    }
 }
 
 
@@ -244,28 +244,15 @@ function openAddRollModal() {
 
 
 // finish roll
-
 document.addEventListener('click', function (e) {
     if (e.target.matches('[data-finish-roll]')) {
-      const rollId = e.target.getAttribute('data-finish-roll');
-  
-      fetch(`/shooting/finish_roll/${rollId}`, {
-        method: 'POST'
-      })
-        .then(res => res.json())
-        .then(data => {
-          if (data.success) {
-            // 1. Remove the current roll card
-            const card = e.target.closest('.gear-card');
-            if (card) card.remove();
-  
-            // 2. Insert into the frames area 
-            if (data.roll.status === 'finished' && window.createRollRow) {
-              const row = createRollRow(data.roll);
-              document.getElementById('roll-detail-list').appendChild(row);
-            }
-          }
-        });
+        const rollId = e.target.getAttribute('data-finish-roll');
+        const form = document.getElementById('finish-roll-form');
+        form.reset();
+        form.querySelector('[name=roll_id]').value = rollId;
+
+        const modal = new bootstrap.Modal(document.getElementById('finishRollModal'));
+        modal.show();
     }
-  });
-  
+});
+

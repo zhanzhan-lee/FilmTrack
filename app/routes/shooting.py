@@ -2,9 +2,14 @@
 
 from flask import Blueprint, request, render_template, jsonify
 from flask_login import login_required, current_user
-from app.models import Roll, Film
+from app.models import Roll, Film, Photo, Camera, Lens
 from app.forms import RollForm
 from app import db
+import os
+from datetime import datetime
+from werkzeug.utils import secure_filename
+from flask import current_app
+
 
 shooting = Blueprint('shooting', __name__)
 
@@ -63,7 +68,7 @@ def upload_roll():
             roll_name=form.roll_name.data,
             start_date=form.start_date.data,
             end_date=form.end_date.data,
-            status=form.status.data,
+            status='in use',
             notes=form.notes.data
         )
         db.session.add(new_roll)
@@ -116,11 +121,21 @@ def delete_roll(id):
 # -----------------------------
 
 
-@shooting.route('/shooting/finish_roll/<int:id>', methods=['POST'])
+@shooting.route('/shooting/finish_roll/<int:roll_id>', methods=['POST'])
 @login_required
-def finish_roll(id):
-    roll = Roll.query.filter_by(id=id, user_id=current_user.id).first_or_404()
+def finish_roll(roll_id):
+    roll = Roll.query.get_or_404(roll_id)
+    if roll.user_id != current_user.id:
+        return jsonify({'success': False}), 403
+
+    from datetime import datetime
     roll.status = 'finished'
+    end_date_str = request.form.get('end_date')
+    if end_date_str:
+        roll.end_date = datetime.strptime(end_date_str, '%Y-%m-%d')
+    else:
+        roll.end_date = datetime.utcnow()
+
     db.session.commit()
 
     return jsonify({
@@ -128,10 +143,104 @@ def finish_roll(id):
         'roll': {
             'id': roll.id,
             'roll_name': roll.roll_name,
-            'film_id': roll.film_id,
-            'film_name': f"{roll.film.brand} {roll.film.name}" if roll.film else None,
-            'film_image': roll.film.image_path if roll.film else None,
-            'start_date': roll.start_date.strftime('%Y-%m-%d') if roll.start_date else None,
+            'film_name': f"{roll.film.brand} {roll.film.name}" if roll.film else '',
+            'film_image': roll.film.image_path if roll.film else '',
+            'start_date': roll.start_date.strftime('%Y-%m-%d') if roll.start_date else '',
+            'end_date': roll.end_date.strftime('%Y-%m-%d') if roll.end_date else '',
             'status': roll.status
         }
     })
+
+
+# -----------------------------
+# Frame upload（POST）
+# ------------------------------
+
+@shooting.route('/shooting/data/photos')
+@login_required
+def get_photos():
+    roll_id = request.args.get('roll_id', type=int)
+    if not roll_id:
+        return jsonify([])
+
+    photos = Photo.query.filter_by(roll_id=roll_id, user_id=current_user.id).order_by(Photo.id).all()
+    return jsonify([
+        {
+            'id': p.id,
+            'image_path': p.image_path,
+            'frame_number': p.frame_number,
+            'shot_date': p.shot_date.strftime('%Y-%m-%d') if p.shot_date else ''
+        }
+        for p in photos
+    ])
+
+@shooting.route('/shooting/upload_photo', methods=['POST'])
+@login_required
+def upload_photo():
+    image = request.files.get('image')
+    if not image:
+        return jsonify({'success': False, 'error': 'No image'}), 400
+
+    filename = secure_filename(image.filename)
+    save_dir = os.path.join(current_app.root_path, 'static/uploads/photos')
+    os.makedirs(save_dir, exist_ok=True)
+    image.save(os.path.join(save_dir, filename))
+
+    # 解析字段
+    roll_id = request.form.get('roll_id', type=int)
+    shot_date = request.form.get('shot_date')
+    shutter_speed = request.form.get('shutter_speed')
+    aperture = request.form.get('aperture')
+    iso = request.form.get('iso')
+    frame_number = request.form.get('frame_number')
+    location = request.form.get('location')
+    camera_id = request.form.get('camera_id', type=int)
+    lens_id = request.form.get('lens_id', type=int)
+    film_id = request.form.get('film_id', type=int)
+
+    # 日期格式化
+    try:
+        shot_date = datetime.strptime(shot_date, '%Y-%m-%d') if shot_date else None
+    except ValueError:
+        shot_date = None
+
+    photo = Photo(
+        user_id=current_user.id,
+        image_path=filename,
+        roll_id=roll_id,
+        shot_date=shot_date,
+        shutter_speed=shutter_speed,
+        aperture=aperture,
+        iso=iso,
+        frame_number=frame_number,
+        location=location,
+        camera_id=camera_id,
+        lens_id=lens_id,
+        film_id=film_id
+    )
+
+    db.session.add(photo)
+    db.session.commit()
+
+    return jsonify({'success': True})
+
+
+@shooting.route('/gear/data/cameras')
+@login_required
+def get_cameras():
+    cameras = Camera.query.filter_by(user_id=current_user.id).all()
+    return jsonify([{
+        'id': cam.id,
+        'brand': cam.brand,
+        'model': cam.model
+    } for cam in cameras])
+
+@shooting.route('/gear/data/lenses')
+@login_required
+def get_lenses():
+    lenses = Lens.query.filter_by(user_id=current_user.id).all()
+    return jsonify([{
+        'id': lens.id,
+        'brand': lens.brand,
+        'model': lens.model
+    } for lens in lenses])
