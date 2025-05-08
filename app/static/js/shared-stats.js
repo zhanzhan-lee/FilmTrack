@@ -7,16 +7,44 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Define color palettes for different tiles
+const colorPalettes = {
+    0: { // Green palette
+        primary: '#278661',
+        shades: ['#278661', '#3A9B74', '#4CAF88', '#6BC19C', '#8CD4B0'],
+        background: 'rgba(39, 134, 97, 0.1)'
+    },
+    1: { // Red palette
+        primary: '#B54E4E',
+        shades: ['#B54E4E', '#C66262', '#D67676', '#E78A8A', '#F89E9E'],
+        background: 'rgba(181, 78, 78, 0.1)'
+    },
+    2: { // Purple palette
+        primary: '#7C4E9E',
+        shades: ['#7C4E9E', '#8F62B1', '#A276C4', '#B58AD7', '#C89EEA'],
+        background: 'rgba(124, 78, 158, 0.1)'
+    },
+    3: { // Blue palette
+        primary: '#4E77B5',
+        shades: ['#4E77B5', '#628AC6', '#769DD7', '#8AB0E7', '#9EC3F8'],
+        background: 'rgba(78, 119, 181, 0.1)'
+    }
+};
+
 function fetchAndRenderCharts(shareId) {
     fetch(`/api/shared_stats/${shareId}`)
         .then(response => response.json())
         .then(data => {
+            const tileIndex = Array.from(document.querySelectorAll('.shared-stats-tile'))
+                                 .findIndex(tile => tile.dataset.shareId === shareId);
+            const palette = colorPalettes[tileIndex % Object.keys(colorPalettes).length];
+
             if (data.exposure) {
                 renderBarChart(`exposure-chart-${shareId}`, {
                     labels: data.exposure.labels,
                     datasets: [{
                         data: data.exposure.values,
-                        backgroundColor: '#278661',
+                        backgroundColor: palette.shades[2], // Using middle shade
                         borderRadius: 5
                     }]
                 });
@@ -27,7 +55,7 @@ function fetchAndRenderCharts(shareId) {
                     labels: data.aperture.labels,
                     datasets: [{
                         data: data.aperture.values,
-                        backgroundColor: ['#278661', '#3A9B74', '#4CAF88', '#6BC19C', '#8CD4B0']
+                        backgroundColor: palette.shades
                     }]
                 });
             }
@@ -37,33 +65,39 @@ function fetchAndRenderCharts(shareId) {
                     labels: data.cameras.labels,
                     datasets: [{
                         data: data.cameras.values,
-                        backgroundColor: '#278661',
+                        backgroundColor: palette.shades[0], // Using darkest shade
                         borderRadius: 5
                     }]
                 });
             }
 
-            // Add lens usage chart
             if (data.lenses) {
                 renderBarChart(`lens-chart-${shareId}`, {
                     labels: data.lenses.labels,
                     datasets: [{
                         data: data.lenses.values,
-                        backgroundColor: '#3A9B74', // Slightly different shade for distinction
+                        backgroundColor: palette.shades[1], // Using second shade
                         borderRadius: 5
                     }]
                 });
             }
 
             if (data.monthly_trend) {
+                const ctx = document.getElementById(`monthly-chart-${shareId}`).getContext('2d');
+                const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+                gradient.addColorStop(0, palette.shades[3]);
+                gradient.addColorStop(1, 'rgba(255, 255, 255, 0.4)');
+
                 renderLineChart(`monthly-chart-${shareId}`, {
                     labels: data.monthly_trend.labels,
                     datasets: [{
                         data: data.monthly_trend.values,
-                        borderColor: '#278661',
-                        backgroundColor: 'rgba(39, 134, 97, 0.1)',
+                        borderColor: palette.primary,
+                        backgroundColor: gradient,
                         fill: true,
-                        tension: 0.4
+                        tension: 0.4,
+                        borderWidth: 3,
+                        pointRadius: 0
                     }]
                 });
             }
@@ -112,14 +146,20 @@ function renderLineChart(canvasId, data) {
             },
             elements: {
                 line: {
-                    tension: 0.6 // Increased from 0.4 for smoother curves
+                    tension: 0.6
                 }
             },
             scales: {
                 y: {
                     beginAtZero: true,
-                    suggestedMin: Math.min(...data.datasets[0].data) * 0.8, // Add 20% padding at bottom
-                    suggestedMax: Math.max(...data.datasets[0].data) * 1.2  // Add 20% padding at top
+                    suggestedMin: Math.min(...data.datasets[0].data) * 0.8,
+                    suggestedMax: Math.max(...data.datasets[0].data) * 1.2,
+                    grid: { drawTicks: false, color: '#eee' },
+                    ticks: { display: false }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#666' }
                 }
             }
         }
