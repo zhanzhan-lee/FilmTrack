@@ -1,16 +1,59 @@
 {% extends "base.html" %}
 
-{% block title %}About Us{% endblock %}
+{% block title %}Shared Statistics{% endblock %}
 
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/view-stats.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/shared-stats.js') }}"></script>
 
-<div class="user-stats-grid">
-    {% for i in range(6) %}
-    <div class="user-stats-tile">
-      <p class="user-stats-title">User {{ i + 1 }}</p>
-      <img src="{{ url_for('static', filename='images/stats-sample.png') }}" alt="Stats Sample" class="user-stats-image">
+<div class="shared-stats-grid">
+    {% for share in shares %}
+    <div class="shared-stats-tile" data-share-id="{{ share.id }}">
+        <div class="shared-stats-header">
+            <h3>Shared by @{{ share.from_user.username }}</h3>
+            <p class="shared-date">{{ share.start_date.strftime('%Y-%m-%d') }} → {{ share.end_date.strftime('%Y-%m-%d') }}</p>
+        </div>
+        
+        {% if share.share_exposure or share.share_aperture %}
+        <div class="chart-row">
+            {% if share.share_exposure %}
+            <div class="chart-container half">
+                <h4>Exposure Distribution</h4>
+                <canvas id="exposure-chart-{{ share.id }}"></canvas>
+            </div>
+            {% endif %}
+            {% if share.share_aperture %}
+            <div class="chart-container half">
+                <h4>Aperture Distribution</h4>
+                <canvas id="aperture-chart-{{ share.id }}"></canvas>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% if share.share_gear %}
+        <div class="chart-row">
+            <div class="chart-container half">
+                <h4>Camera Usage</h4>
+                <canvas id="camera-chart-{{ share.id }}"></canvas>
+            </div>
+            <div class="chart-container half">
+                <h4>Lens Usage</h4>
+                <canvas id="lens-chart-{{ share.id }}"></canvas>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if share.share_shoot_time %}
+        <div class="chart-row">
+            <div class="chart-container">
+                <h4>Shooting Patterns</h4>
+                <canvas id="monthly-chart-{{ share.id }}"></canvas>
+            </div>
+        </div>
+        {% endif %}
     </div>
     {% endfor %}
-  </div>
+</div>
 {% endblock %}
