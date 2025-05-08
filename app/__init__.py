@@ -2,19 +2,24 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_migrate import Migrate
+from config import TestingConfig
+
 
 # Initialize Flask-Login globally
 login_manager = LoginManager()
 # Initialize SQLAlchemy globally
 db = SQLAlchemy()
 
-def create_app():
+def create_app(config_name='default'):
     app = Flask(__name__)
-    
-    # Configuration
-    app.config['SECRET_KEY'] = 'dev'  # Temporary secret key
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+    if config_name == 'testing':
+        app.config.from_object(TestingConfig)
+    else:
+        app.config['SECRET_KEY'] = 'dev'
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+        app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 
     # Initialize DB with app context
     db.init_app(app)
@@ -30,7 +35,7 @@ def create_app():
 
     @login_manager.user_loader
     def load_user(user_id):
-        return User.query.get(int(user_id))
+       return db.session.get(User, int(user_id))
 
     # Register Blueprints
     from .routes.main import main
