@@ -15,8 +15,8 @@
             <p class="shared-date">{{ share.start_date.strftime('%Y-%m-%d') }} → {{ share.end_date.strftime('%Y-%m-%d') }}</p>
         </div>
         
-        {% if share.share_exposure or share.share_aperture %}
-        <div class="chart-row">
+        <!-- Primary Charts (Always Visible) -->
+        <div class="chart-row primary-charts">
             {% if share.share_exposure %}
             <div class="chart-container half">
                 <h4>Exposure Distribution</h4>
@@ -30,29 +30,31 @@
             </div>
             {% endif %}
         </div>
-        {% endif %}
 
-        {% if share.share_gear %}
-        <div class="chart-row">
-            <div class="chart-container half">
-                <h4>Camera Usage</h4>
-                <canvas id="camera-chart-{{ share.id }}"></canvas>
+        <!-- Secondary Charts (Initially Hidden) -->
+        <div class="chart-row secondary-charts">
+            {% if share.share_gear %}
+            <div class="chart-row">
+                <div class="chart-container half">
+                    <h4>Camera Usage</h4>
+                    <canvas id="camera-chart-{{ share.id }}"></canvas>
+                </div>
+                <div class="chart-container half">
+                    <h4>Lens Usage</h4>
+                    <canvas id="lens-chart-{{ share.id }}"></canvas>
+                </div>
             </div>
-            <div class="chart-container half">
-                <h4>Lens Usage</h4>
-                <canvas id="lens-chart-{{ share.id }}"></canvas>
-            </div>
-        </div>
-        {% endif %}
-
-        {% if share.share_shoot_time %}
-        <div class="chart-row">
+            {% endif %}
+            
+            {% if share.share_shoot_time %}
             <div class="chart-container">
                 <h4>Shooting Patterns</h4>
                 <canvas id="monthly-chart-{{ share.id }}"></canvas>
             </div>
+            {% endif %}
         </div>
-        {% endif %}
+
+        <button class="expand-button">↓</button>
     </div>
     {% endfor %}
 </div>

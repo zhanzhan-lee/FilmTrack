@@ -57,56 +57,72 @@ body {
     border-radius: 15px;
     padding: 1.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.shared-stats-tile:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.shared-stats-tile.expanded {
+    grid-row: span 2;
+    transform: scale(1.02);
+}
+
+.chart-container {
+    position: relative;
+    height: 220px;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.chart-container.half {
+    height: 180px;
 }
 
 .chart-row {
     display: flex;
     gap: 1rem;
-    margin: 0;
-    align-items: stretch; /* Ensure consistent heights */
+    margin: 1rem 0;
+    flex-wrap: wrap;
 }
 
-.chart-container {
-    flex: 1;
-    height: 250px;
-    position: relative;
+.chart-row.secondary-charts {
+    opacity: 0;
+    max-height: 0;
     overflow: hidden;
-    margin-bottom: 1rem;
-    padding: 1rem 0.5rem; /* Increased top/bottom padding */
+    transition: all 0.3s ease;
 }
 
-.chart-container.half {
-    flex: 0.5;
-    height: 220px; /* Slightly reduced */
-    min-width: 250px;
+.shared-stats-tile.expanded .chart-row.secondary-charts {
+    opacity: 1;
+    max-height: 800px;
+    overflow: visible;
 }
 
-.shared-stats-header {
-    margin-bottom: 1rem;
-    text-align: center;
+.expand-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: #278661;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
 }
 
-.shared-stats-header h3 {
-    color: #333;
-    margin: 0;
-}
-
-h4 {
-    margin: 0 0 1rem 0; /* Increased bottom margin */
-    font-size: 0.9rem;
-    color: #666;
-    text-align: center;
-}
-
-.shared-date {
-    color: #666;
-    font-size: 0.9rem;
-    margin: 0.5rem 0;
-}
-
-[id^="monthly-chart"] {
-    max-height: 300px;
+.expanded .expand-button {
+    transform: rotate(180deg);
 }
 
 @media (max-width: 1200px) {

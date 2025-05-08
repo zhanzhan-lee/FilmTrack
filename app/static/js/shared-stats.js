@@ -1,9 +1,25 @@
 document.addEventListener('DOMContentLoaded', function() {
     const tiles = document.querySelectorAll('.shared-stats-tile');
     
+
     tiles.forEach(tile => {
         const shareId = tile.dataset.shareId;
-        fetchAndRenderCharts(shareId);
+        fetchAndRenderPrimaryCharts(shareId);
+
+        tile.addEventListener('click', function(e) {
+            if (e.target.tagName.toLowerCase() === 'canvas') return;
+            
+            const wasExpanded = tile.classList.contains('expanded');
+            tiles.forEach(t => t.classList.remove('expanded'));
+            
+            if (!wasExpanded) {
+                tile.classList.add('expanded');
+                // Add slight delay for expansion animation
+                setTimeout(() => {
+                    fetchAndRenderSecondaryCharts(shareId);
+                }, 300);
+            }
+        });
     });
 });
 
@@ -31,7 +47,7 @@ const colorPalettes = {
     }
 };
 
-function fetchAndRenderCharts(shareId) {
+function fetchAndRenderPrimaryCharts(shareId) {
     fetch(`/api/shared_stats/${shareId}`)
         .then(response => response.json())
         .then(data => {
@@ -59,6 +75,17 @@ function fetchAndRenderCharts(shareId) {
                     }]
                 });
             }
+        })
+        .catch(error => console.error('Error fetching shared stats:', error));
+}
+
+function fetchAndRenderSecondaryCharts(shareId) {
+    fetch(`/api/shared_stats/${shareId}`)
+        .then(response => response.json())
+        .then(data => {
+            const tileIndex = Array.from(document.querySelectorAll('.shared-stats-tile'))
+                                 .findIndex(tile => tile.dataset.shareId === shareId);
+            const palette = colorPalettes[tileIndex % Object.keys(colorPalettes).length];
 
             if (data.cameras) {
                 renderBarChart(`camera-chart-${shareId}`, {
@@ -105,8 +132,9 @@ function fetchAndRenderCharts(shareId) {
         .catch(error => console.error('Error fetching shared stats:', error));
 }
 
+// Update the chart rendering functions with fixed dimensions
 function renderBarChart(canvasId, data) {
-    new Chart(document.getElementById(canvasId), {
+    const chart = new Chart(document.getElementById(canvasId), {
         type: 'bar',
         data: data,
         options: {
@@ -115,7 +143,7 @@ function renderBarChart(canvasId, data) {
             layout: {
                 padding: {
                     top: 20,
-                    bottom: 25  // Increased bottom padding
+                    bottom: 25
                 }
             },
             plugins: {
@@ -126,19 +154,20 @@ function renderBarChart(canvasId, data) {
                     beginAtZero: true,
                     grid: { drawTicks: false },
                     ticks: {
-                        padding: 10  // Add padding to axis ticks
+                        padding: 10
                     }
                 },
                 x: { 
                     grid: { display: false },
                     ticks: { 
                         font: { size: 10 },
-                        padding: 10  // Add padding to axis ticks
+                        padding: 10
                     }
                 }
             }
         }
     });
+    return chart;
 }
 
 function renderDoughnutChart(canvasId, data) {
