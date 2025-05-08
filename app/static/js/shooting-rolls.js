@@ -273,6 +273,7 @@ document.getElementById('finish-roll-form').addEventListener('submit', function 
             const modal = bootstrap.Modal.getInstance(document.getElementById('finishRollModal'));
             modal.hide();
             loadRolls(); // ✅ 刷新 roll 列表
+            loadRollDetailView(); // ✅ 刷新详情视图
         } else {
             alert(data.message || 'Failed to mark roll as finished.');
         }

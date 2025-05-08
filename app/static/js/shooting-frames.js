@@ -182,8 +182,8 @@ function openPhotoUploadModal(rollId) {
   
         // 设置 roll_id 和 film_id
         form.roll_id.value = rollId;
-        form.film_id.value = roll.film_id;
-        form.film_id.disabled = true;
+        // form.film_id.value = roll.film_id;
+        // form.film_id.disabled = true;
   
 
   

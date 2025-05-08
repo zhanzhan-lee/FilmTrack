@@ -188,6 +188,14 @@ def upload_photo():
 
     # 解析字段
     roll_id = request.form.get('roll_id', type=int)
+    if not roll_id:
+        return jsonify({'success': False, 'error': 'Missing roll ID'}), 400
+
+    #  自动查出 film_id
+    roll = Roll.query.filter_by(id=roll_id, user_id=current_user.id).first()
+    if not roll:
+        return jsonify({'success': False, 'error': 'Invalid roll ID'}), 400
+    film_id = roll.film_id  # ✅ 从 roll 中提取 film_id
     shot_date = request.form.get('shot_date')
     shutter_speed = request.form.get('shutter_speed')
     aperture = request.form.get('aperture')
@@ -196,7 +204,8 @@ def upload_photo():
     location = request.form.get('location')
     camera_id = request.form.get('camera_id', type=int)
     lens_id = request.form.get('lens_id', type=int)
-    film_id = request.form.get('film_id', type=int)
+    
+
 
     # 日期格式化
     try:
