@@ -95,13 +95,12 @@ body {
     opacity: 0;
     max-height: 0;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: opacity 0.3s ease, max-height 0.3s ease;
 }
 
 .shared-stats-tile.expanded .chart-row.secondary-charts {
     opacity: 1;
     max-height: 800px;
-    overflow: visible;
 }
 
 .expand-button {

@@ -1,23 +1,30 @@
 document.addEventListener('DOMContentLoaded', function() {
     const tiles = document.querySelectorAll('.shared-stats-tile');
-    
 
     tiles.forEach(tile => {
         const shareId = tile.dataset.shareId;
         fetchAndRenderPrimaryCharts(shareId);
 
         tile.addEventListener('click', function(e) {
+            // Ignore clicks on canvas elements to allow chart interaction
             if (e.target.tagName.toLowerCase() === 'canvas') return;
             
             const wasExpanded = tile.classList.contains('expanded');
-            tiles.forEach(t => t.classList.remove('expanded'));
             
+            // First close any other open tiles
+            tiles.forEach(t => {
+                if (t !== tile && t.classList.contains('expanded')) {
+                    t.classList.remove('expanded');
+                }
+            });
+            
+            // Then handle the clicked tile
             if (!wasExpanded) {
                 tile.classList.add('expanded');
-                // Add slight delay for expansion animation
-                setTimeout(() => {
-                    fetchAndRenderSecondaryCharts(shareId);
-                }, 300);
+                fetchAndRenderSecondaryCharts(shareId);
+  
+            } else {
+                tile.classList.remove('expanded');
             }
         });
     });
