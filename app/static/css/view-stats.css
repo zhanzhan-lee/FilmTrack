@@ -69,15 +69,17 @@ body {
 
 .chart-container {
     flex: 1;
-    height: 300px; /* Fixed height instead of min-height */
+    height: 250px;
     position: relative;
-    overflow: hidden; /* Prevent content from "melting" outside */
-    margin-bottom: 1rem;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    padding: 1rem 0.5rem; /* Increased top/bottom padding */
 }
 
 .chart-container.half {
     flex: 0.5;
-    height: 250px; /* Slightly smaller for half-width charts */
+    height: 220px; /* Slightly reduced */
+    min-width: 250px;
 }
 
 .shared-stats-header {
@@ -91,8 +93,8 @@ body {
 }
 
 h4 {
-    margin: 0 0 0.5rem 0;
-    font-size: 1rem;
+    margin: 0 0 1rem 0; /* Increased bottom margin */
+    font-size: 0.9rem;
     color: #666;
     text-align: center;
 }

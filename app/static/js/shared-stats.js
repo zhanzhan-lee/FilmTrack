@@ -98,7 +98,7 @@ function fetchAndRenderCharts(shareId) {
                         tension: 0.4,
                         borderWidth: 3,
                         pointRadius: 0
-                    }]
+                    },],
                 });
             }
         })
@@ -112,11 +112,30 @@ function renderBarChart(canvasId, data) {
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            layout: {
+                padding: {
+                    top: 20,
+                    bottom: 25  // Increased bottom padding
+                }
+            },
             plugins: {
                 legend: { display: false }
             },
             scales: {
-                y: { beginAtZero: true }
+                y: { 
+                    beginAtZero: true,
+                    grid: { drawTicks: false },
+                    ticks: {
+                        padding: 10  // Add padding to axis ticks
+                    }
+                },
+                x: { 
+                    grid: { display: false },
+                    ticks: { 
+                        font: { size: 10 },
+                        padding: 10  // Add padding to axis ticks
+                    }
+                }
             }
         }
     });
@@ -129,6 +148,12 @@ function renderDoughnutChart(canvasId, data) {
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            layout: {
+                padding: {
+                    top: 20,
+                    bottom: 25  // Added bottom padding
+                }
+            },
             cutout: '60%'
         }
     });
@@ -141,25 +166,42 @@ function renderLineChart(canvasId, data) {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false }
-            },
-            elements: {
-                line: {
-                    tension: 0.6
+            layout: {
+                padding: {
+                    top: 20,
+                    bottom: 25
                 }
+            },
+            plugins: {
+                datalabels: false,
+                tooltip: {
+                    enabled: true,
+                    mode: 'index',
+                    intersect: false,
+                    callbacks: {
+                        label: function(context) {
+                            return `Photos: ${context.raw}`;
+                        }
+                    }
+                },
+                legend: { display: false }
             },
             scales: {
                 y: {
                     beginAtZero: true,
-                    suggestedMin: Math.min(...data.datasets[0].data) * 0.8,
-                    suggestedMax: Math.max(...data.datasets[0].data) * 1.2,
+                    suggestedMax: Math.max(...data.datasets[0].data) + 2, // Dynamic max scale
                     grid: { drawTicks: false, color: '#eee' },
                     ticks: { display: false }
                 },
                 x: {
                     grid: { display: false },
-                    ticks: { color: '#666' }
+                    ticks: { 
+                        color: '#666',
+                        font: { 
+                            size: 10,
+                            family: 'Roboto'
+                        }
+                    }
                 }
             }
         }
