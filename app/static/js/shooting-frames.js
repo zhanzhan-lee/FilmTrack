@@ -50,7 +50,7 @@ function bindEditRollFormFin() {
 
         const rollId = form.querySelector('[name=roll_id]').value;
         const formData = new FormData(form);
-        formData.set('status', 'finished');  // 强制保持 finished 状态
+        formData.set('status', 'finished');  // 强制保持 finished 状态 for finished rolls
 
         fetch(`/shooting/edit_roll/${rollId}`, {
             method: 'POST',
@@ -59,7 +59,7 @@ function bindEditRollFormFin() {
         .then(response => {
             if (response.ok) {
                 bootstrap.Modal.getInstance(document.getElementById('editRollModalFin')).hide();
-                loadRollDetailView(); // 刷新 finished 区域
+                loadRollDetailView(); // 刷新 finished 区域 refresh finished area
             } else {
                 alert("Failed to update roll.");
             }
@@ -124,7 +124,7 @@ function createRollRow(roll) {
     strip.className = 'film-strip';
 
     
-    // 获取该 roll 的照片（异步）
+    // 获取该 roll 的照片（异步）get photos for this roll (async)
     fetch(`/shooting/data/photos?roll_id=${roll.id}`)
         .then(res => res.json())
         .then(photos => {
@@ -150,7 +150,7 @@ function createRollRow(roll) {
             addFrame.innerHTML = '<span class="plus-icon">+</span>';
 
             addFrame.addEventListener('click', () => {
-                openPhotoUploadModal(roll.id);  // 👈 新增 modal 弹出函数
+                openPhotoUploadModal(roll.id);  
             });
 
             strip.appendChild(addFrame);
