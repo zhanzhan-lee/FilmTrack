@@ -1,5 +1,5 @@
 from app import create_app, db
-from app.models import User, Film, Camera, Lens, Roll, Photo
+from app.models import User, Film, Camera, Lens, Roll, Photo, Share
 from werkzeug.security import generate_password_hash
 from datetime import datetime, timedelta
 import random
@@ -94,7 +94,7 @@ def create_photos(users, rolls, cameras, lenses, films):
     current_date = datetime.now()
 
     for roll in rolls:
-        for j in range(5):  # Five photos per roll
+        for j in range(10):  # Five photos per roll
             # Spread the shot_date between the roll's start_date and the current date
             days_difference = (current_date - roll.start_date).days
             random_days_offset = random.randint(0, days_difference)
@@ -128,5 +128,36 @@ with app.app_context():
     lenses = create_lenses(users)
     rolls = create_rolls(users, films)
     create_photos(users, rolls, cameras, lenses, films)
+
+    share = Share(
+        from_user_id=2,  # Replace with a valid user ID
+        to_user_id=1,    # Replace with a valid user ID
+        start_date=datetime(2025, 1, 1),
+        end_date=datetime(2025, random.randint(1, 12), random.randint(1, 28)),
+        created_at=datetime(2025, 1, 1),
+        note="Testing share functionality",
+        share_exposure=True,
+        share_aperture=True,
+        share_favorite_film=True,
+        share_gear=True,
+        share_shoot_time=True
+    )
+    db.session.add(share)
+
+    share = Share(
+        from_user_id=3,  # Replace with a valid user ID
+        to_user_id=1,    # Replace with a valid user ID
+        start_date=datetime(2025, 1, 1),
+        end_date=datetime(2025, random.randint(1, 12), random.randint(1, 28)),
+        created_at=datetime(2025, 1, 1),
+        note="Testing share functionality",
+        share_exposure=True,
+        share_aperture=True,
+        share_favorite_film=True,
+        share_gear=True,
+        share_shoot_time=True
+    )
+    db.session.add(share)
+    db.session.commit()
 
     print("✅ Sample data inserted successfully.")
