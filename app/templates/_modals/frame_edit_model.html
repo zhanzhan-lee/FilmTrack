@@ -1,0 +1,85 @@
+<form id="edit-photo-form">
+    <input type="hidden" name="photo_id">
+    <div class="modal fade" id="editPhotoModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-3">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit Photo</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+  
+          <div class="modal-body">
+            <div class="mb-2">
+              <label for="shot_date" class="form-label">Shot Date</label>
+              <input class="form-control" name="shot_date" type="date">
+            </div>
+            <div class="mb-2">
+              <label for="shutter_speed" class="form-label">Shutter Speed</label>
+              <input class="form-control" name="shutter_speed">
+              <datalist id="shutter-suggestions">
+                <option value="1/4000">
+                <option value="1/2000">
+                <option value="1/1000">
+                <option value="1/500">
+                <option value="1/250">
+                <option value="1/125">
+                <option value="1/60">
+                <option value="1/30">
+                <option value="1/15">
+                <option value="1/8">
+                <option value="1/4">
+                <option value="1/2">
+                <option value="1&quot;">
+              </datalist>
+            </div>
+
+            <div class="mb-2">
+              <label for="aperture" class="form-label">Aperture</label>
+              <input class="form-control" name="aperture">
+              <datalist id="aperture-suggestions">
+                <option value="f/1.2">
+                <option value="f/1.4">
+                <option value="f/2">
+                <option value="f/2.8">
+                <option value="f/4">
+                <option value="f/5.6">
+                <option value="f/8">
+                <option value="f/11">
+                <option value="f/16">
+                <option value="f/22">
+              </datalist>
+            </div>
+
+            <div class="mb-2">
+              <label for="iso" class="form-label">ISO</label>
+              <input class="form-control" name="iso">
+            </div>
+            <div class="mb-2">
+              <label for="frame_number" class="form-label">Frame #</label>
+              <input class="form-control" name="frame_number">
+            </div>
+            <div class="mb-2">
+              <label for="location" class="form-label">Location</label>
+              <input class="form-control" name="location">
+            </div>
+            <div class="mb-2">
+              <label for="camera_id" class="form-label">Camera</label>
+              <select name="camera_id" class="form-control" id="edit-camera-select"></select>
+            </div>
+            <div class="mb-2">
+              <label for="lens_id" class="form-label">Lens</label>
+              <select name="lens_id" class="form-control" id="edit-lens-select"></select>
+            </div>
+          </div>
+  
+          <div class="modal-footer ">
+
+            <button type="submit" class="btn btn-dark">Save Changes</button>
+            <button type="button" class="btn btn-outline-danger" id="delete-photo-btn">Delete</button>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </form>
+  

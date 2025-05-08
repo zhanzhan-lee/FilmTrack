@@ -169,10 +169,17 @@ def get_photos():
             'id': p.id,
             'image_path': p.image_path,
             'frame_number': p.frame_number,
-            'shot_date': p.shot_date.strftime('%Y-%m-%d') if p.shot_date else ''
+            'shot_date': p.shot_date.strftime('%Y-%m-%d') if p.shot_date else '',
+            'shutter_speed': p.shutter_speed,
+            'aperture': p.aperture,
+            'iso': p.iso,
+            'location': p.location,
+            'camera_id': p.camera_id,
+            'lens_id': p.lens_id
         }
         for p in photos
     ])
+
 
 @shooting.route('/shooting/upload_photo', methods=['POST'])
 @login_required
@@ -207,7 +214,7 @@ def upload_photo():
     
 
 
-    # 日期格式化
+    # date format check
     try:
         shot_date = datetime.strptime(shot_date, '%Y-%m-%d') if shot_date else None
     except ValueError:
@@ -253,3 +260,38 @@ def get_lenses():
         'brand': lens.brand,
         'model': lens.model
     } for lens in lenses])
+
+
+# edit photo
+@shooting.route('/shooting/edit_photo/<int:id>', methods=['POST'])
+@login_required
+def edit_photo(id):
+    photo = Photo.query.filter_by(id=id, user_id=current_user.id).first_or_404()
+
+    photo.shutter_speed = request.form.get('shutter_speed')
+    photo.aperture = request.form.get('aperture')
+    photo.iso = request.form.get('iso')
+    photo.frame_number = request.form.get('frame_number')
+    photo.location = request.form.get('location')
+
+    photo.camera_id = request.form.get('camera_id', type=int)
+    photo.lens_id = request.form.get('lens_id', type=int)
+
+    shot_date = request.form.get('shot_date')
+    if shot_date:
+        try:
+            photo.shot_date = datetime.strptime(shot_date, '%Y-%m-%d')
+        except ValueError:
+            pass
+
+    db.session.commit()
+    return jsonify({'success': True})
+
+# delete photo
+@shooting.route('/shooting/delete_photo/<int:id>', methods=['POST'])
+@login_required
+def delete_photo(id):
+    photo = Photo.query.filter_by(id=id, user_id=current_user.id).first_or_404()
+    db.session.delete(photo)
+    db.session.commit()
+    return jsonify({'success': True})
