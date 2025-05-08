@@ -63,7 +63,7 @@ body {
 .chart-row {
     display: flex;
     gap: 1rem;
-    margin: 1rem 0;
+    margin: 0;
     align-items: stretch; /* Ensure consistent heights */
 }
 
@@ -72,7 +72,7 @@ body {
     height: 250px;
     position: relative;
     overflow: hidden;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     padding: 1rem 0.5rem; /* Increased top/bottom padding */
 }
 
@@ -105,15 +105,23 @@ h4 {
     margin: 0.5rem 0;
 }
 
+[id^="monthly-chart"] {
+    max-height: 300px;
+}
+
+@media (max-width: 1200px) {
+    .chart-row {
+        flex-direction: column;
+        max-height: 600px;
+    }
+}
+
 @media (max-width: 768px) {
     .shared-stats-grid {
         grid-template-columns: 1fr;
     }
 
-    .chart-row {
-        flex-direction: column;
-        max-height: 300px;
-    }
+    
 
     .chart-container.half {
         flex: 1;
