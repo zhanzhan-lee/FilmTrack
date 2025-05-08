@@ -1,6 +1,18 @@
 /* ---------------------------- */
 /*  Navbar MAIN        */
 /* ---------------------------- */
+
+
+
+
+
+body.modal-open .custom-navbar {
+    padding-right: 20px !important; /* 保持原样 */
+}
+
+
+
+
 .custom-navbar {
     position: fixed;
     top: 0;
@@ -15,7 +27,6 @@
     align-items: center;
     box-sizing: border-box;
     z-index: 1000;
-    transition: all 0.3s ease;
 }
 
 .navbar-inner {
