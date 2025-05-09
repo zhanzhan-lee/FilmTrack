@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, jsonify
 from app.models import *
 from sqlalchemy import func, extract
-from flask_login import current_user
+from flask_login import current_user, login_required
 from datetime import datetime, timedelta
 
 stats = Blueprint('stats', __name__)
