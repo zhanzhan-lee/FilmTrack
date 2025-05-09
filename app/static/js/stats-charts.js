@@ -137,7 +137,7 @@ function updateFilmLeaderboard() {
         {
           position.innerHTML = `
           <div class="film-leaderboard-position">
-            <img src="/static/uploads/films/${data.images[index]}" id="favourite-film-img">
+            <img src="${data.images[index]}" id="favourite-film-img">
               <h1>#1</h1>
               <p>${filmName}</p>
             </div>

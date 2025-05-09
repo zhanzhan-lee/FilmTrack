@@ -166,10 +166,18 @@ def get_film_preference():
 
     for film_id, count in results:
         film = Film.query.get(film_id) 
-        if film:
+        # Fetch film image details
+        if film: 
             labels.append(film.name) 
             data.append(count)
-            images.append(film.image_path)
+            if film.image_path:
+                image_url = f"/static/uploads/films/{film.image_path}" 
+            else:
+             image_url = "/static/images/film_placeholder.png" # If the user has no uploaded film images
+            
+            images.append(image_url)
+
+            
 
     # Return the data as JSON
     return jsonify({"labels": labels, "data": data, "images": images})
