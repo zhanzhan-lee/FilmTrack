@@ -1,6 +1,6 @@
 from flask_login import UserMixin
 from app import db
-
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 # -------------------------
@@ -12,6 +12,15 @@ class User(db.Model, UserMixin):  # ⬅ 加上 UserMixin
     password = db.Column(db.String(200), nullable=False)
     image_path = db.Column(db.String(200))
     
+    def set_password(self, password):
+        self.password = generate_password_hash(password)
+    
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
+
+
+
+
     cameras = db.relationship('Camera', backref='owner', lazy=True)
     lenses = db.relationship('Lens', backref='owner', lazy=True)
     films = db.relationship('Film', backref='owner', lazy=True)
