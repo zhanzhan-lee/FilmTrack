@@ -8,6 +8,7 @@ app = create_app()
 
 def clear_database():
     """Clear all existing data from the database."""
+    db.session.query(Share).delete()
     db.session.query(Photo).delete()
     db.session.query(Roll).delete()
     db.session.query(Film).delete()
@@ -15,6 +16,9 @@ def clear_database():
     db.session.query(Lens).delete()
     db.session.query(User).delete()
     db.session.commit()
+    
+
+
 
 def create_users():
     """Create sample users."""
