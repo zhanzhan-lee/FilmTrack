@@ -4,7 +4,7 @@
 {% block styles %}
 <style>
 :root{--main:#6B705C;--bg:#F2E8CF;--accent:#B5838D}
-body{background:var(--bg);font-family:system-ui,sans-serif;padding:80px 16px 32px;color:#333}
+body{background:var(--bg);padding:80px 16px 32px;color:#333}
 .container{background:transparent!important;box-shadow:none!important;padding:0!important;transition:margin-left .3s ease}
 @media(min-width:992px){
   #sidebar.active + .container{margin-left:260px}
@@ -23,8 +23,7 @@ legend{font-weight:bold;color:var(--main);margin-bottom:10px;font-size:16px}
 .checkbox-grid label{display:flex;align-items:center;gap:6px;font-size:14px}
 
 input[type=date],input[type=text],textarea{
-  width:100%;padding:9px;border:1px solid #ccc;border-radius:6px;font-size:14px;background:#fff;margin-top:6px
-}
+  width:100%;padding:9px;border:1px solid #ccc;border-radius:6px;font-size:14px;background:#fff;margin-top:6px}
 textarea{height:80px;resize:vertical}
 
 .form-buttons{display:flex;gap:16px;margin-top:24px}
@@ -136,6 +135,19 @@ textarea{height:80px;resize:vertical}
   </div>
 </div>
 {% endblock %}
+
+{% block scripts %}
+<!-- Twemoji CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/twemoji.min.js"
+        integrity="sha512-+9nrGrU+cg4RlZMf3QXSu5Xei1MIhZy/CQYjaMwvqFaYMGtCUNWQK8qv5GUcC3PDuX+hW5yX33/3S4E5dX9p7g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    twemoji.parse(document.body);
+  });
+</script>
+{% endblock %}
+
 
 
 
