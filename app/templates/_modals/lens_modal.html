@@ -6,15 +6,15 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
-          {{ lens_form.hidden_tag() }}
-          {{ lens_form.name.label }} {{ lens_form.name(class="form-control") }}
-          {{ lens_form.brand.label }} {{ lens_form.brand(class="form-control") }}
-          {{ lens_form.mount_type.label }} {{ lens_form.mount_type(class="form-control") }}
-          {{ lens_form.image.label }} {{ lens_form.image(class="form-control") }}
-          {{ lens_form.is_public() }} {{ lens_form.is_public.label }}
+        {{ lens_form.hidden_tag() }}
+        {{ lens_form.name.label }} {{ lens_form.name(class="form-control", id="lens-name") }}
+        {{ lens_form.brand.label }} {{ lens_form.brand(class="form-control", id="lens-brand") }}
+        {{ lens_form.mount_type.label }} {{ lens_form.mount_type(class="form-control", id="lens-mount-type") }}
+        {{ lens_form.image.label }} {{ lens_form.image(class="form-control", id="lens-image") }}
+        {{ lens_form.is_public(id="lens-is-public") }} {{ lens_form.is_public.label }}
         </div>
         <div class="modal-footer">
-          {{ lens_form.submit(class="btn btn-dark") }}
+          {{ lens_form.submit(class="btn btn-dark", id="submit-lens") }}
         </div>
       </form>
     </div>

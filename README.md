@@ -1,21 +1,24 @@
 
-## 🚀 Project Setup
+## Project Setup
 
-### Prerequisites
+### 1. Prerequisites
 
-- **Operating System**: Ubuntu 24.04 (or WSL with Ubuntu 24.04)
+- **Operating System**: 
+    - **Recommand:** Ubuntu 24.04 (or WSL with Ubuntu 24.04)
+    - Windows 11
+    - MacOS
 - **Python Version**: Python 3.10 or later
 
 ---
 
-### 🛠 Step-by-step Setup Guide
+### 2. Step-by-step Setup Guide
 
 #### 1️⃣ Clone the Project
 
 Start by cloning the project repository:
 
 ```bash
-git clone https://github.com/your-GitHub-username/CITS3403-Group11-2025.git
+git clone https://github.com/zhanzhan-lee/CITS3403-Group11-2025.git
 cd CITS3403-Group11-2025
 ```
 
@@ -31,13 +34,19 @@ sudo apt install python3 python3-venv python3-pip
 #### 3️⃣ Create and Activate the Virtual Environment
 
 Create a virtual environment to isolate project dependencies:
-
+- **Linux / macOS / WSL:**
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 ```
+- **Windows**
+```bash
+python3 -m venv venv_win
+.\venv_win\Scripts\activate   
+```
 
-Once activated, your terminal prompt should change to `(venv)`.
+
+Once activated, your terminal prompt should change to `(venv)` or `(venv_win)`.
 
 #### 4️⃣ Install Project Dependencies
 
@@ -51,11 +60,8 @@ This will install all the necessary packages, including Flask and Flask-WTF.
 
 #### 5️⃣ Run the Application 
 
-Set the Flask app environment variables and start the application:
 
 ```bash
-export FLASK_APP=run.py
-export FLASK_ENV=development  # Enable debugging mode
 flask run
 ```
 
@@ -63,10 +69,9 @@ Visit `http://127.0.0.1:5000` in your browser to see the app running.
 
 ---
 
-## 🧭 Usage
+## 3. Usage
 
 - **Development Mode**: The application runs in development mode with auto-reloading enabled. Simply run `flask run` to start the app.
-- **No Database Setup**: The project currently does not include any database configuration. You can focus on the core functionality of the application.
 
 ---
 

@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from config import TestingConfig
+import sqlalchemy
 
 
 # Initialize Flask-Login globally
@@ -35,7 +36,11 @@ def create_app(config_name='default'):
 
     @login_manager.user_loader
     def load_user(user_id):
-       return db.session.get(User, int(user_id))
+        try:
+            return db.session.get(User, int(user_id))
+        except (TypeError, ValueError, sqlalchemy.exc.InterfaceError):
+            return None
+
 
     # Register Blueprints
     from .routes.main import main

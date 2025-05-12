@@ -7,15 +7,18 @@
         </div>
         <div class="modal-body">
           {{ film_form.hidden_tag() }}
-          {{ film_form.name.label }} {{ film_form.name(class="form-control") }}
-          {{ film_form.brand.label }} {{ film_form.brand(class="form-control") }}
-          {{ film_form.iso.label }} {{ film_form.iso(class="form-control") }}
-          {{ film_form.format.label }} {{ film_form.format(class="form-select") }}
-          {{ film_form.image.label }} {{ film_form.image(class="form-control") }}
-          {{ film_form.is_public() }} {{ film_form.is_public.label }}
+
+          {{ film_form.name.label }}{{ film_form.name(class="form-control", id="film-name") }}
+          {{ film_form.brand.label }}{{ film_form.brand(class="form-control", id="film-brand") }}
+          {{ film_form.iso.label }}{{ film_form.iso(class="form-control", id="film-iso") }}
+          {{ film_form.format.label }}{{ film_form.format(class="form-select", id="film-format") }}
+          {{ film_form.image.label }}{{ film_form.image(class="form-control", id="film-image") }}
+          {{ film_form.is_public(id="film-is_public") }}{{ film_form.is_public.label }}
+
         </div>
         <div class="modal-footer">
-          {{ film_form.submit(class="btn btn-dark") }}
+          {{ film_form.submit(class="btn btn-dark", id="submit-film") }}
+
         </div>
       </form>
     </div>
