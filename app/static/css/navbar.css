@@ -1,6 +1,18 @@
 /* ---------------------------- */
 /*  Navbar MAIN        */
 /* ---------------------------- */
+
+
+
+
+
+body.modal-open .custom-navbar {
+    padding-right: 20px !important; /* Prevents content shift when modal is open */
+}
+
+
+
+
 .custom-navbar {
     position: fixed;
     top: 0;
@@ -15,7 +27,6 @@
     align-items: center;
     box-sizing: border-box;
     z-index: 1000;
-    transition: all 0.3s ease;
 }
 
 .navbar-inner {
@@ -25,7 +36,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: nowrap; /* 避免内容换行 */
+    flex-wrap: nowrap; 
 }
 
 /* ---------------------------- */

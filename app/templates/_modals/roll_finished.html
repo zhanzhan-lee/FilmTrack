@@ -1,0 +1,22 @@
+<!-- Modal: Mark Roll as Finished -->
+<div class="modal fade" id="finishRollModal" tabindex="-1" aria-labelledby="finishRollModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form id="finish-roll-form" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="finishRollModalLabel">Mark as Finished</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" name="roll_id">
+          <div class="mb-3">
+            <label for="finish-date" class="form-label">End Date</label>
+            <input type="date" name="end_date" id="finish-date" class="form-control" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Confirm</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  

@@ -18,17 +18,22 @@ body {
 /* 继续复用 gear-card 样式但可以微调 */
 /* Continue to reuse the gear-card style but can be fine-tuned */
 .gear-card {
-    width: 236px; 
-    /*max-width: 600px; */
+    flex: 1 1 calc(20% - 20px);  /* 默认 5列 */
+    max-width: calc(20% - 20px);
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
-    overflow: auto;
+    overflow: hidden;
     text-align: center;
-    padding: 15px;
+    padding: 12px;
     font-family: sans-serif;
-    transition: all 0.3s ease; 
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.3s ease-in-out;
 }
+
 
 .subtext {
     font-size: 14px;
@@ -71,6 +76,7 @@ body {
     align-items: center;
     flex-shrink: 0;
     overflow: hidden; /* 保证盖子不会溢出 *//* Make sure the lid doesn't overflow */
+    transition: all 0.3s ease-in-out;
 }
 
 
@@ -98,6 +104,7 @@ body {
     
     z-index: 2; /* Under the cap */
     margin-top: 20px;
+    transition: all 0.3s ease-in-out;
 }
 
 .roll-details {
@@ -118,6 +125,7 @@ body {
     position: absolute;
     left: 0;
     z-index: 3; /* cap is above */
+    transition: all 0.3s ease-in-out;
 }
 
 /* 上盖子 top cap */
@@ -148,4 +156,61 @@ body {
     align-items: center;
     position: relative;
     z-index: 1;
+    transition: all 0.3s ease-in-out;
 }
+
+@media (max-width: 1200px) {
+    .gear-card {
+        flex: 1 1 calc(25% - 20px);  /* 4列 */
+        max-width: calc(25% - 20px);
+    }
+}
+
+@media (max-width: 992px) {
+    .gear-card {
+        flex: 1 1 calc(50% - 20px);  /* 2列 */
+        max-width: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 640px) {
+    .gear-card {
+        flex: 1 1 calc(50% - 20px);  /* 2列 */
+        max-width: calc(50% - 20px);
+    }
+    .film-logo-container {
+        width: 140px;
+        height: 200px;
+    }
+
+    .film-logo {
+        width: 150px;
+        height: auto;
+        margin-top: 6px;
+    }
+
+    .film-cap {
+        height: 15px;
+    }
+
+    .film-cap.top {
+        top: 15px;   /* ✅ 相对高度控制 */
+    }
+
+    .film-cap.bottom {
+        bottom: 10px; /* ✅ 相对高度控制 */
+    }
+
+    .film-cap.axle {
+        width: 32px;
+        height: 18px;
+        left: 54px;
+        top: 2px;
+    }
+
+    .film-add-body {
+        width: 126px;
+        height: 160px;
+    }
+}
+
