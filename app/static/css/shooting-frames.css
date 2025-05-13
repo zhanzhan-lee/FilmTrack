@@ -9,6 +9,7 @@
 }
 
 .film-strip {
+    
     position: relative;
     display: flex;
     flex-wrap: nowrap;     /* ✅ No line break */
