@@ -43,27 +43,28 @@ class SystemRegisterLoginTest(unittest.TestCase):
     def test_register_and_login_flow(self):
         driver = self.driver
 
-        # 1. 打开首页，点击 Sign Up
+        # Sign Up
         driver.get("http://localhost:5001/")
         driver.find_element(By.LINK_TEXT, "Sign Up").click()
         time.sleep(1)
 
-        # 2. 填写注册表单
+        # Register a new user
         driver.find_element(By.NAME, "username").send_keys("testuser")
         driver.find_element(By.NAME, "password").send_keys("password")
+        driver.find_element(By.NAME, "confirm_password").send_keys("password")
         checkboxes = driver.find_elements(By.CSS_SELECTOR, 'input[type="checkbox"]')
         checkboxes[0].click()
         checkboxes[1].click()
         driver.find_element(By.CSS_SELECTOR, 'button[type="submit"]').click()
         time.sleep(1)
 
-        # ✅ 现在已经跳转到了 login 页面，无需点击 “Sign in”
+        # Login PAGE
         driver.find_element(By.NAME, "username").send_keys("testuser")
         driver.find_element(By.NAME, "password").send_keys("password")
         driver.find_element(By.CSS_SELECTOR, 'button[type="submit"]').click()
         time.sleep(1)
 
-        # 4. 验证已成功登录并进入 Gear 页
+        # Check if the user is logged in
         driver.get("http://localhost:5001/gear")
         time.sleep(1)
         self.assertIn("Upload Camera", driver.page_source)  # or check .add-card presence
