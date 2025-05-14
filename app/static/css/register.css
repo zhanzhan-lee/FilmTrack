@@ -71,10 +71,18 @@ input[type="password"] {
 }
 
 .checkboxes label {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-weight: normal;
   color: #333;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
+}
+
+.checkboxes input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
 }
 
 .checkboxes a {

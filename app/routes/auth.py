@@ -5,42 +5,43 @@ from flask_login import login_user, logout_user, login_required
 from flask_login import login_required, current_user
 from app.models import User
 from app import db
+from app.forms import LoginForm, RegisterForm
+
 
 auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        user = User.query.filter_by(username=username).first()
-
-        if user and check_password_hash(user.password, password):
-            login_user(user)  #  Flask-Login to log in the user
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user and check_password_hash(user.password, form.password.data):
+            login_user(user)
             flash('Login successful!', 'success')
             return redirect(url_for('main.home'))
         else:
             flash('Login failed. Check your credentials.', 'danger')
+    return render_template('login.html', form=form)
 
-    return render_template('login.html', title="Login")
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-
-        if User.query.filter_by(username=username).first():
+    form = RegisterForm()
+    if form.validate_on_submit():
+        if User.query.filter_by(username=form.username.data).first():
             flash('Username already exists.', 'warning')
         else:
-            hashed_pw = generate_password_hash(password, method='pbkdf2:sha256')
-            new_user = User(username=username, password=hashed_pw)
+            hashed_pw = generate_password_hash(form.password.data, method='pbkdf2:sha256')
+            new_user = User(
+                username=form.username.data,
+                password=hashed_pw
+            )
             db.session.add(new_user)
             db.session.commit()
             flash('Registration successful. Please log in.', 'success')
             return redirect(url_for('auth.login'))
+    return render_template('register.html', form=form)
 
-    return render_template('register.html', title="Register")
 
 @auth.route('/logout')
 @login_required
