@@ -45,9 +45,9 @@ body {
 
 .shared-stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
-    padding: 2rem;
+    padding: 1rem;
     max-width: 1400px;
     margin: 0 auto;
 }
@@ -75,13 +75,13 @@ body {
 
 .chart-container {
     position: relative;
-    height: 220px;
     width: 100%;
+    height: 250px;  /* Fixed height instead of min/max */
     margin-bottom: 1rem;
 }
 
 .chart-container.half {
-    height: 180px;
+    height: 200px;  /* Fixed height for half containers */
 }
 
 .chart-row {
@@ -89,6 +89,7 @@ body {
     gap: 1rem;
     margin: 1rem 0;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 .chart-row.secondary-charts {
@@ -100,7 +101,7 @@ body {
 
 .shared-stats-tile.expanded .chart-row.secondary-charts {
     opacity: 1;
-    max-height: 800px;
+    max-height: 1000px; /* Set this to a value larger than your content will ever be */
 }
 
 .expand-button {
@@ -127,19 +128,46 @@ body {
 @media (max-width: 1200px) {
     .chart-row {
         flex-direction: column;
-        max-height: 600px;
+        gap: 2rem;
+    }
+    
+    .shared-stats-tile {
+        padding: 1rem;
     }
 }
 
 @media (max-width: 768px) {
     .shared-stats-grid {
         grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 0.5rem;
     }
 
-    
+    .chart-container {
+        height: 200px;  /* Adjusted height for mobile */
+    }
 
     .chart-container.half {
-        flex: 1;
-        max-height: 250px;
+        height: 180px;
+    }
+
+    .shared-stats-tile {
+        margin: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .chart-container {
+        height: 180px;  /* Further reduced height for smaller screens */
+    }
+    
+    .chart-container.half {
+        height: 160px;
+    }
+
+    .user-stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 10px;
     }
 }
