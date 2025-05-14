@@ -118,6 +118,14 @@ body.modal-open .custom-navbar {
     background-color: #5a6350;
 }
 
+.user-greeting {
+    margin-right: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #6B705C;
+}
+
+
 /* ---------------------------- */
 /* ☰ Sidebar Toggle         */
 /* ---------------------------- */

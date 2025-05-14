@@ -31,6 +31,9 @@
 
         <div class="right-items d-flex align-items-center">
             {% if current_user.is_authenticated %}
+                <div class="user-greeting d-none d-md-block">
+                    Welcome, {{ current_user.username }}
+                </div>
                 <div class="user-avatar">
                     <button class="avatar-btn" data-bs-toggle="modal" data-bs-target="#profileModal">
                     {{ current_user.username[0]|upper }}
