@@ -9,7 +9,9 @@ document.addEventListener('DOMContentLoaded', function () {
 // loading gear data
 
 function loadCameras() {
-    fetch('/gear/data/cameras')
+    fetch('/gear/data/cameras', {
+        credentials: 'include'
+    })
         .then(response => response.json())
         .then(cameras => {
             const container = document.getElementById('camera-list');
@@ -55,7 +57,9 @@ function loadCameras() {
 
 
 function loadLenses() {
-    fetch('/gear/data/lenses')
+    fetch('/gear/data/lenses', {
+        credentials: 'include'
+    })
         .then(response => response.json())
         .then(lenses => {
             const container = document.getElementById('lens-list');
@@ -97,7 +101,9 @@ function loadLenses() {
 
 
 function loadFilms() {
-    fetch('/gear/data/films')
+    fetch('/gear/data/films', {
+        credentials: 'include'
+    })
         .then(response => response.json())
         .then(films => {
             const container = document.getElementById('film-list');

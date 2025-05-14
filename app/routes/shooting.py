@@ -1,12 +1,12 @@
 # app/routes/shooting.py
 
-from flask import Blueprint, request, render_template, jsonify
+from flask import Blueprint, request, render_template, jsonify, abort
 from flask_login import login_required, current_user
 from app.models import Roll, Film, Photo, Camera, Lens
 from app.forms import RollForm
 from app import db
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 from werkzeug.utils import secure_filename
 from flask import current_app
 
@@ -124,7 +124,10 @@ def delete_roll(id):
 @shooting.route('/shooting/finish_roll/<int:roll_id>', methods=['POST'])
 @login_required
 def finish_roll(roll_id):
-    roll = Roll.query.get_or_404(roll_id)
+    roll = db.session.get(Roll, roll_id)
+    if not roll:
+        abort(404)
+
     if roll.user_id != current_user.id:
         return jsonify({'success': False}), 403
 
@@ -134,7 +137,7 @@ def finish_roll(roll_id):
     if end_date_str:
         roll.end_date = datetime.strptime(end_date_str, '%Y-%m-%d')
     else:
-        roll.end_date = datetime.utcnow()
+        roll.end_date = datetime.now(timezone.utc)
 
     db.session.commit()
 

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login to Flourish</title>
+    <title>Login to FilmTrack</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/login.css') }}"
@@ -18,15 +18,18 @@
       <div class="flash {{ category }}">{{ message }}</div>
       {% endfor %} {% endif %} {% endwith %}
 
-      <form method="POST" action="{{ url_for('auth.login') }}">
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" required />
+        <form method="POST" action="{{ url_for('auth.login') }}">
+          {{ form.hidden_tag() }}
 
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required />
+          <label for="username">{{ form.username.label }}</label>
+          {{ form.username(class="form-control") }}
 
-        <button type="submit">Log in</button>
-      </form>
+          <label for="password">{{ form.password.label }}</label>
+          {{ form.password(class="form-control") }}
+
+          <button type="submit">Log in</button>
+        </form>
+
 
       <p class="signup-text">
         Don’t have an account yet?
