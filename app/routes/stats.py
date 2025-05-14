@@ -7,10 +7,12 @@ from datetime import datetime, timedelta
 stats = Blueprint('stats', __name__)
 
 @stats.route('/stats')
+@login_required
 def stats_page():
     return render_template('stats.html', title="Stats", message="Visualise your shooting habits.")
 
 @stats.route('/api/monthly-trend', methods=['GET'])
+@login_required
 def get_monthly_trend():
     today = datetime.today()
     six_months_ago = today - timedelta(days=6 * 30)
@@ -59,6 +61,7 @@ def get_monthly_trend():
     return jsonify(monthly_data)
 
 @stats.route('/api/aperture-distribution', methods=['GET'])
+@login_required
 def get_aperture_distribution():
     # Query the database for the top 5 apertures used by the current user
     results = (
@@ -79,6 +82,7 @@ def get_aperture_distribution():
     return jsonify({"labels": labels, "data": data})
 
 @stats.route('/api/shutter-speed-distribution', methods=['GET'])
+@login_required
 def get_shutter_speed_distribution():
     # Query the database for the top 5 shutter speeds used by the current user
     results = (
@@ -99,6 +103,7 @@ def get_shutter_speed_distribution():
     return jsonify({"labels": labels, "data": data, "total": sum(data)})
 
 @stats.route('/api/cameras-chart-preference', methods=['GET'])
+@login_required
 def get_camera_preference():
     # Query the database for the top 3 most-used cameras by the current user
     results = (
@@ -125,6 +130,7 @@ def get_camera_preference():
     return jsonify({"labels": labels, "data": data})
 
 @stats.route('/api/lenses-chart-preference', methods=['GET'])
+@login_required
 def get_lens_preference():
     results = (
         Photo.query
@@ -149,6 +155,7 @@ def get_lens_preference():
     return jsonify({"labels": labels, "data": data})
 
 @stats.route('/api/film-chart-preference', methods=['GET'])
+@login_required
 def get_film_preference():
     results = (
         Photo.query
@@ -183,6 +190,7 @@ def get_film_preference():
     return jsonify({"labels": labels, "data": data, "images": images})
 
 @stats.route('/api/top-locations', methods=['GET'])
+@login_required
 def get_top_locations():
     # Query the database for the top 5 most shot-at locations by the current user
     results = (
