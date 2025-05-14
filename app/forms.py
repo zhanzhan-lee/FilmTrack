@@ -1,6 +1,26 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, SelectField, BooleanField, FileField, DateField, SubmitField
-from wtforms.validators import DataRequired, Optional
+from wtforms import StringField, TextAreaField, SelectField, BooleanField, FileField, DateField, SubmitField, PasswordField
+from wtforms.validators import DataRequired, Optional, Length, EqualTo
+
+
+class LoginForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired(), Length(1, 64)])
+    password = PasswordField('Password', validators=[DataRequired()])
+
+class RegisterForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired(), Length(1, 64)])
+    password = PasswordField('Password', validators=[DataRequired()])
+    confirm_password = PasswordField('Confirm Password', validators=[
+        DataRequired(),
+        EqualTo('password', message='Passwords must match.')
+    ])
+    agree_terms = BooleanField('I agree to the terms', validators=[DataRequired()])
+    agree_policy = BooleanField('I have read the privacy policy', validators=[DataRequired()])
+    subscribe = BooleanField('Send me occasional tips and updates')
+
+
+
+
 
 class CameraForm(FlaskForm):
     class Meta:
