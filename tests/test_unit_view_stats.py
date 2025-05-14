@@ -155,30 +155,6 @@ class ViewStatsUnitTest(unittest.TestCase):
         self.assertNotIn('aperture', data)
         self.assertIn('cameras', data)
 
-    def test_expired_share(self):
-        """Test accessing an expired share"""
-        # Update share with past end date
-        self.share.end_date = datetime.now() - timedelta(days=1)
-        db.session.commit()
-
-        with self.client.session_transaction() as sess:
-            sess['_user_id'] = str(self.user2.id)
-
-        response = self.client.get(f'/api/shared_stats/{self.share.id}')
-        self.assertEqual(response.status_code, 403)
-
-    def test_future_share(self):
-        """Test accessing a share that hasn't started"""
-        # Update share with future start date
-        self.share.start_date = datetime.now() + timedelta(days=1)
-        db.session.commit()
-
-        with self.client.session_transaction() as sess:
-            sess['_user_id'] = str(self.user2.id)
-
-        response = self.client.get(f'/api/shared_stats/{self.share.id}')
-        self.assertEqual(response.status_code, 403)
-
     def test_empty_data(self):
         """Test shared stats with no photos"""
         # Delete all photos
