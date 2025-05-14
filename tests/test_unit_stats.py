@@ -145,3 +145,117 @@ class StatsUnitTest(unittest.TestCase):
         self.assertIn('labels', data)
         self.assertIn('data', data)
         self.assertEqual(len(data['labels']), 6)  # Should have 6 months
+
+    def test_monthly_trend_empty_data(self):
+        """Test monthly trend with no photos"""
+        # Delete all photos
+        Photo.query.delete()
+        db.session.commit()
+
+        response = self.client.get('/api/monthly-trend')
+        self.assertEqual(response.status_code, 200)
+        data = response.get_json()
+        self.assertEqual(len(data['labels']), 6)  # Should still have 6 months
+        self.assertEqual(sum(data['data']), 0)    # All values should be 0
+
+    def test_gear_stats_with_unused_gear(self):
+        """Test gear stats when some gear has never been used"""
+        # Add unused camera
+        unused_camera = Camera(name='unused', brand='test', type='test',
+                             format='35mm', user_id=self.user.id)
+        db.session.add(unused_camera)
+        db.session.commit()
+
+        response = self.client.get('/api/cameras-chart-preference')
+        self.assertEqual(response.status_code, 200)
+        data = response.get_json()
+        self.assertNotIn('unused', data['labels'])  # Unused camera shouldn't appear
+
+    def test_location_stats_with_null_locations(self):
+        """Test location stats with null location values"""
+        # Add photo with null location
+        photo = Photo(user_id=self.user.id, roll_id=self.roll1.id,
+                     camera_id=self.camera1.id, lens_id=self.lens1.id,
+                     film_id=self.film1.id, shutter_speed='1/125',
+                     aperture='f/2', iso='400', location=None,
+                     shot_date=datetime(2024, 5, 1))
+        db.session.add(photo)
+        db.session.commit()
+
+        response = self.client.get('/api/top-locations')
+        self.assertEqual(response.status_code, 200)
+        data = response.get_json()
+        self.assertNotIn(None, data['labels'])  # Null locations should be filtered out
+
+    def test_film_stats_with_deleted_film(self):
+        """Test film stats when referenced film is deleted"""
+        # Delete a film that's used in photos
+        db.session.delete(self.film1)
+        db.session.commit()
+
+        response = self.client.get('/api/film-chart-preference')
+        self.assertEqual(response.status_code, 200)
+        data = response.get_json()
+        self.assertNotIn('Portra 400', data['labels'])
+
+    def test_stats_unauthorized_access(self):
+        """Test accessing stats without being logged in"""
+        with self.client.session_transaction() as sess:
+            sess.clear()  # Clear session to simulate logged out state
+
+        response = self.client.get('/stats')
+        self.assertEqual(response.status_code, 302)  # Should redirect to login
+
+    def test_aperture_distribution_invalid_data(self):
+        """Test aperture distribution with invalid aperture values"""
+        # Add photo with invalid aperture
+        photo = Photo(user_id=self.user.id, roll_id=self.roll1.id,
+                     camera_id=self.camera1.id, lens_id=self.lens1.id,
+                     film_id=self.film1.id, shutter_speed='1/125',
+                     aperture='invalid', iso='400', location='Test',
+                     shot_date=datetime(2024, 5, 1))
+        db.session.add(photo)
+        db.session.commit()
+
+        response = self.client.get('/api/aperture-distribution')
+        self.assertEqual(response.status_code, 200)
+        data = response.get_json()
+        self.assertIn('invalid', data['labels'])  # Should handle invalid data
+
+    def test_monthly_trend_future_dates(self):
+        """Test monthly trend with future dates"""
+        # Add photo with future date
+        future_photo = Photo(user_id=self.user.id, roll_id=self.roll1.id,
+                           camera_id=self.camera1.id, lens_id=self.lens1.id,
+                           film_id=self.film1.id, shutter_speed='1/125',
+                           aperture='f/2', iso='400', location='Future',
+                           shot_date=datetime(2025, 12, 1))
+        db.session.add(future_photo)
+        db.session.commit()
+
+        response = self.client.get('/api/monthly-trend')
+        self.assertEqual(response.status_code, 200)
+        data = response.get_json()
+        self.assertEqual(len(data['labels']), 6)  # Should still only show last 6 months
+
+    def test_cross_user_data_isolation(self):
+        """Test that users can't see each other's stats"""
+        # Create second user with their own photos
+        user2 = User(username='testuser2')
+        user2.set_password('password')
+        db.session.add(user2)
+        db.session.commit()
+
+        photo2 = Photo(user_id=user2.id, roll_id=self.roll1.id,
+                      camera_id=self.camera1.id, lens_id=self.lens1.id,
+                      film_id=self.film1.id, shutter_speed='1/1000',
+                      aperture='f/1.4', iso='400', location='User2Location',
+                      shot_date=datetime(2024, 5, 1))
+        db.session.add(photo2)
+        db.session.commit()
+
+        # Check that first user can't see second user's data
+        response = self.client.get('/api/top-locations')
+        self.assertEqual(response.status_code, 200)
+        data = response.get_json()
+        self.assertNotIn('User2Location', data['labels'])
