@@ -3,6 +3,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
 from app import db
 from app.models import Share, User
+from flask import abort
 
 share = Blueprint("share", __name__)
 
@@ -70,7 +71,9 @@ def share_page():
 @share.route("/share/<int:share_id>/revoke", methods=["POST"])
 @login_required
 def revoke_share(share_id):
-    rec = Share.query.get_or_404(share_id)
+    rec = db.session.get(Share, share_id)
+    if not rec:
+        abort(404)
     if rec.from_user_id != current_user.id:
         flash("Not authorised.", "danger")
         return redirect(url_for("share.share_page"))
