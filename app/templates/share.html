@@ -2,60 +2,20 @@
 {% block title %}Share{% endblock %}
 
 {% block styles %}
-<style>
-:root{--main:#6B705C;--bg:#F2E8CF;--accent:#B5838D}
-body{background:var(--bg);padding:80px 16px 32px;color:#333}
-.container{background:transparent!important;box-shadow:none!important;padding:0!important;transition:margin-left .3s ease}
-@media(min-width:992px){
-  #sidebar.active + .container{margin-left:260px}
-}
-
-.share-wrapper{display:flex;flex-direction:column;gap:32px;margin:auto;max-width:1200px}
-@media(min-width:992px){.share-wrapper{flex-direction:row}}
-
-.card{background:#fff;border-radius:14px;padding:32px 38px;box-shadow:0 6px 16px rgba(0,0,0,.07)}
-.card h2{font-size:22px;color:var(--main);margin:0 0 12px}
-
-fieldset{border:none;margin:0 0 20px}
-legend{font-weight:bold;color:var(--main);margin-bottom:10px;font-size:16px}
-
-.checkbox-grid{display:flex;flex-wrap:wrap;gap:16px;margin-top:6px}
-.checkbox-grid label{display:flex;align-items:center;gap:6px;font-size:14px}
-
-input[type=date],input[type=text],textarea{
-  width:100%;padding:9px;border:1px solid #ccc;border-radius:6px;font-size:14px;background:#fff;margin-top:6px}
-textarea{height:80px;resize:vertical}
-
-.form-buttons{display:flex;gap:16px;margin-top:24px}
-.form-buttons button{padding:10px 22px;border:none;border-radius:6px;font-size:14px;font-weight:bold;cursor:pointer;transition:opacity .2s}
-.form-buttons button:hover{opacity:.92}
-.btn-share{background:var(--main);color:#fff}
-.btn-reset{background:var(--accent);color:#fff}
-
-.table-responsive{width:100%;overflow-x:auto}
-.shared-table{width:100%;min-width:620px;border-collapse:collapse;font-size:14px}
-.shared-table th,.shared-table td{padding:10px;border:1px solid #ddd;text-align:left}
-.shared-table th{background:#f9f7f1;color:var(--main)}
-.shared-table tr:nth-child(even){background:#faf9f7}
-.shared-table tr:hover{background:#f3f1ec}
-.revoke-btn{background:crimson;color:#fff;border:none;padding:6px 10px;border-radius:4px;cursor:pointer;font-size:13px}
-
-.alert{padding:10px 14px;font-size:14px}
-@media(max-width:768px){.card{padding:24px}.checkbox-grid{flex-direction:column}}
-</style>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/share.css') }}">
 {% endblock %}
 
 {% block content %}
 <div class="share-wrapper">
-  <!-- ─────────────── FORM CARD ─────────────── -->
+  <!-- ─── FORM CARD ─── -->
   <div class="card" style="flex:1">
     <h2>New Share</h2>
 
     {% with msgs = get_flashed_messages(with_categories=true) %}
       {% if msgs %}
-        {% for cat,msg in msgs %}
+        {% for cat, msg in msgs %}
           {% if "login successful" not in msg|lower %}
-            <div class="alert alert-{{'danger' if cat=='danger' else cat}} alert-dismissible fade show" role="alert">
+            <div class="alert alert-{{ 'danger' if cat=='danger' else cat }} alert-dismissible fade show" role="alert">
               {{ msg }}
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -65,13 +25,11 @@ textarea{height:80px;resize:vertical}
     {% endwith %}
 
     <form method="POST">
-      <fieldset>
-        <legend>Recipient</legend>
+      <fieldset><legend>Recipient</legend>
         <input type="text" name="share_users" placeholder="@username" required>
       </fieldset>
 
-      <fieldset>
-        <legend>Data to Share</legend>
+      <fieldset><legend>Data to Share</legend>
         <div class="checkbox-grid">
           <label><input type="checkbox" name="share_exposure"> Exposure Habits</label>
           <label><input type="checkbox" name="share_aperture"> Aperture Usage</label>
@@ -81,16 +39,14 @@ textarea{height:80px;resize:vertical}
         </div>
       </fieldset>
 
-      <fieldset>
-        <legend>Time Range</legend>
+      <fieldset><legend>Time Range</legend>
         <div class="row g-2">
           <div class="col"><input type="date" name="start_date" required></div>
           <div class="col"><input type="date" name="end_date" required></div>
         </div>
       </fieldset>
 
-      <fieldset>
-        <legend>Message (optional)</legend>
+      <fieldset><legend>Message (optional)</legend>
         <textarea name="message" placeholder="Write a message..."></textarea>
       </fieldset>
 
@@ -101,7 +57,7 @@ textarea{height:80px;resize:vertical}
     </form>
   </div>
 
-  <!-- ─────────────── HISTORY CARD ─────────────── -->
+  <!-- ─── HISTORY CARD ─── -->
   <div class="card" style="flex:1.1">
     <h2>Shared by You</h2>
     <div class="table-responsive">
@@ -112,7 +68,7 @@ textarea{height:80px;resize:vertical}
           <td>{{ s.created_at.strftime('%Y-%m-%d') }}</td>
           <td>@{{ s.to_user.username }}</td>
           <td>
-            {% set items=[] %}
+            {% set items = [] %}
             {% if s.share_exposure      %}{% set _ = items.append('Exposure') %}{% endif %}
             {% if s.share_aperture      %}{% set _ = items.append('Aperture') %}{% endif %}
             {% if s.share_favorite_film %}{% set _ = items.append('Film') %}{% endif %}
@@ -137,16 +93,9 @@ textarea{height:80px;resize:vertical}
 {% endblock %}
 
 {% block scripts %}
-<!-- Twemoji CDN -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/twemoji.min.js"
-        integrity="sha512-+9nrGrU+cg4RlZMf3QXSu5Xei1MIhZy/CQYjaMwvqFaYMGtCUNWQK8qv5GUcC3PDuX+hW5yX33/3S4E5dX9p7g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    twemoji.parse(document.body);
-  });
-</script>
+<script src="{{ url_for('static', filename='js/share.js') }}"></script>
 {% endblock %}
+
 
 
 
