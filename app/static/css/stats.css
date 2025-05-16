@@ -76,7 +76,7 @@ body {
 .bar-fill {
     position: absolute;
     height: 100%;
-    background: linear-gradient(90deg, #5eb3f4, #9ccdf1);
+    background: linear-gradient(90deg, #2c5282, #7797bf);
     border-radius: 5px;
     width: 0;
     display: flex;
@@ -182,7 +182,19 @@ body {
     height: 400px;
     width: 100%;
     border-radius: 15px;
+    margin: 0 auto;  /* Add this line to center horizontally */
+    display: flex;   /* Add these lines for proper centering */
+    align-items: center;
     justify-content: center;
+}
+
+/* Add styles for the map container tile */
+#map-container.chart-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 
 #location-stats {
