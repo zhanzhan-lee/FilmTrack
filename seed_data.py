@@ -1,167 +1,69 @@
 from app import create_app, db
-from app.models import User, Film, Camera, Lens, Roll, Photo, Share
+from app.models import User, Camera, Lens, Film, Photo, Roll
 from werkzeug.security import generate_password_hash
-from datetime import datetime, timedelta
-import random
 
 app = create_app()
 
 def clear_database():
-    """Clear all existing data from the database."""
-    db.session.query(Share).delete()
-    db.session.query(Photo).delete()
-    db.session.query(Roll).delete()
-    db.session.query(Film).delete()
     db.session.query(Camera).delete()
     db.session.query(Lens).delete()
+    db.session.query(Film).delete()
+    #db.session.query(Photo).delete()
+    #db.session.query(Roll).delete()
     db.session.query(User).delete()
     db.session.commit()
-    
 
-
-
-def create_users():
-    """Create sample users."""
-    users = [
-        User(username="admin", password=generate_password_hash("123456")),
-        User(username="user1", password=generate_password_hash("password1")),
-        User(username="user2", password=generate_password_hash("password2"))
-    ]
-    db.session.add_all(users)
+def seed():
+    # ---------- User 1: Alice ----------
+    alice = User(username="alice", password=generate_password_hash("alice123"))
+    db.session.add(alice)
     db.session.commit()
-    return users
 
-def create_films(users):
-    """Create sample films for each user."""
-    films = [
-        Film(name="Portra 400", brand="Kodak", iso="400", format="35mm", user_id=users[0].id),
-        Film(name="HP5 Plus", brand="Ilford", iso="400", format="35mm", user_id=users[0].id),
-        Film(name="Ektar 100", brand="Kodak", iso="100", format="35mm", user_id=users[1].id),
-        Film(name="Superia X-TRA 400", brand="Fujifilm", iso="400", format="35mm", user_id=users[2].id)
-    ]
-    db.session.add_all(films)
+    alice_c1 = Camera(name="Leica IIIG", brand="Leica", type="Rangefinder", format="35mm", user_id=alice.id, image_path="leica_iiig.jpg")
+    alice_c3 = Camera(name="Canon AE-1", brand="Canon", type="SLR", format="35mm", user_id=alice.id, image_path="canon_ae1.jpg")
+
+    alice_l1 = Lens(name="Leitz Elmar 50mm f/3.5", brand="Leitz", mount_type="M39", user_id=alice.id, image_path="leitz_elmar_50.jpg")
+    alice_l3 = Lens(name="Canon FD 50mm f/1.8", brand="Canon", mount_type="FD", user_id=alice.id, image_path="canon_fd_50_18.jpg")
+
+    f2 = Film(name="Kodak Ektachrome E100", brand="Kodak", iso="100", format="35mm", user_id=alice.id, image_path="kodak_e100.jpg")
+    f3 = Film(name="Kodak Portra 160", brand="Kodak", iso="160", format="35mm", user_id=alice.id, image_path="portra_160.jpg")
+    f4 = Film(name="Fujifilm Velvia 100", brand="Fujifilm", iso="100", format="35mm", user_id=alice.id, image_path="velvia_100.jpg")
+    f5 = Film(name="Ilford HP5 Plus 400", brand="Ilford", iso="400", format="35mm", user_id=alice.id, image_path="hp5_plus.jpg")
+
+    db.session.add_all([alice_c1, alice_c3, alice_l1, alice_l3, f2, f3, f4, f5])
+
+    # ---------- User 2: Bob ----------
+    bob = User(username="bob", password=generate_password_hash("bob123"))
+    db.session.add(bob)
     db.session.commit()
-    return films
 
-def create_cameras(users):
-    """Create sample cameras for each user."""
-    cameras = [
-        Camera(name="Nikon F", brand="Nikon", type="SLR", format="35mm", user_id=users[0].id, image_path="nikon_f.jpg"),
-        Camera(name="Canon AE-1", brand="Canon", type="SLR", format="35mm", user_id=users[0].id),
-        Camera(name="Leica IIIG", brand="Leica", type="Rangefinder", format="35mm", user_id=users[1].id, image_path="leica_iiig.jpg"),
-        Camera(name="Pentax K1000", brand="Pentax", type="SLR", format="35mm", user_id=users[2].id)
-    ]
-    db.session.add_all(cameras)
+    bob_c1 = Camera(name="Nikon F", brand="Nikon", type="SLR", format="35mm", user_id=bob.id, image_path="nikon_f.jpg")
+    bob_c2 = Camera(name="Nikon FM2", brand="Nikon", type="SLR", format="35mm", user_id=bob.id, image_path="nikon_fm2.jpg")
+    bob_l1 = Lens(name="Nikkor-S 50mm f/1.4", brand="Nikon", mount_type="F", user_id=bob.id, image_path="nikkor_50_14.jpg")
+    bob_l2 = Lens(name="Nikkor-P 105mm f/2.5", brand="Nikon", mount_type="F", user_id=bob.id, image_path="nikkor_105_25.jpg")
+    f6 = Film(name="Kodak Ultramax 400", brand="Kodak", iso="400", format="35mm", user_id=bob.id, image_path="ultramax_400.jpg")
+    f7 = Film(name="Kodak Portra 400", brand="Kodak", iso="400", format="35mm", user_id=bob.id, image_path="portra_400.jpg")
+
+    db.session.add_all([bob_c1, bob_c2, bob_l1, bob_l2, f6, f7])
+
+    # ---------- User 3: Carol ----------
+    carol = User(username="carol", password=generate_password_hash("carol123"))
+    db.session.add(carol)
     db.session.commit()
-    return cameras
 
-def create_lenses(users):
-    """Create sample lenses for each user."""
-    lenses = [
-        Lens(name="Nikkor 50mm f/1.4", brand="Nikon", mount_type="F", user_id=users[0].id),
-        Lens(name="Leitz 50mm f/3.5 Elmar", brand="Leitz", mount_type="L39", user_id=users[1].id, image_path="leitz_50mm_elmar.jpg"),
-        Lens(name="Canon FD 50mm f/1.8", brand="Canon", mount_type="FD", user_id=users[0].id),
-        Lens(name="Pentax 50mm f/2", brand="Pentax", mount_type="K", user_id=users[2].id)
-    ]
-    db.session.add_all(lenses)
-    db.session.commit()
-    return lenses
+    carol_c1 = Camera(name="Hasselblad 500C", brand="Hasselblad", type="SLR", format="120", user_id=carol.id, image_path="hasselblad_500c.jpg")
+    carol_c2 = Camera(name="Mamiya RB67", brand="Mamiya", type="SLR", format="120", user_id=carol.id, image_path="mamiya_rb67.jpg")
+    carol_l1 = Lens(name="Carl Zeiss Planar 80mm f/2.8", brand="Zeiss", mount_type="V", user_id=carol.id, image_path="zeiss_planar_80.jpg")
+    carol_l2 = Lens(name="Mamiya-Sekor 90mm f/3.8", brand="Mamiya", mount_type="RB67", user_id=carol.id, image_path="mamiya_90_38.jpg")
+    f8 = Film(name="Fujifilm Velvia 50", brand="Fujifilm", iso="50", format="120", user_id=carol.id, image_path="velvia_50.jpg")
+    f9 = Film(name="Kodak Portra 160", brand="Kodak", iso="160", format="120", user_id=carol.id, image_path="portra_160.jpg")
 
-def create_rolls(users, films):
-    """Create sample rolls for each user."""
-    roll_names = ["City Walk", "Family Weekend", "Test Shots", "Holiday Trip"]
-    base_date = datetime(2024, 1, 1)
-    rolls = []
-
-    for i, user in enumerate(users):
-        for j in range(2):  # Two rolls per user
-            roll = Roll(
-                roll_name=f"{roll_names[j]} ({user.username})",
-                film_id=films[(i + j) % len(films)].id,
-                user_id=user.id,
-                start_date=base_date + timedelta(days=i * 10 + j * 5),
-                end_date=base_date + timedelta(days=i * 10 + j * 5 + 2),
-                status="scanned",
-                notes=f"Example roll {j+1} for {user.username}"
-            )
-            db.session.add(roll)
-            rolls.append(roll)
+    db.session.add_all([carol_c1, carol_c2, carol_l1, carol_l2, f8, f9])
 
     db.session.commit()
-    return rolls
 
-def create_photos(users, rolls, cameras, lenses, films):
-    """Create sample photos for each roll, spread out over the year."""
-    shutter_speeds = ["1/30", "1/60", "1/125", "1/250", "1/500"]
-    apertures = ["f/2.0", "f/2.8", "f/4.0", "f/5.6", "f/8.0"]
-    locations = ["Perth City", "Fremantle", "Kings Park", "UWA", "Cottesloe"]
-    current_date = datetime.now()
-
-    for roll in rolls:
-        for j in range(10):  # Five photos per roll
-            # Spread the shot_date between the roll's start_date and the current date
-            days_difference = (current_date - roll.start_date).days
-            random_days_offset = random.randint(0, days_difference)
-            shot_date = roll.start_date + timedelta(days=random_days_offset)
-
-            photo = Photo(
-                user_id=roll.user_id,
-                roll_id=roll.id,
-                camera_id=cameras[j % len(cameras)].id,
-                lens_id=lenses[j % len(lenses)].id,
-                film_id=roll.film_id,
-                shot_date=shot_date,
-                shutter_speed=random.choice(shutter_speeds),
-                aperture=random.choice(apertures),
-                iso=str(films[j % len(films)].iso),
-                frame_number=str(j + 1),
-                location=random.choice(locations)
-            )
-            db.session.add(photo)
-
-    db.session.commit()
 
 with app.app_context():
-    # Clear existing data
     clear_database()
-
-    # Create sample data
-    users = create_users()
-    films = create_films(users)
-    cameras = create_cameras(users)
-    lenses = create_lenses(users)
-    rolls = create_rolls(users, films)
-    create_photos(users, rolls, cameras, lenses, films)
-
-    share = Share(
-        from_user_id=2,  # Replace with a valid user ID
-        to_user_id=1,    # Replace with a valid user ID
-        start_date=datetime(2025, 1, 1),
-        end_date=datetime(2025, random.randint(1, 12), random.randint(1, 28)),
-        created_at=datetime(2025, 1, 1),
-        note="Testing share functionality",
-        share_exposure=True,
-        share_aperture=True,
-        share_favorite_film=True,
-        share_gear=True,
-        share_shoot_time=True
-    )
-    db.session.add(share)
-
-    share = Share(
-        from_user_id=3,  # Replace with a valid user ID
-        to_user_id=1,    # Replace with a valid user ID
-        start_date=datetime(2025, 1, 1),
-        end_date=datetime(2025, random.randint(1, 12), random.randint(1, 28)),
-        created_at=datetime(2025, 1, 1),
-        note="Testing share functionality",
-        share_exposure=True,
-        share_aperture=True,
-        share_favorite_film=True,
-        share_gear=True,
-        share_shoot_time=True
-    )
-    db.session.add(share)
-    db.session.commit()
-
-    print("✅ Sample data inserted successfully.")
+    seed()
+    print("✅ Users and gear seeded with image names.")
