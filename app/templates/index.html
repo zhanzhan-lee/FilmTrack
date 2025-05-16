@@ -6,10 +6,9 @@
     <title>Track Every Frame</title>
 
     <!-- Stylesheets -->
-
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='css/index.css') }}"
+      href="{{ url_for('static', filename='css/index_mod.css') }}"
     />
     <link
       rel="stylesheet"
@@ -22,57 +21,116 @@
   </head>
 
   {% extends "base.html" %}
-
   {% block content %}
 
-    <!-- Main Content -->
-    <div class="container" >
-      <h1>Track every frame.</h1>
-      <p class="subtext">Digitize your film journey.</p>
+  <div class="container">
+    <h1>Track every frame.</h1>
+    <p class="subtext">Digitize your film journey.</p>
 
-      <div class="button-group">
-        <button onclick="alert('Explore coming soon')">Explore</button>
+    <div class="button-group">
+      <button onclick="window.location.href='/register'">Explore</button>
+    </div>
+
+
+    <div class="features">
+      <div class="feature" onclick="scrollToSection('gearSection', 'gearGif')">
+        <div class="feature-content">
+          <img
+            src="{{ url_for('static', filename='images/camera.gif') }}"
+            alt="Camera Icon"
+            class="feature-icon"
+          />
+          <p>Add your cameras,<br />lenses, and film<br />&nbsp; </p>
+        </div>
       </div>
 
-      <div class="features">
-        <div class="feature">
-          <div class="feature-content">
-            <img
-              src="{{ url_for('static', filename='images/shutter.gif') }}"
-              alt="Camera Icon"
-              class="feature-icon"
-            />
-            <p>Add your cameras,<br />lenses, and film</p>
-          </div>
+      <div class="feature" onclick="scrollToSection('rollSection', 'rollGif')">
+        <div class="feature-content">
+          <img
+            src="{{ url_for('static', filename='images/film.gif') }}"
+            alt="Camera Icon"
+            class="feature-icon"
+          />
+          <p>Record aperture,<br />shutter speed, ISO,<br />location & more</p>
         </div>
+      </div>
 
-        <div class="feature">
-          <div class="feature-content">
-            <!-- You can add another icon here later -->
-            <p>
-              Record aperture,<br />shutter speed, ISO,<br />location & more
-            </p>
-          </div>
+      <div class="feature" onclick="scrollToSection('shareStatsSection', 'shareStatsGif')">
+        <div class="feature-content">
+          <img
+            src="{{ url_for('static', filename='images/analysis.gif') }}"
+            alt="Camera Icon"
+            class="feature-icon"
+          />
+          <p>Visualize exposure<br />and gear preferences<br />&nbsp; </p>
         </div>
+      </div>
 
-        <div class="feature">
-          <div class="feature-content">
-            <!-- You can add another icon here later -->
-            <p>Visualize exposure<br />and gear preferences</p>
-          </div>
-        </div>
-
-        <div class="feature">
-          <div class="feature-content">
-            <!-- You can add another icon here later -->
-            <p>Share your shooting<br />maps and photos</p>
-          </div>
+      <div class="feature" onclick="scrollToSection('shareMapSection', 'shareMapGif')">
+        <div class="feature-content">
+          <img
+            src="{{ url_for('static', filename='images/share.gif') }}"
+            alt="Camera Icon"
+            class="feature-icon"
+          />
+          <p>Share your shooting<br />maps and photos<br />&nbsp; </p>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Scripts -->
-    
-  </body>
+  <hr />
+
+  <div class="container gif-section">
+    <h2 id="gearSection">📸 Gear Management</h2>
+    <p class="subtext">Keep track of all your cameras, lenses and film stocks.</p>
+
+    <div class="media-wrapper">
+      <img id="gearGif" src="{{ url_for('static', filename='images/gear.gif') }}" class="media-box" />
+    </div>
+
+    <h2 id="rollSection" class="mt-5">🎞️ Shooting Rolls</h2>
+    <p class="subtext">Document every roll in use and view shots you’ve already developed.</p>
+    <div class="media-wrapper">
+      <img id="rollGif" src="{{ url_for('static', filename='images/roll.gif') }}" class="media-box" />
+    </div>
+
+    <h2 id="shareStatsSection" class="mt-5">📊 Stats</h2>
+    <p class="subtext">See trends in your shooting habits, gear usage and exposure settings.</p>
+    <div class="media-wrapper">
+      <img id="statesGif" src="{{ url_for('static', filename='images/states.gif') }}" class="media-box" />
+    </div>
+    <h2 id="shareMapSection" class="mt-5">🔗 Sharing </h2>
+    <p class="subtext">Explore and share shooting locations and selected shots with others.</p>
+    <div class="media-wrapper">
+      
+      <img id="shareMapGif" src="{{ url_for('static', filename='images/share.png') }}" class="media-box" />
+      <img id="shareStatsGif" src="{{ url_for('static', filename='images/share_stats.png') }}" class="media-box" />
+    </div>
+  </div>
+
+  <script>
+    function scrollToSection(sectionId, gifId) {
+      const target = document.getElementById(sectionId);
+
+      const offset = 120;
+      const y = target.getBoundingClientRect().top + window.scrollY - offset;
+
+      window.scrollTo({
+        top: y,
+        behavior: 'smooth'
+      });
+
+
+      const gif = document.getElementById(gifId);
+      if (gif && gif.src.endsWith('.gif')) {
+        const src = gif.src;
+        gif.src = '';
+        gif.src = src;
+      }
+    }
+  </script>
+
+
+  {% endblock %}
 </html>
-{% endblock %}

@@ -32,12 +32,16 @@
 
           <button type="submit">Log in</button>
         </form>
+        <div style="text-align: center; margin-top: 20px;">
+          <a href="{{ url_for('main.home') }}" class="back-btn">← Back to Home</a>
+
+        </div>
 
 
       <p class="signup-text">
         Don’t have an account yet?
         <a href="{{ url_for('auth.register') }}">Sign up now!</a>
-      </p>
+      </p> 
     </div>
   </body>
 </html>

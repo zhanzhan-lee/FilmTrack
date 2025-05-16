@@ -9,7 +9,7 @@ function loadRollDetailView() {
         .then(data => {
             const container = document.getElementById('roll-detail-list');
             container.innerHTML = '';
-            const finishedRolls = data.filter(roll => roll.status === 'finished');
+            const finishedRolls = data.filter(roll => roll.status === 'finished').reverse();
 
             finishedRolls.forEach(roll => {
                 const row = createRollRow(roll);
@@ -78,7 +78,7 @@ function bindEditRollFormFin() {
             .then(response => {
                 if (response.ok) {
                     bootstrap.Modal.getInstance(document.getElementById('editRollModalFin')).hide();
-                    loadRollDetailView(); // 删除后刷新
+                    loadRollDetailView(); 
                 } else {
                     alert('Failed to delete roll.');
                 }
@@ -146,7 +146,6 @@ function createRollRow(roll) {
                 strip.appendChild(frame);
             });
 
-            // 最后加一个上传按钮
             const addFrame = document.createElement('div');
             addFrame.className = 'film-frame upload-frame';
             addFrame.innerHTML = '<span class="plus-icon">+</span>';

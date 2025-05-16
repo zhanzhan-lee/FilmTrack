@@ -1,0 +1,149 @@
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 0px;     
+  padding-bottom: 40px;  
+  padding-left: 30px;
+  padding-right: 30px;
+  text-align: center;
+}
+
+h1 {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+  color: #6b705c;
+}
+
+.subtext {
+  color: #a5a58d;
+  font-size: 1.1em;
+  margin-bottom: 30px;
+}
+
+.button-group {
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.button-group button {
+  background-color: #6b705c;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.3s;
+  margin: 0 auto;
+}
+
+.button-group button:hover {
+  background-color: #b5838d;
+}
+
+.features {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.feature {
+  background-color: #fff;
+  border: 2px solid #a5a58d;
+  padding: 20px;
+  border-radius: 10px;
+  width: 200px;
+  height: 230px;
+  font-size: 0.95em;
+  line-height: 1.5em;
+  color: #6b705c;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.feature:hover {
+  transform: scale(1.03);
+}
+
+.feature-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.feature p {
+  margin: 0;
+  font-weight: bold;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+[id]::before {
+  display: block;
+  content: " ";
+  margin-top: -80px;
+  height: 80px;
+  visibility: hidden;
+}
+
+.gif-section {
+  text-align: center;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  padding: 0 16px;
+}
+
+.gif-section h2 {
+  margin-top: 30px;
+  margin-bottom: 12px;
+  font-size: 1.5rem;
+}
+
+
+.media-wrapper {
+  max-width: 1200px;
+  margin: 0 auto 24px auto;
+  padding: 0;
+  margin-bottom: 80px;
+}
+
+.media-box {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  background-color: white;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  object-fit: contain;
+}
+
+
+@media (max-width: 768px) {
+  .gif-section h2 {
+    font-size: 1.25rem;
+  }
+
+  .media-wrapper {
+    padding: 0 10px;
+  }
+}
