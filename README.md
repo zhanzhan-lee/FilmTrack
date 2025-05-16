@@ -176,7 +176,7 @@ System tests simulate user interactions with the UI (using Selenium) and must be
 Example: test the full gear upload flow:
 
 ```bash
-python tests/test_sys_gear.py
+python tests/test_sys_photo.py
 ```
 
 > 💡 **Note:** If system tests involve browser automation (Selenium), make sure:
