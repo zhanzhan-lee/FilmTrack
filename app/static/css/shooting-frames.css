@@ -12,7 +12,7 @@
     
     position: relative;
     display: flex;
-    flex-wrap: nowrap;     /* ✅ No line break */
+    flex-wrap: nowrap;     /*  No line break */
     align-items: center;
     background: #333;
     padding: 20px 60px 20px 20px; 

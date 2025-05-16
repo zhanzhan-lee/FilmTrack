@@ -15,7 +15,6 @@ body {
     margin-bottom: 20px;
 }
 
-/* 继续复用 gear-card 样式但可以微调 */
 /* Continue to reuse the gear-card style but can be fine-tuned */
 .gear-card {
     flex: 1 1 calc(20% - 20px);  /* 默认 5列 */
@@ -38,7 +37,7 @@ body {
 .subtext {
     font-size: 14px;
     color: #555;
-    margin: 0.2rem 0;  /* ✅ 减小上下间距 */
+    margin: 0.2rem 0;  
     line-height: 1.4;
   }
   
@@ -70,12 +69,12 @@ body {
     height: 260px;
     
     border-radius: 0px;
-    position: relative; /* 相对定位，为了 film-cap *//* Relative positioning, for film-cap */
+    position: relative; 
     display: flex;
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
-    overflow: hidden; /* 保证盖子不会溢出 *//* Make sure the lid doesn't overflow */
+    overflow: hidden; 
     transition: all 0.3s ease-in-out;
 }
 
@@ -128,12 +127,12 @@ body {
     transition: all 0.3s ease-in-out;
 }
 
-/* 上盖子 top cap */
+/*  top cap */
 .film-cap.top {
     top: 20px; 
 }
 
-/* 下盖子 bottom cap */
+/* bottom cap */
 .film-cap.bottom {
     bottom: 0;
 }
@@ -161,21 +160,21 @@ body {
 
 @media (max-width: 1200px) {
     .gear-card {
-        flex: 1 1 calc(25% - 20px);  /* 4列 */
+        flex: 1 1 calc(25% - 20px);  /* 4 */
         max-width: calc(25% - 20px);
     }
 }
 
 @media (max-width: 992px) {
     .gear-card {
-        flex: 1 1 calc(50% - 20px);  /* 2列 */
+        flex: 1 1 calc(50% - 20px);  /* 2 */
         max-width: calc(50% - 20px);
     }
 }
 
 @media (max-width: 640px) {
     .gear-card {
-        flex: 1 1 calc(50% - 20px);  /* 2列 */
+        flex: 1 1 calc(50% - 20px);  /* 2 */
         max-width: calc(50% - 20px);
     }
     .film-logo-container {
@@ -194,11 +193,11 @@ body {
     }
 
     .film-cap.top {
-        top: 15px;   /* ✅ 相对高度控制 */
+        top: 15px;  
     }
 
     .film-cap.bottom {
-        bottom: 10px; /* ✅ 相对高度控制 */
+        bottom: 10px; 
     }
 
     .film-cap.axle {

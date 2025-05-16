@@ -101,3 +101,15 @@ button:hover {
   color: #0c5460;
   border-left: 5px solid #17a2b8;
 }
+
+.back-btn {
+  color: #6b705c;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.back-btn:hover {
+  color: #a5a58d;
+  text-decoration: underline;
+}

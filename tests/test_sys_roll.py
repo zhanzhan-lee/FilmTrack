@@ -52,6 +52,9 @@ class GearUploadAndEditSystemTest(unittest.TestCase):
         time.sleep(1)
         driver.find_element(By.NAME, "username").send_keys("testuser")
         driver.find_element(By.NAME, "password").send_keys("password")
+        driver.find_element(By.NAME, "confirm_password").send_keys("password")
+
+        
         checkboxes = driver.find_elements(By.CSS_SELECTOR, 'input[type="checkbox"]')
         checkboxes[0].click()
         checkboxes[1].click()

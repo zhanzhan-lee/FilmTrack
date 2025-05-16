@@ -197,14 +197,12 @@ def edit_camera(id):
     # print(" Form errors:", form.errors)
 
     if form.validate_on_submit():
-        # 更新字段
         camera.name = form.name.data
         camera.brand = form.brand.data
         camera.type = form.type.data
         camera.format = form.format.data
         camera.is_public = form.is_public.data
 
-        # 可选：处理图片更新
         image_file = form.image.data
         if image_file:
             filename = secure_filename(image_file.filename)
@@ -230,7 +228,7 @@ def delete_camera(id):
         return jsonify({'message': 'deleted'}), 200
 
     except IntegrityError:
-        db.session.rollback()  #  回滚事务，防止 session 锁死Roll back the transaction to prevent the session from being locked
+        db.session.rollback()  # Roll back the transaction to prevent the session from being locked
         return jsonify({
             'message': '❗ Unable to delete: This camera is linked to one or more photos.'
         }), 400
