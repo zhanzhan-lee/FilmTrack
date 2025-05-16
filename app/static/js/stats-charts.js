@@ -1,6 +1,7 @@
 Chart.register(ChartDataLabels);
 
 function monthlyTrendChart() {
+  // Everything in these functions follows the same structure 
   fetch('/api/monthly-trend')
     .then(response => response.json())
     .then(data => {
@@ -67,7 +68,6 @@ function apertureDistributionChart() {
       const ctx = document.getElementById('donut-chart').getContext('2d');
       console.log(Chart.registry.plugins);
 
-      
       new Chart(ctx, {
         type: 'doughnut',
         data: {
@@ -164,8 +164,8 @@ function gearChart(elementID) {
     .then(data => {
       const ctx = document.getElementById(elementID).getContext('2d');
       const bg = ctx.createLinearGradient(0, 0, 0, 300);
-      bg.addColorStop(0, '#5eb3f4');
-      bg.addColorStop(1, '#9ccdf1');
+      bg.addColorStop(0, '#2c5282');  // Changed to darker blue
+      bg.addColorStop(1, '#4299e1');  // Changed to medium blue
 
       new Chart(ctx, {
         type: 'bar',
