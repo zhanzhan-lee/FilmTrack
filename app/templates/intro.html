@@ -1,72 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Track Every Frame</title>
+{% extends "base.html" %}
+{% block title %}Intro{% endblock %}
 
-    <!-- Stylesheets -->
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index_mod.css') }}">
+{% endblock %}
 
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/index_mod.css') }}"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
-      rel="stylesheet"
-    />
-  </head>
+{% block content %}
+<div class="container">
+  <h1>Track every frame.</h1>
+  <p class="subtext">Digitize your film journey.</p>
 
-  {% extends "base.html" %}
-
-  {% block content %}
-
-    <!-- Main Content -->
-
-  <div class="container">
-    <h1>Track every frame.</h1>
-    <p class="subtext">Digitize your film journey.</p>
-
-
-
-    <div class="features">
-      <div class="feature" onclick="window.location.href='/gear'">
-        <div class="feature-content">
-          <img src="{{ url_for('static', filename='images/camera.gif') }}" alt="Camera Icon" class="feature-icon" />
-          <p>Add your cameras,<br />lenses, and film<br />&nbsp;</p>
-        </div>
-      </div>
-
-      <div class="feature" onclick="window.location.href='/shooting'">
-        <div class="feature-content">
-          <img src="{{ url_for('static', filename='images/film.gif') }}" alt="Film Icon" class="feature-icon" />
-          <p>Record aperture,<br />shutter speed, ISO,<br />location & more</p>
-        </div>
-      </div>
-
-      <div class="feature" onclick="window.location.href='/stats'">
-        <div class="feature-content">
-          <img src="{{ url_for('static', filename='images/analysis.gif') }}" alt="Stats Icon" class="feature-icon" />
-          <p>Visualize exposure<br />and gear preferences<br />&nbsp;</p>
-        </div>
-      </div>
-
-      <div class="feature" onclick="window.location.href='/share'">
-        <div class="feature-content">
-          <img src="{{ url_for('static', filename='images/share.gif') }}" alt="Share Icon" class="feature-icon" />
-          <p>Share your shooting<br />maps and photos<br />&nbsp;</p>
-        </div>
+  <div class="features">
+    <div class="feature" onclick="window.location.href='/gear'">
+      <div class="feature-content">
+        <img src="{{ url_for('static', filename='images/camera.gif') }}" alt="Camera Icon" class="feature-icon" />
+        <p>Add your cameras,<br />lenses, and film<br />&nbsp;</p>
       </div>
     </div>
 
-  </div>
+    <div class="feature" onclick="window.location.href='/shooting'">
+      <div class="feature-content">
+        <img src="{{ url_for('static', filename='images/film.gif') }}" alt="Film Icon" class="feature-icon" />
+        <p>Record aperture,<br />shutter speed, ISO,<br />location & more</p>
+      </div>
+    </div>
 
-    <!-- Scripts -->
-    
-  </body>
-</html>
+    <div class="feature" onclick="window.location.href='/stats'">
+      <div class="feature-content">
+        <img src="{{ url_for('static', filename='images/analysis.gif') }}" alt="Stats Icon" class="feature-icon" />
+        <p>Visualize exposure<br />and gear preferences<br />&nbsp;</p>
+      </div>
+    </div>
+
+    <div class="feature" onclick="window.location.href='/share'">
+      <div class="feature-content">
+        <img src="{{ url_for('static', filename='images/share.gif') }}" alt="Share Icon" class="feature-icon" />
+        <p>Share your shooting<br />maps and photos<br />&nbsp;</p>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
