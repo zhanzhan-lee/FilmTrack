@@ -1,12 +1,3 @@
-# FilmTrack - CITS3403 - G11
-
-| Name           | Student ID | GitHub Username      |
-|----------------|------------|----------------------|
-| Zhanyi(Zane) Li| 24103639   | zhanzhan-lee         |
-| Shining Han    | 23913741   | HSN20031118          |
-| Tobias Camille | 24214277   | Resistnz             |
-| Jawad Huda     | 23102177   | clashyboy1only       |
-
 
 ## 📌 Purpose and Design
 
