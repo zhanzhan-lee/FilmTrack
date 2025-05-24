@@ -32,25 +32,26 @@ To support film photography enthusiasts in efficiently logging and analyzing the
   - 📷 Cameras  
   - 🔍 Lenses  
   - 🎞️ Films
-
+![alt text](app/static/images/gear.gif)
 - **Rolls Page**  
   Users can create new film rolls and log each shot:
   - Select a film from the registered gear
   - Choose the camera and lens used for each shot
   - Enter aperture, shutter speed, ISO, shooting time, and notes
-
+![alt text](app/static/images/roll.gif)
 - **Stats Page**  
   Automatically generates visual charts based on uploaded data:
   - Exposure habits (aperture, shutter speed, ISO distributions)
   - Gear usage trends (most used cameras, lenses, films)
   - Shooting time patterns (activity by day, week, or month)
+  ![alt text](app/static/images/states.gif)
 
 - **Share Page**  
   Users can selectively choose which statistics to share and generate a public viewable page of their photography data.
-
+  ![alt text](app/static/images/share.png)
 - **Shared Stats Page**  
   Browse stats shared by other users.
-
+  ![alt text](app/static/images/share_stats.png)
 
 
 The system is built around this workflow:  
